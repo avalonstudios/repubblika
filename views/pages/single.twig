@@ -1,0 +1,66 @@
+{% extends 'wrappers/head-foot-wrap.twig' %}
+{% import 'sections/partials/_macros.twig' as mcr %}
+
+{% block header %}
+	{% set post_title = post.title|e('wp_kses_post') %}
+	<h1 class="entry-title">{{ post_title }}{% if fn('is_sticky') %}<i class="fas fa-paperclip"></i>{% endif %}</h1>
+	{{ mcr.post_meta(post) }}
+{% endblock %}
+
+
+{% block content %}
+	{% if password == 1 %}
+		{{ fn('get_the_password_form') }}
+	{% else %}
+		{{ post.content }}
+	{% endif %}
+	{% if post.pagination %}
+		{% set pages = post.pagination.pages %}
+		<div class="my-5">
+			<span>Pages: </span>
+			{% for page in pages %}
+				{% if page.current %}
+					<span class="current">{{ page.title }}</span>{{ loop.last ? '' : ', ' }}
+				{% else %}
+					<a href="{{ page.link }}">{{ page.title }}</a>{{ loop.last ? '' : ', ' }}
+				{% endif %}
+			{% endfor %}
+		</div>
+	{% endif %}
+{% endblock %}
+
+{% block footer %}
+	<div class="categories-tags">
+		{% if post.terms('category')|length %}
+			<span class="cat-link d-block">
+				<span class="oswald">Filed in:</span>
+				{% for term in post.terms('category') %}
+					<span class="badge badge-dark mr-1"><a href="{{ term.link }}" rel="bookmark">{{ term }}</a></span>
+				{% endfor %}
+			</span>
+		{% endif %}
+		{% if post.terms('tags')|length %}
+			<span class="tags-link d-block">
+				<span class="oswald">Tagged as:</span>
+				{% for term in post.terms('tags') %}
+					<span class="badge badge-light mr-1"><a href="{{ term.link }}" rel="bookmark">{{ term }}</a></span>
+				{% endfor %}
+			</span>
+		{% endif %}
+	</div>
+
+	<div class="container my-5">
+		{% include 'navigation/post-navigation.twig' %}
+	</div>
+{% endblock %}
+
+{% block comments %}
+	{% if password != 1 %}
+		<div class="container mt-5">
+			{% if fn('comments_open') or fn('get_comments_number') %}
+				{{ fn('comments_template') }}
+				{{ fn('paginate_comments_links') }}
+			{% endif %}
+		</div>
+	{% endif %}
+{% endblock %}

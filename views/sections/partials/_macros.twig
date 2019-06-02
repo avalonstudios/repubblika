@@ -1,0 +1,282 @@
+{% macro space_classes(full_width, text_color, background_color) %}
+	{% if full_width %}
+		{% set container = 'px-3 px-md-0 ' %}
+	{% else %}
+		{% set container = 'container px-3 px-sm-5 ' %}
+	{% endif %}
+
+	{% if background_color %}
+		{% set classes = ' py-5' %}
+	{% else %}
+		{% set classes = '' %}
+	{% endif %}
+
+	<section class="{{ container }}my-5" style="color:{{ text_color }};background-color:{{ background_color }}">
+		<div class="{{ classes }}">
+{% endmacro space_classes %}
+
+{% macro end_space_classes(p) %}
+		</div>
+	</section>
+	<hr>
+{% endmacro end_space_classes %}
+
+
+{% macro acf_map(lat, lng, title, address, description, height, classes) %}
+	<div class="acf-map {{ classes }}" style="{{ height }}">
+		<div class="marker" data-lat="{{ lat }}" data-lng="{{ lng }}">
+			<h5>{{ title }}</h5>
+			<p>{{ description }}</p>
+			<p class="address">{{ address }}</p>
+		</div>
+	</div>
+{% endmacro acf_map %}
+
+
+{% macro music_demos(prop) %}
+	{% if prop|length %}
+		{% import _self as spaceclass %}
+		{{ spaceclass.space_classes(prop.section_properties.full_width, prop.section_properties.text_color, prop.section_properties.background_color) }}
+
+		<h2 class="h1-responsive font-weight-bold text-center mb-4">{{ prop.section_title }}</h2>
+		{% set track = '' %}
+		{% for track in prop.music_tracks %}
+			{% set tr = track.track %}
+			{% if not loop.last %}
+				<div class="mb-3 embed-container">{{ tr }}</div>
+			{% else %}
+				<div class="embed-container">{{ tr }}</div>
+			{% endif %}
+		{% endfor %}
+
+		{% import _self as endspaceclass %}
+		{{ endspaceclass.end_space_classes(p) }}
+	{% endif %}
+{% endmacro music_demos %}
+
+
+{% macro text_editor(prop) %}
+	{% set text = prop.text_editor %}
+
+	{% import _self as spaceclass %}
+	{{ spaceclass.space_classes(prop.section_properties.full_width, prop.section_properties.text_color, prop.section_properties.background_color) }}
+
+		{{ text }}
+
+	{% import _self as endspaceclass %}
+	{{ endspaceclass.end_space_classes(p) }}
+{% endmacro text_editor %}
+
+
+{% macro reviews(prop) %}
+	{% import _self as spaceclass %}
+	{{ spaceclass.space_classes(prop.section_properties.full_width, prop.section_properties.text_color, prop.section_properties.background_color) }}
+		{% set presskit = prop.reviews_cln.presskit_builder %}
+		{% for kit in presskit %}
+			{% set layout = kit.acf_fc_layout %}
+			{% if layout == 'reviews_lyt' %}
+				<div class="text-center my-5">
+					{% if prop.section_title %}
+						<!-- Section heading -->
+						<h2 class="h1-responsive font-weight-bold my-5">{{ prop.section_title }}</h2>
+					{% endif %}
+					<!-- Carousel Wrapper -->
+					<div id="carousel-example-1" class="carousel no-flex testimonial-carousel slide carousel-fade" data-ride="carousel"	data-interval="false">
+						<!--Slides-->
+						<div class="carousel-inner" role="listbox">
+							{% for review in kit.reviews %}
+								{% if loop.first %}
+									{% set active_slide = ' active' %}
+								{% else %}
+									{% set active_slide = '' %}
+								{% endif %}
+								<!--First slide-->
+								<div class="carousel-item{{ active_slide }}">
+									<div class="testimonial">
+										{% if review.review_image %}
+										<!--Avatar-->
+											<div class="avatar mx-auto mb-4">
+												<img src="{{ Image(review.review_image).src|resize(300, 300, 'center') }}" class="rounded-circle img-fluid"
+												alt="First sample avatar image">
+											</div>
+										{% endif %}
+										<!--Content-->
+										<div>
+											<i class="fas fa-quote-left"></i> {{ review.review_text }}
+										</div>
+										<h4 class="font-weight-bold">{{ review.review_author }}</h4>
+										<a href="{{ review.review_link }}" target="_blank" rel="external">Website</a>
+										<!--Review-->
+									</div>
+								</div><!--First slide-->
+							{% endfor %}
+						</div><!--Slides-->
+						{% if kit.reviews|length > 1 %}
+							<!--Controls-->
+							<a class="carousel-control-prev left carousel-control" href="#carousel-example-1" role="button" data-slide="prev">
+								<span class="icon-prev" aria-hidden="true"></span>
+								<span class="sr-only">Previous</span>
+							</a>
+							<a class="carousel-control-next right carousel-control" href="#carousel-example-1" role="button" data-slide="next">
+								<span class="icon-next" aria-hidden="true"></span>
+								<span class="sr-only">Next</span>
+							</a><!--Controls-->
+						{% endif %}
+					</div><!-- Carousel Wrapper -->
+				</div>
+			{% elseif layout == 'images_lyt' %}
+			{% endif %}
+		{% endfor %}
+
+	{% import _self as endspaceclass %}
+	{{ endspaceclass.end_space_classes(p) }}
+{% endmacro reviews %}
+
+
+{% macro upcoming_shows(prop, shows) %}
+	{% set text = prop.text_editor %}
+
+	{% import _self as spaceclass %}
+	{{ spaceclass.space_classes(prop.section_properties.full_width, prop.section_properties.text_color, prop.section_properties.background_color) }}
+
+	{% if prop.section_title %}
+		<h2 class="h1-responsive font-weight-bold mb-4 text-center">{{ prop.section_title }}</h2>
+	{% endif %}
+
+	{% for show in shows %}
+		{% set title = show.post_title|e('wp_kses_post') %}
+		{% set multiday = show.multiday_event %}
+		{% set start_date = show.start_date %}
+		{% set end_date = show.end_date %}
+		{% set artist = fn('get_the_title', show.artist)|e('wp_kses_post') %}
+		{% set artist_link = fn('get_field', 'artist_website', show.artist)|e('esc_url') %}
+
+		{% set venue_name = fn('get_the_title', show.venue)|e('wp_kses_post') %}
+		{% set venue = fn('get_fields', show.venue) %}
+
+		{% set admittance = show.admittance|e('wp_kses_post') %}
+		{% set price = show.price|e('wp_kses_post') %}
+		{% set ticket_url = show.ticket_url|e('esc_url') %}
+		{% set ticket_phone = show.ticket_phone|e('wp_kses_post') %}
+		{% set notes = show.notes|e('wp_kses_post') %}
+
+		{% set venue_address = venue.venue_address|e('wp_kses_post') %}
+		{% set venue_state_provence = venue.venue_state_provence|e('wp_kses_post') %}
+		{% set venue_city = venue.venue_city|e('wp_kses_post') %}
+		{% set venue_postal_code = venue.venue_postal_code|e('wp_kses_post') %}
+		{% set venue_website = venue.venue_website|e('esc_url') %}
+		{% set venue_phone = venue.venue_phone|e('wp_kses_post') %}
+
+		{% if price %}
+			{% set price_output = '<span>&euro;' ~ price ~ '</span><br>' %}
+		{% endif %}
+
+		{% if multiday %}
+			{% if start_date|date('dmY') == end_date|date('dmY') %}
+				{% set s_date = '<i class="far fa-calendar-alt"></i> ' ~ start_date|date('d/M/Y') ~ ' <i class="far fa-clock"></i> ' ~ start_date|date('H:i') %}
+				{% set e_date = ' - ' ~ end_date|date('H:i') %}
+			{% else %}
+				{% set s_date = '<i class="far fa-calendar-alt"></i> ' ~ start_date|date('d/M/Y') ~ ' <i class="far fa-clock"></i> ' ~ start_date|date('H:i') %}
+				{% set e_date = '<br><div class="mt-2"><i class="fas fa-calendar-alt"></i> ' ~ end_date|date('d/M/Y') ~ ' <i class="fas fa-clock"></i> ' ~ end_date|date('H:i') ~ '</div>' %}
+			{% endif %}
+		{% else %}
+			{% set s_date = '<i class="far fa-calendar-alt"></i> ' ~ start_date|date('d/M/Y') ~ ' <i class="far fa-clock"></i> ' ~ start_date|date('H:i') %}
+		{% endif %}
+		<div class="jumbotron white text-center hoverable p-4 z-depth-0">
+			<!-- Grid row -->
+			<div class="row">
+				<!-- Grid column -->
+				<h3 class="col-12 text-capitalize">{{ title }}</h3>
+				<div class="col-md-6 offset-md- x-md-3 my-3">
+					<h6>{{ s_date }}{{ e_date }}</h6>
+					<h6 class="font-weight-bold mt-3 m-0">Admittance</h6>
+					<div>
+						<span>{{ admittance }}</span><br>
+						{{ price_output }}
+						{% if ticket_url or ticket_phone %}
+							<h6 class="font-weight-bold mt-3 m-0">Tickets</h6>
+							{% if ticket_url %}
+								<a href="{{ ticket_url }}"><code class="p-0">website</code></a>
+							{% endif %}
+							{% if ticket_phone %}
+								<a href="tel:{{ ticket_phone }}"><code class="p-0">phone</code></a>
+							{% endif %}
+						{% endif %}
+					</div>
+				</div><!-- Grid column -->
+				<!-- Grid column -->
+				<div class="col-md-6 text-md-left l-md-3 mt-3">
+					<h6 class="h6 pb-1 green-text"><i class="fas fa-desktop pr-1"></i> {{ venue.venue_country.label }}</h6>
+					<h4 class="h4 mb-4">{{ venue_name }}</h4>
+					<div class="font-weight-normal">
+
+						<span>{{ venue_address ? venue_address : '' }}</span>
+						<span>{{ venue_state_provence ? ', ' ~ venue_state_provence ~ '<br>' : '' }}</span>
+						<span>{{ venue_city ? venue_city : '' }}</span>
+						<span>{{ venue_postal_code ? ', ' ~ venue_postal_code ~ '<br>' : '' }}</span>
+
+						{% if venue_website or venue_phone %}
+							<h6 class="font-weight-bold mt-3 m-0">Venue</h6>
+							{% if venue_website %}
+								<a href="{{ venue_website }}"><code class="p-0">website</code></a>
+							{% endif %}
+							{% if venue_phone %}
+								<a href="tel:{{ venue_phone }}"><code class="p-0">phone</code></a>
+							{% endif %}
+						{% endif %}
+					</div>
+				</div><!-- Grid column -->
+				<div class="col-12">
+					<a href="{{ show.link }}" class="btn btn-primary">View</a>
+				</div>
+			</div><!-- Grid row -->
+		</div><!-- News jumbotron -->
+	{% endfor %}
+
+	{% import _self as endspaceclass %}
+	{{ endspaceclass.end_space_classes(p) }}
+{% endmacro upcoming_shows %}
+
+{% macro logos(prop) %}
+	{% set logos = prop.logos_rep %}
+
+	{% import _self as spaceclass %}
+	{{ spaceclass.space_classes(prop.section_properties.full_width, prop.section_properties.text_color, prop.section_properties.background_color) }}
+
+	{% if logos|length %}
+		<div class="d-flex justify-content-around">
+			{% for logo in logos %}
+				{% set url = logo.url|e('esc_url') %}
+				<a href="{{ url }}" target="_blank"><img src="{{ Image(logo.image).src|resize(null,60,'center') }}" alt="{{ Image(logo.image).alt }}"></a>
+			{% endfor %}
+		</div>
+	{% endif %}
+
+	{% import _self as endspaceclass %}
+	{{ endspaceclass.end_space_classes(p) }}
+{% endmacro logos %}
+
+
+
+
+{% macro post_meta(post) %}
+	<div class="entry-meta small-text">
+		{% set date = post.date %}
+		{% set modified_date = post.modified_date %}
+		<span class="author vcard">by <a class="url fn n" href="{{ post.author.link|e('esc_url') }}">{{ post.author.name|e('wp_kses_post') }}</a></span>
+		<span class="posted-on ml-1">
+		{% if modified_date != date %}
+			<span class="font-italic">
+				on
+				<time class="entry-date published" datetime="{{ date|date('c') }}">{{ date }}</time>
+			</span>,
+			<small class="font-italic">
+				updated on
+				<time class="update" datetime="{{ modified_date|date('c') }}">{{ modified_date }}</time>
+			</small>
+		{% else %}
+			<time class="entry-date published updated" datetime="{{ date|date('c') }}">on {{ date }}</time>
+		{% endif %}
+		</span>
+	</div><!-- .entry-meta -->
+{% endmacro post_meta %}

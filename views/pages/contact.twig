@@ -1,0 +1,47 @@
+{% extends 'wrappers/head-foot-wrap-no-sidebar.twig' %}
+
+{% block content %}
+<!-- Section: Contact v.3 -->
+<section class="contact-section my-5">
+	<!-- Form with header -->
+	<div class="card">
+		<!-- Grid row -->
+		<div class="row">
+			<!-- Grid column -->
+			<div class="col-lg-8">
+				<div class="card-body form">
+					<!-- Header -->
+					<h3 class="mt-4"><i class="fas fa-envelope pr-2"></i>Get in touch</h3>
+					{% filter shortcodes %}
+						[contact-form-7 id="{{ options.main_cf }}" title="Main Contact Form"]
+					{% endfilter %}
+				</div>
+			</div><!-- Grid column -->
+			<!-- Grid column -->
+			<div class="col-lg-4">
+				<div class="card-body elegant-color text-center h-100 white-text">
+					{% set phone = options.phone %}
+					{% set email = options.email_address %}
+					{% if phone or email %}
+						<h3 class="my-4 pb-2">Contact information</h3>
+						<ul class="text-lg-left list-unstyled ml-4">
+							{% if phone %}
+							<li>
+								<p><i class="fas fa-phone pr-2"></i><a class="hite-text" href="tel:{{ phone|replace({' ': ''}) }}">{{ phone }}</a></p>
+							</li>
+							{% endif %}
+							{% if email %}
+							<li>
+								<p><i class="fas fa-envelope pr-2"></i><a class="hite-text" href="mailto:{{ email }}">{{ email }}</a></p>
+							</li>
+							{% endif %}
+						</ul>
+					{% endif %}
+					<hr class="hr-light my-4">
+					{% include 'menus/social-menu.twig' %}
+				</div>
+			</div><!-- Grid column -->
+		</div><!-- Grid row -->
+	</div><!-- Form with header -->
+</section><!-- Section: Contact v.3 -->
+{% endblock %}

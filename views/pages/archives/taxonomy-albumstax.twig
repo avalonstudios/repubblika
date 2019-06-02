@@ -1,0 +1,37 @@
+{% extends 'wrappers/basic-wrap.twig' %}
+
+{% block header %}
+	<h1 class="page-title">{{ term.name }}</h1>
+	<h5>Albums</h5>
+	<div class="mt-2 mb-5">
+		{% for term in terms %}
+			{% set term_link = fn('get_term_link', term.term_id, 'albumstax') %}
+			<a href="{{ term_link }}">{{ term.name }}</a>{% if not loop.last %}, {% endif %}
+		{% endfor %}
+	</div>
+{% endblock %}
+
+{% block content %}
+	{% include 'navigation/posts-pagination.twig' %}
+	<div class="row">
+		<div class="col-12 col-md-6 mb-4">
+			{% for post in posts %}
+				<a href="#lyric-{{ loop.index }}" class="d-block lyric-btn">{{ post.post_title }}</a>
+			{% endfor %}
+		</div>
+		<div id="lyrics-content" class="col-12 col-md-6">
+			<div class="card lyrics-card scrollbar scrollbar-black bordered-black square">
+				<div class="card-body pt-0">
+					{% for post in posts %}
+						<div id="lyric-{{ loop.index }}" class="lyric-lyrics pt-4">
+							<h3 class="mb-3">{{ post.post_title }}</h3>
+							{{ post.content }}
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+	{% include 'navigation/posts-pagination.twig' %}
+{% endblock %}
+

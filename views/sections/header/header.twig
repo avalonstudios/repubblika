@@ -1,0 +1,15 @@
+<div id="page" class="site">
+	<a class="skip-link screen-reader-text" href="#content">{{ fn('esc_html_e', 'Skip to content', 'daithirua') }}</a>
+
+	<header id="masthead" class="site-header">
+		<!-- SideNav slide-out button -->
+		{#<a data-activates="slide-out" class="button-collapse p-3 d-lg-none position-fixed"><i class="fas fa-bars"></i></a>#}
+		{% include 'menus/main-menu.twig' %}
+	</header><!-- #masthead -->
+
+	{% include 'menus/fixed-sidenav.twig' %}
+
+	<div class="py-5 d-non d-lg-block"></div>
+
+	<div id="content" class="site-content container">
+		<div class="row no-gutters">

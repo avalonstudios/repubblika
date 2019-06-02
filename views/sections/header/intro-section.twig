@@ -1,0 +1,10 @@
+<div id="frontPageCarousel" class="carousel slide" data-ride="carousel">
+	<div class="carousel-inner">
+		{% set images = post.meta('images') %}
+		{% for img in images %}
+			<div class="carousel-item {{ loop.first ? 'active' }}">
+				<img class="d-block w-100" src="{{ Image(img.image).src }}">
+			</div>
+		{% endfor %}
+	</div>
+</div>

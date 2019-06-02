@@ -1,0 +1,50 @@
+{% extends 'wrappers/head-foot-wrap.twig' %}
+{% import 'sections/partials/_macros.twig' as mcr %}
+
+{% block content %}
+	{% include 'navigation/posts-pagination.twig' %}
+	{% for post in posts %}
+		{% set thumb = Image(post.thumbnail).src|resize(510) %}
+		{% set post_title = post.title|e('wp_kses_post') %}
+		{% set post_link = post.link|e('esc_url') %}
+		<article id="post-{{ post.id }}" class="{{ post.class }} mb-2">
+			<div class="row">
+				{% if thumb %}
+					<div class="col-12 col-md-4">
+						<img src="{{ thumb }}" alt="">
+					</div>
+				{% endif %}
+				<div class="col-12 {% if thumb %}col-md-8{% endif %}">
+					<header class="entry-header">
+						{% if fn('is_singular') %}
+							<h1 class="entry-title">{{ post_title }}{% if fn('is_sticky') %}<i class="fas fa-paperclip"></i>{% endif %}</h1>
+						{% else %}
+							<h2 class="entry-title"><a href="{{ post_link }}" rel="bookmark">{{ post_title }}{% if fn('is_sticky') %}<i class="ml-3 fas fa-paperclip"></i>{% endif %}</a></h2>
+						{% endif %}
+						{{ mcr.post_meta(post) }}
+					</header><!-- .entry-header -->
+					<div class="entry-content my-3">{{ post.preview.length(40).read_more('More <i class="fas fa-angle-double-right"></i>') }}</div>
+					<footer class="entry-footer">
+						<small>
+							{% if post.terms('post_tag')|length %}
+								<span class="mr-2">Categories:</span>
+								{% for term in post.terms('category') %}
+									<a href="{{ term.link|e('esc_url') }}">{{ term }}{% if not loop.last %}, {% endif %}</a>
+								{% endfor %}
+							{% endif %}
+							<br>
+							{% if post.terms('post_tag')|length %}
+								<span class="mr-2">Tagged:</span>
+								{% for term in post.terms('post_tag') %}
+									<a href="{{ term.link|e('esc_url') }}">{{ term }}{% if not loop.last %}, {% endif %}</a>
+								{% endfor %}
+							{% endif %}
+						</small>
+					</footer><!-- .entry-footer -->
+				</div>
+			</div>
+		</article><!-- #post-<?php the_ID(); ?> -->
+		<hr class="d-block mb-5">
+	{% endfor %}
+	{% include 'navigation/posts-pagination.twig' %}
+{% endblock %}

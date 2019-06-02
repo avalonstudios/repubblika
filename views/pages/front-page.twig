@@ -1,0 +1,35 @@
+{% extends 'wrappers/head-foot-wrap-no-sidebar.twig' %}
+
+{% set disable_backimg = post.meta('disable') %}
+{% set is_active = post.meta('active') %}
+
+{% set img = Image(post.meta('image')).src|resize(1110,500,'center') %}
+
+{% block header %}
+	{% if is_active %}
+		<div class="position-relative">
+			<img src="{{ img }}">
+			<h2 class="no-intro-title position-absolute float-left fixed-bottom m-0 pl-3 py-1">{{ post.title }}</h2>
+		</div>
+		<div class="my-5"></div>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+    {{ post.content }}
+
+	<form method="post" action="{{ theme.link }}/inc/calendar/download-ics.php">
+		<input type="hidden" name="date_start" value="2017-1-16 9:00AM">
+		<input type="hidden" name="date_end" value="2017-1-16 10:00AM">
+		<input type="hidden" name="location" value="123 Fake St, New York, NY">
+		<input type="hidden" name="description" value="This is my description">
+		<input type="hidden" name="summary" value="This is my summary">
+		<input type="hidden" name="url" value="http://example.com">
+		<input type="submit" value="Add to Calendar">
+	</form>
+
+{% endblock %}
+
+{% block builder %}
+    {% include 'sections/partials/content-builder.twig' %}
+{% endblock %}
