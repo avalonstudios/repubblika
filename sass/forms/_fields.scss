@@ -26,6 +26,7 @@ textarea {
 
 select {
 	border: 1px solid $color__border-input;
+	display: block !important;
 }
 
 textarea {

@@ -1,4 +1,4 @@
-button,
+/* button,
 input[type="button"],
 input[type="reset"],
 input[type="submit"] {
@@ -19,4 +19,16 @@ input[type="submit"] {
 	&:focus {
 		border-color: $color__border-button-focus;
 	}
+}
+*/
+
+.addtocalendar {
+	a {
+		border-radius: 0 !important;
+		font-family: $sans !important;
+		text-transform: uppercase;
+		background-color: $grey !important;
+	}
+	margin: 5.25px;
+	@include colored-links( $red, black, $red );
 }

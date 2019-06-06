@@ -79,6 +79,14 @@ if ( ! function_exists( 'repubblika_setup' ) ) :
 			'flex-width'  => true,
 			'flex-height' => true,
 		) );
+
+		/*
+		 * Enable support for Post Formats on posts and pages.
+		 *
+		 */
+		add_theme_support( 'post-formats', array(
+			'aside', 'chat', 'gallery', 'image', 'link', 'quote', 'status', 'video', 'audio'
+		) );
 	}
 endif;
 add_action( 'after_setup_theme', 'repubblika_setup' );
@@ -105,13 +113,13 @@ add_action( 'after_setup_theme', 'repubblika_content_width', 0 );
  */
 function repubblika_widgets_init() {
 	register_sidebar( array(
-		'name'          => esc_html__( 'Sidebar', 'repubblika' ),
-		'id'            => 'sidebar-1',
-		'description'   => esc_html__( 'Add widgets here.', 'repubblika' ),
-		'before_widget' => '<section id="%1$s" class="widget %2$s">',
-		'after_widget'  => '</section>',
-		'before_title'  => '<h2 class="widget-title">',
-		'after_title'   => '</h2>',
+		'name'				=> esc_html__( 'Sidebar', 'repubblika' ),
+		'id'				=> 'sidebar-1',
+		'description'		=> esc_html__( 'Add widgets here.', 'repubblika' ),
+		'before_widget'		=> '<section id="%1$s" class="widget %2$s m-0 pl-3 pb-5 ' . ava_count_widgets( 'sidebar-1' ) . '">',
+		'after_widget'		=> '</section>',
+		'before_title'		=> '<h2 class="widget-title">',
+		'after_title'		=> '</h2>',
 	) );
 }
 add_action( 'widgets_init', 'repubblika_widgets_init' );
@@ -121,6 +129,7 @@ add_action( 'widgets_init', 'repubblika_widgets_init' );
  */
 function repubblika_scripts() {
 	require_once "inc/theme-includes.php";
+	//require_once "inc/theme-includes-bootstrap.php";
 
 	wp_enqueue_script( 'repubblika-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20151215', true );
 
@@ -166,12 +175,16 @@ if ( class_exists( 'WooCommerce' ) ) {
 	require get_template_directory() . '/inc/woocommerce.php';
 }
 
-add_filter('acf/settings/default_language', 'my_acf_settings_default_language');
-function my_acf_settings_default_language( $language ) {
-	return 'en';
-}
+/**
+ * Remove CF7 JS & CSS from all pages, and load them only in pg-templates/contact-form.php
+ */
+add_filter( 'wpcf7_load_js', '__return_false' );
+add_filter( 'wpcf7_load_css', '__return_false' );
 
-add_filter('acf/settings/current_language', 'my_acf_settings_current_language');
-function my_acf_settings_current_language( $language ) {
-	return 'mt';
-}
+
+function my_acf_init() {
+	acf_update_setting('google_api_key', 'AIzaSyBJke8awiiax4MfVDhap0N1eW-4vG2gIoo');
+} add_action('acf/init', 'my_acf_init');
+
+require_once "inc/cpt.php";
+require_once "inc/acf-blocks.php";

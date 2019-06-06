@@ -1,0 +1,43 @@
+{
+    "key": "group_5cf7d3663395c",
+    "title": "Page Settings",
+    "fields": [
+        {
+            "key": "field_5cf7d37315a16",
+            "label": "Make page full width",
+            "name": "full_width",
+            "type": "true_false",
+            "instructions": "If <b>Active<\/b>, the Sidebar will be removed from this page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "Active",
+            "ui_off_text": "Inactive"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1559745491
+}

@@ -8,30 +8,25 @@
  */
 
 get_header();
-?>
 
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main">
+// Timber support for Multipage
+global $post, $page, $pages, $multipage;
+setup_postdata( $post );
 
-		<?php
-		while ( have_posts() ) :
-			the_post();
+$single = Timber::get_context();
+$single['post'] = new TimberPost();
 
-			get_template_part( 'template-parts/content', get_post_type() );
+// Overwrite whole post with paginated piece, if viewing a
+// paginated page of the overall post
+if ( $multipage ) {
+	$single['post']->post_content = $pages[ $page - 1 ];
+}
 
-			the_post_navigation();
+if ( post_password_required() ) {
+	$single['password'] = true;
+}
 
-			// If comments are open or we have at least one comment, load up the comment template.
-			if ( comments_open() || get_comments_number() ) :
-				comments_template();
-			endif;
+Timber::render( 'pages/single.twig', $single );
 
-		endwhile; // End of the loop.
-		?>
-
-		</main><!-- #main -->
-	</div><!-- #primary -->
-
-<?php
 get_sidebar();
 get_footer();

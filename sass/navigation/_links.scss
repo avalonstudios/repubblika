@@ -17,3 +17,5 @@ a {
 		outline: 0;
 	}
 }
+
+@include colored-links( $red, black, pink );

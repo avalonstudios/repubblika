@@ -5,37 +5,40 @@
 	width: 100%;
 
 	ul {
-		display: none;
+		//display: none;
 		list-style: none;
 		margin: 0;
 		padding-left: 0;
-
 		ul {
 			box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
 			float: left;
 			position: absolute;
 			top: 100%;
-			left: -999em;
+			right: -999em;
 			z-index: 99999;
+			background: $grey;
 
 			ul {
-				left: -999em;
+				right: -999em;
 				top: 0;
 			}
 
 			li {
 				&:hover > ul,
 				&.focus > ul {
-					left: 100%;
+					right: 100%;
 				}
 			}
 
 			a {
 				width: 200px;
+				padding: .5em;
 			}
 
 			:hover > a,
 			.focus > a {
+				background-color: $darkgrey;
+				border: 1px solid transparent;
 			}
 
 			a:hover,
@@ -45,7 +48,7 @@
 
 		li:hover > ul,
 		li.focus > ul {
-			left: auto;
+			right: 0;
 		}
 	}
 
@@ -55,12 +58,16 @@
 
 		&:hover > a,
 		&.focus > a {
+			border: 1px solid $red;
+			margin: -1px;
 		}
 	}
 
 	a {
 		display: block;
 		text-decoration: none;
+		font-family: $oswald;
+		text-transform: uppercase;
 	}
 
 	.current_page_item > a,
@@ -113,4 +120,36 @@
 
 #sidenav-overlay {
 	z-index: 1031
+}
+
+
+.side-nav {
+	.nav-drop-item {
+		padding-left: 10px;
+		ul {
+			padding-left: 10px;
+		}
+	}
+	li {
+		width: 100%;
+		a {
+			border-bottom: 1px solid $darkgrey;
+			text-transform: uppercase;
+			font-family: $oswald;
+		}
+	}
+	.nav-drop {
+		a {
+			width: unset;
+			//width: 200px;
+		}
+	}
+}
+
+.main-navigation {
+	.collapsing {
+		li {
+			display: none;
+		}
+	}
 }

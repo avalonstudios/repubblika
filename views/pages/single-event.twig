@@ -1,0 +1,234 @@
+{% extends 'wrappers/head-foot-wrap-no-sidebar.twig' %}
+
+{% set show = post %}
+
+{% set months = [ '', 'Jannar', 'Frar', 'Marzu', 'April', 'Mejju', 'Ġunju', 'Lujlu', 'Awissu', 'Settembru', 'Ottubru', 'Novembru', 'Diċembru' ] %}
+
+{% block header %}
+	{% set title = show.post_title|e('wp_kses_post') %}
+	<h3 class="text-capitalize">{{ title }}</h3>
+	{% if is_active %}
+		<div class="position-relative">
+			<img src="{{ img }}">
+			<h2 class="no-intro-title position-absolute float-left fixed-bottom m-0 pl-3 py-1">{{ post.title }}</h2>
+		</div>
+		<div class="my-5"></div>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+	{% set lang = site.language %}
+
+	{% set multiday = show.multiday_event %}
+	{% set start_date = show.start_date %}
+	{% set end_date = show.end_date %}
+
+	{% set xahar = start_date|date('m')|number_format %}
+
+	{% set speakers = show.speaker %}
+
+	{% set venue_name = fn('get_the_title', show.venue)|e('wp_kses_post') %}
+	{% set venue = fn('get_fields', show.venue) %}
+
+	{% set admittance = show.admittance|e('wp_kses_post') %}
+	{% if lang == 'en-GB' %}
+		{% set admit_lng = admittance|split('|')[0] %}
+	{% else %}
+		{% set admit_lng = admittance|split('|')[1] %}
+	{% endif %}
+
+	{% set price = show.price|e('wp_kses_post') %}
+	{% set ticket_url = show.ticket_url|e('esc_url') %}
+	{% set ticket_phone = '+' ~ show.cc ~ show.number %}
+
+	{% set notes = show.notes|e('wp_kses_post') %}
+
+	{% set venue_address = venue.venue_address|e('wp_kses_post') %}
+	{% set venue_state_provence = venue.venue_state_provence|e('wp_kses_post') %}
+	{% set venue_city = venue.venue_city|e('wp_kses_post') %}
+	{% set venue_postal_code = venue.venue_postal_code|e('wp_kses_post') %}
+	{% set venue_website = venue.venue_website|e('esc_url') %}
+	{% set venue_phone = venue.contact_number|e('wp_kses_post') %}
+	{% set venue_country = venue.venue_country.label|e('wp_kses_post') %}
+
+	{% set notes = show.notes|e('wp_kses_post') %}
+
+	{% if price %}
+		{% set price_output = '<span>&euro;' ~ price ~ '</span><br>' %}
+	{% endif %}
+
+
+	{% if lang == 'en-GB' %}
+		{% set admittance_lng = 'Admittance' %}
+		{% set ticket_lng = 'Tickets' %}
+		{% set website_lng = 'website' %}
+		{% set phone_lng = 'phone' %}
+		{% set venue_lng = 'Venue' %}
+		{% set start_date_output = start_date|date('d/M/Y') %}
+		{% set end_date_output = end_date|date('d/M/Y') %}
+	{% else %}
+		{% set admittance_lng = 'Dħul' %}
+		{% set ticket_lng = 'Biljetti' %}
+		{% set website_lng = 'sit elettroniku' %}
+		{% set phone_lng = 'ċempel' %}
+		{% set venue_lng = 'Post' %}
+		{% set start_date_output = start_date|date('d') ~ '/' ~ months[xahar] ~ '/' ~ start_date|date('Y') %}
+		{% set end_date_output = end_date|date('d') ~ '/' ~ months[xahar] ~ '/' ~ end_date|date('Y') %}
+	{% endif %}
+
+
+	{% if multiday %}
+		{% if start_date|date('dmY') == end_date|date('dmY') %}
+			{% set s_date = '<i class="far fa-calendar-alt"></i> ' ~ start_date_output ~ ' <i class="far fa-clock"></i> ' ~ start_date|date('H:i') %}
+			{% set e_date = ' - ' ~ end_date|date('H:i') %}
+		{% else %}
+			{% set s_date = '<i class="far fa-calendar-alt"></i> ' ~ start_date_output ~ ' <i class="far fa-clock"></i> ' ~ start_date|date('H:i') %}
+			{% set e_date = '<br><div class="mt-2"><i class="fas fa-calendar-alt"></i> ' ~ end_date_output ~ ' <i class="fas fa-clock"></i> ' ~ end_date|date('H:i') ~ '</div>' %}
+		{% endif %}
+	{% else %}
+		{% set s_date = '<i class="far fa-calendar-alt"></i> ' ~ start_date_output ~ ' <i class="far fa-clock"></i> ' ~ start_date|date('H:i') %}
+	{% endif %}
+
+	<!-- Grid row -->
+	<div class="row">
+		<!-- Grid column -->
+		<div class="col-12 col-md-6 offset-md- x-md-3 my-3">
+			<h6>{{ s_date }}{{ e_date }}</h6>
+			<h6 class="font-weight-bold mt-3 m-0">{{ admittance_lng }}</h6>
+			<div>
+				<span>{{ admit_lng }}</span><br>
+				{{ price_output }}
+				{% if ticket_url or ticket_phone %}
+					<h6 class="font-weight-bold mt-3 m-0">{{ ticket_lng }}</h6>
+					{% if ticket_url %}
+						<a href="{{ ticket_url }}"><code class="p-0 d-block">{{ website_lng }}</code></a>
+					{% endif %}
+					{% if ticket_phone %}
+						<a href="tel:{{ ticket_phone }}"><code class="p-0 d-block">{{ phone_lng }}</code></a>
+					{% endif %}
+				{% endif %}
+			</div>
+		</div><!-- Grid column -->
+		<!-- Grid column -->
+		<div class="col-12 col-md-6 text-md-left l-md-3 mt-3">
+			<h4 class="h4 mb-4"><i class="fas fa-map-pin pr-1"></i>{{ venue_name }}</h4>
+			<div class="font-weight-normal">
+
+				{{ venue_address ? '<span>' ~ venue_address ~ '<br></span>' }}
+				{{ venue_state_provence ? '<span>' ~ venue_state_provence ~ '<br></span>' }}
+				{{ venue_city ? '<span>' ~ venue_city ~ '<br></span>' }}
+				{{ venue_postal_code ? '<span>' ~ venue_postal_code ~ '<br></span>' }}
+				{{ venue_country ? '<span>' ~ venue_country ~ '<br></span>' }}
+
+				{% if venue_website or venue_phone.number %}
+					<h6 class="font-weight-bold mt-3 m-0">{{ venue_lng }}</h6>
+				{% endif %}
+				{% if venue_website %}
+					<a href="{{ venue_website }}"><code class="p-0">{{ website_lng }}</code></a>
+				{% endif %}
+				{% if venue_phone.number %}
+					<a href="tel:+{{ venue_phone.cc }}{{ venue_phone.number }}"><code class="p-0 d-block">{{ phone_lng }}</code></a>
+				{% endif %}
+			</div>
+		</div><!-- Grid column -->
+		{% if post.content %}
+			<div class="col-12 mt-4">
+				<hr>
+				{{ post.content|e('wp_kses_post') }}
+				{{ notes ? '' : '<hr>' }}
+			</div>
+		{% endif %}
+		{% if notes %}
+			<div class="col-12 mb-5">
+				<hr>
+				<p class="text-monospace">Note</p>
+				{{ notes }}
+				<hr>
+			</div>
+		{% endif %}
+
+		{% for speaker in speakers %}
+			{% set name 				= fn('get_the_title', speaker)|e('wp_kses_post') %}
+			{% set spkr 				= fn('get_fields', speaker) %}
+
+			{% set artist_website		= spkr.artist_website|e('esc_url') %}
+			{% set show_email			= spkr.show_email|e('wp_kses_post') %}
+			{% set show_contact_number	= spkr.show_contact_number|e('wp_kses_post') %}
+			{% set email				= spkr.email|e('wp_kses_post') %}
+			{% set contact_number		= spkr.contact_number|e('wp_kses_post') %}
+			{% set spkr_image			= spkr.image|e('wp_kses_post') %}
+			{% set short_bio			= spkr.short_bio|e('wp_kses_post') %}
+
+			{% set phone_number			= '+' ~ contact_number.cc ~ contact_number.number %}
+
+			{% if not short_bio %}
+				{% set pad_bottom = 'pb-3' %}
+			{% endif %}
+
+			{% if not spkr_image %}
+				{% set cols = 'col-12' %}
+			{% else %}
+				{% set cols = 'col-md-8' %}
+			{% endif %}
+
+			{% if loop.length == 1 %}
+				{% set card_cols = 'col-12' %}
+			{% elseif loop.length == 2 %}
+				{% set card_cols = 'col-12 col-lg-6' %}
+			{% elseif loop.length >= 3 %}
+				{% set card_cols = 'col-12 col-lg-4' %}
+			{% endif %}
+
+			<div class="mb-3 {{ card_cols }} {{ pad_bottom }}">
+				<div class="row no-gutters">
+					{% if spkr_image %}
+						<div class="col-md-4 mb-3">
+							<img src="{{ Image(spkr_image).src|resize(500,500,'center') }}" class="card-img" alt="{{ Image(spkr_image).src }}">
+						</div>
+					{% endif %}
+					<div class="{{ cols }}">
+						<div class="card-body pt-0">
+							<h5 class="card-title">{{ name }}</h5>
+
+							{% if short_bio %}
+								<div class="card-text">{{ short_bio }}</div>
+							{% endif %}
+
+							{% if artist_website %}
+								<small class="text-muted"><em class="mr-2">w:</em><a href="{{ artist_website }}" target="_blank">{{ artist_website }}</a></small><br>
+							{% endif %}
+
+							{% if show_email %}
+								<small class="text-muted"><em class="mr-2">e:</em><a href="mailto:{{ email }}">{{ email }}</a></small><br>
+							{% endif %}
+
+							{% if show_contact_number %}
+								<small class="text-muted"><em class="mr-2">t:</em><a href="tel:{{ phone_number }}">{{ phone_number }}</a></small><br>
+							{% endif %}
+
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+		<div class="col-12">
+			{% include 'sections/partials/_map.twig' %}
+			<span class="addtocalendar atc-style-blue">
+				<var class="atc_event">
+					<var class="atc_date_start">{{ start_date|date('Y-m-d') }} {{ start_date|date('h:ia') }}</var>
+					<var class="atc_date_end">{{ end_date|date('Y-m-d') }} {{ end_date|date('h:ia') }}</var>
+					<var class="atc_timezone">Europe/Malta</var>
+					<var class="atc_title">Star Wars Day Party</var>
+					<var class="atc_description">May the force be with you</var>
+					<var class="atc_location">{{ venue_address ~ ' ' ~ venue_city ~ ' ' ~ venue_country }}</var>
+					<var class="atc_organizer">Repubblika</var>
+					<var class="atc_organizer_email">sam@repubblika.moc</var>
+				</var>
+			</span>
+		</div>
+	</div><!-- Grid row -->
+{% endblock %}
+
+{% block builder %}
+	{% include 'sections/partials/content-builder.twig' %}
+{% endblock %}

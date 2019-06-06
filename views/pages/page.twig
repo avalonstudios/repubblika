@@ -1,4 +1,5 @@
-{% extends 'wrappers/head-foot-wrap.twig' %}
+{% set fw = post.meta('full_width') %}
+{% extends fw ? 'wrappers/head-foot-wrap.twig' : 'wrappers/head-foot-wrap-no-sidebar.twig' %}
 
 {% set disable_backimg = post.meta('disable') %}
 {% set is_active = post.meta('active') %}

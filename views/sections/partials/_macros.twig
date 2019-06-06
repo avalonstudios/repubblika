@@ -32,29 +32,6 @@
 	</div>
 {% endmacro acf_map %}
 
-
-{% macro music_demos(prop) %}
-	{% if prop|length %}
-		{% import _self as spaceclass %}
-		{{ spaceclass.space_classes(prop.section_properties.full_width, prop.section_properties.text_color, prop.section_properties.background_color) }}
-
-		<h2 class="h1-responsive font-weight-bold text-center mb-4">{{ prop.section_title }}</h2>
-		{% set track = '' %}
-		{% for track in prop.music_tracks %}
-			{% set tr = track.track %}
-			{% if not loop.last %}
-				<div class="mb-3 embed-container">{{ tr }}</div>
-			{% else %}
-				<div class="embed-container">{{ tr }}</div>
-			{% endif %}
-		{% endfor %}
-
-		{% import _self as endspaceclass %}
-		{{ endspaceclass.end_space_classes(p) }}
-	{% endif %}
-{% endmacro music_demos %}
-
-
 {% macro text_editor(prop) %}
 	{% set text = prop.text_editor %}
 
@@ -66,176 +43,6 @@
 	{% import _self as endspaceclass %}
 	{{ endspaceclass.end_space_classes(p) }}
 {% endmacro text_editor %}
-
-
-{% macro reviews(prop) %}
-	{% import _self as spaceclass %}
-	{{ spaceclass.space_classes(prop.section_properties.full_width, prop.section_properties.text_color, prop.section_properties.background_color) }}
-		{% set presskit = prop.reviews_cln.presskit_builder %}
-		{% for kit in presskit %}
-			{% set layout = kit.acf_fc_layout %}
-			{% if layout == 'reviews_lyt' %}
-				<div class="text-center my-5">
-					{% if prop.section_title %}
-						<!-- Section heading -->
-						<h2 class="h1-responsive font-weight-bold my-5">{{ prop.section_title }}</h2>
-					{% endif %}
-					<!-- Carousel Wrapper -->
-					<div id="carousel-example-1" class="carousel no-flex testimonial-carousel slide carousel-fade" data-ride="carousel"	data-interval="false">
-						<!--Slides-->
-						<div class="carousel-inner" role="listbox">
-							{% for review in kit.reviews %}
-								{% if loop.first %}
-									{% set active_slide = ' active' %}
-								{% else %}
-									{% set active_slide = '' %}
-								{% endif %}
-								<!--First slide-->
-								<div class="carousel-item{{ active_slide }}">
-									<div class="testimonial">
-										{% if review.review_image %}
-										<!--Avatar-->
-											<div class="avatar mx-auto mb-4">
-												<img src="{{ Image(review.review_image).src|resize(300, 300, 'center') }}" class="rounded-circle img-fluid"
-												alt="First sample avatar image">
-											</div>
-										{% endif %}
-										<!--Content-->
-										<div>
-											<i class="fas fa-quote-left"></i> {{ review.review_text }}
-										</div>
-										<h4 class="font-weight-bold">{{ review.review_author }}</h4>
-										<a href="{{ review.review_link }}" target="_blank" rel="external">Website</a>
-										<!--Review-->
-									</div>
-								</div><!--First slide-->
-							{% endfor %}
-						</div><!--Slides-->
-						{% if kit.reviews|length > 1 %}
-							<!--Controls-->
-							<a class="carousel-control-prev left carousel-control" href="#carousel-example-1" role="button" data-slide="prev">
-								<span class="icon-prev" aria-hidden="true"></span>
-								<span class="sr-only">Previous</span>
-							</a>
-							<a class="carousel-control-next right carousel-control" href="#carousel-example-1" role="button" data-slide="next">
-								<span class="icon-next" aria-hidden="true"></span>
-								<span class="sr-only">Next</span>
-							</a><!--Controls-->
-						{% endif %}
-					</div><!-- Carousel Wrapper -->
-				</div>
-			{% elseif layout == 'images_lyt' %}
-			{% endif %}
-		{% endfor %}
-
-	{% import _self as endspaceclass %}
-	{{ endspaceclass.end_space_classes(p) }}
-{% endmacro reviews %}
-
-
-{% macro upcoming_shows(prop, shows) %}
-	{% set text = prop.text_editor %}
-
-	{% import _self as spaceclass %}
-	{{ spaceclass.space_classes(prop.section_properties.full_width, prop.section_properties.text_color, prop.section_properties.background_color) }}
-
-	{% if prop.section_title %}
-		<h2 class="h1-responsive font-weight-bold mb-4 text-center">{{ prop.section_title }}</h2>
-	{% endif %}
-
-	{% for show in shows %}
-		{% set title = show.post_title|e('wp_kses_post') %}
-		{% set multiday = show.multiday_event %}
-		{% set start_date = show.start_date %}
-		{% set end_date = show.end_date %}
-		{% set artist = fn('get_the_title', show.artist)|e('wp_kses_post') %}
-		{% set artist_link = fn('get_field', 'artist_website', show.artist)|e('esc_url') %}
-
-		{% set venue_name = fn('get_the_title', show.venue)|e('wp_kses_post') %}
-		{% set venue = fn('get_fields', show.venue) %}
-
-		{% set admittance = show.admittance|e('wp_kses_post') %}
-		{% set price = show.price|e('wp_kses_post') %}
-		{% set ticket_url = show.ticket_url|e('esc_url') %}
-		{% set ticket_phone = show.ticket_phone|e('wp_kses_post') %}
-		{% set notes = show.notes|e('wp_kses_post') %}
-
-		{% set venue_address = venue.venue_address|e('wp_kses_post') %}
-		{% set venue_state_provence = venue.venue_state_provence|e('wp_kses_post') %}
-		{% set venue_city = venue.venue_city|e('wp_kses_post') %}
-		{% set venue_postal_code = venue.venue_postal_code|e('wp_kses_post') %}
-		{% set venue_website = venue.venue_website|e('esc_url') %}
-		{% set venue_phone = venue.venue_phone|e('wp_kses_post') %}
-
-		{% if price %}
-			{% set price_output = '<span>&euro;' ~ price ~ '</span><br>' %}
-		{% endif %}
-
-		{% if multiday %}
-			{% if start_date|date('dmY') == end_date|date('dmY') %}
-				{% set s_date = '<i class="far fa-calendar-alt"></i> ' ~ start_date|date('d/M/Y') ~ ' <i class="far fa-clock"></i> ' ~ start_date|date('H:i') %}
-				{% set e_date = ' - ' ~ end_date|date('H:i') %}
-			{% else %}
-				{% set s_date = '<i class="far fa-calendar-alt"></i> ' ~ start_date|date('d/M/Y') ~ ' <i class="far fa-clock"></i> ' ~ start_date|date('H:i') %}
-				{% set e_date = '<br><div class="mt-2"><i class="fas fa-calendar-alt"></i> ' ~ end_date|date('d/M/Y') ~ ' <i class="fas fa-clock"></i> ' ~ end_date|date('H:i') ~ '</div>' %}
-			{% endif %}
-		{% else %}
-			{% set s_date = '<i class="far fa-calendar-alt"></i> ' ~ start_date|date('d/M/Y') ~ ' <i class="far fa-clock"></i> ' ~ start_date|date('H:i') %}
-		{% endif %}
-		<div class="jumbotron white text-center hoverable p-4 z-depth-0">
-			<!-- Grid row -->
-			<div class="row">
-				<!-- Grid column -->
-				<h3 class="col-12 text-capitalize">{{ title }}</h3>
-				<div class="col-md-6 offset-md- x-md-3 my-3">
-					<h6>{{ s_date }}{{ e_date }}</h6>
-					<h6 class="font-weight-bold mt-3 m-0">Admittance</h6>
-					<div>
-						<span>{{ admittance }}</span><br>
-						{{ price_output }}
-						{% if ticket_url or ticket_phone %}
-							<h6 class="font-weight-bold mt-3 m-0">Tickets</h6>
-							{% if ticket_url %}
-								<a href="{{ ticket_url }}"><code class="p-0">website</code></a>
-							{% endif %}
-							{% if ticket_phone %}
-								<a href="tel:{{ ticket_phone }}"><code class="p-0">phone</code></a>
-							{% endif %}
-						{% endif %}
-					</div>
-				</div><!-- Grid column -->
-				<!-- Grid column -->
-				<div class="col-md-6 text-md-left l-md-3 mt-3">
-					<h6 class="h6 pb-1 green-text"><i class="fas fa-desktop pr-1"></i> {{ venue.venue_country.label }}</h6>
-					<h4 class="h4 mb-4">{{ venue_name }}</h4>
-					<div class="font-weight-normal">
-
-						<span>{{ venue_address ? venue_address : '' }}</span>
-						<span>{{ venue_state_provence ? ', ' ~ venue_state_provence ~ '<br>' : '' }}</span>
-						<span>{{ venue_city ? venue_city : '' }}</span>
-						<span>{{ venue_postal_code ? ', ' ~ venue_postal_code ~ '<br>' : '' }}</span>
-
-						{% if venue_website or venue_phone %}
-							<h6 class="font-weight-bold mt-3 m-0">Venue</h6>
-							{% if venue_website %}
-								<a href="{{ venue_website }}"><code class="p-0">website</code></a>
-							{% endif %}
-							{% if venue_phone %}
-								<a href="tel:{{ venue_phone }}"><code class="p-0">phone</code></a>
-							{% endif %}
-						{% endif %}
-					</div>
-				</div><!-- Grid column -->
-				<div class="col-12">
-					<a href="{{ show.link }}" class="btn btn-primary">View</a>
-				</div>
-			</div><!-- Grid row -->
-		</div><!-- News jumbotron -->
-	{% endfor %}
-
-	{% import _self as endspaceclass %}
-	{{ endspaceclass.end_space_classes(p) }}
-{% endmacro upcoming_shows %}
 
 {% macro logos(prop) %}
 	{% set logos = prop.logos_rep %}
@@ -256,27 +63,281 @@
 	{{ endspaceclass.end_space_classes(p) }}
 {% endmacro logos %}
 
-
-
-
-{% macro post_meta(post) %}
-	<div class="entry-meta small-text">
-		{% set date = post.date %}
-		{% set modified_date = post.modified_date %}
-		<span class="author vcard">by <a class="url fn n" href="{{ post.author.link|e('esc_url') }}">{{ post.author.name|e('wp_kses_post') }}</a></span>
-		<span class="posted-on ml-1">
-		{% if modified_date != date %}
-			<span class="font-italic">
-				on
-				<time class="entry-date published" datetime="{{ date|date('c') }}">{{ date }}</time>
-			</span>,
-			<small class="font-italic">
-				updated on
-				<time class="update" datetime="{{ modified_date|date('c') }}">{{ modified_date }}</time>
-			</small>
-		{% else %}
-			<time class="entry-date published updated" datetime="{{ date|date('c') }}">on {{ date }}</time>
-		{% endif %}
-		</span>
-	</div><!-- .entry-meta -->
+{% macro post_meta(post, site) %}
+	{% set lang = site.language %}
+	{% set months = [ '', 'Jannar', 'Frar', 'Marzu', 'April', 'Mejju', 'Ġunju', 'Lujlu', 'Awissu', 'Settembru', 'Ottubru', 'Novembru', 'Diċembru' ] %}
+	{% if lang == 'en-GB' %}
+		<div class="entry-meta small-text">
+			{% set date = post.date %}
+			{% set modified_date = post.modified_date %}
+			<span class="author vcard"><i class="far fa-user mr-1"></i><a class="url fn n" href="{{ post.author.link|e('esc_url') }}">{{ post.author.name|e('wp_kses_post') }}</a><br></span>
+			<span class="posted-on ml-">
+			{% if modified_date != date %}
+				<time class="entry-date published" datetime="{{ date|date('c') }}"><i class="far fa-calendar-alt mr-1"></i>{{ date }}</time>,
+				<small class="font-italic">updated on <time class="update" datetime="{{ modified_date|date('c') }}">{{ modified_date }}</time></small>
+			{% else %}
+				<time class="entry-date published updated" datetime="{{ date|date('c') }}"><i class="far fa-calendar-alt mr-1"></i>{{ date }}</time>
+			{% endif %}
+			</span>
+		</div><!-- .entry-meta -->
+	{% else %}
+		<div class="entry-meta small-text">
+			{% set date = post.date %}
+			{% set modified_date = post.modified_date %}
+			<span class="author vcard"><i class="far fa-user mr-1"></i><a class="url fn n" href="{{ post.author.link|e('esc_url') }}">{{ post.author.name|e('wp_kses_post') }}</a><br></span>
+			<span class="posted-on ml-">
+			{% if modified_date != date %}
+				<i class="far fa-calendar-alt mr-1"></i><time class="entry-date published" datetime="{{ date|date('c') }}">{{ date|date('d') }} ta' {{ months[date|date('m')|number_format] }}, {{ date|date('Y') }}</time>,
+				<small class="font-italic">aġġornat <time class="update" datetime="{{ modified_date|date('c') }}">{{ modified_date|date('d') }} ta' {{ months[modified_date|date('m')|number_format] }}, {{ modified_date|date('Y') }}</time></small>
+			{% else %}
+				<time class="entry-date published updated" datetime="{{ date|date('c') }}"><i class="far fa-calendar-alt mr-1"></i>{{ date|date('d') }} ta' {{ months[date|date('m')|number_format] }}, {{ date|date('Y') }}</time>
+			{% endif %}
+			</span>
+		</div><!-- .entry-meta -->
+	{% endif %}
 {% endmacro post_meta %}
+
+{% macro post_card(post, site, theme) %}
+	{% set title = post.title|e('wp_kses_post') %}
+	{% set link = post.link|e('esc_url') %}
+	{% set thumb = post.thumbnail %}
+	{% if fn('is_sticky') %}
+		{% set sticky = '<i class="fas fa-thumbtack float-right"></i>' %}
+	{% endif %}
+	{% if site.language == 'en-GB' %}
+		{% set excerpt = post.preview %}
+	{% else %}
+		{% set excerpt = post.preview.read_more('Kompli Area') %}
+	{% endif %}
+	<article id="post-{{ post.id }}" class="{{ post.class }} card transparent-card pb-4 mb-4">
+		{% if thumb %}
+			<a href="{{ link }}"><img class="card-img" src="{{ Image(thumb).src|resize(750,460,'center') }}" alt=""></a>
+		{% else %}
+			<a href="{{ link }}"><img src="{{ theme.path }}/images/repubblika-rpl.png" alt=""></a>
+		{% endif %}
+		<header class="card-header">
+			{% if title %}
+				<a href="{{ link }}"><h4 class="card-title">{{ title }}{{ sticky }}</h4></a>
+			{% else %}
+				<a href="{{ link }}"><h4 class="card-title font-italic">(no title){{ sticky }}</h4></a>
+			{% endif %}
+			<div class="card-meta">
+				{{ _self.post_meta(post, site) }}
+			</div>
+		</header>
+		<div class="card-body">
+			<p class="card-text">{{ excerpt }}</p>
+		</div>
+	</article>
+{% endmacro post_card %}
+
+
+{% macro posts_carousel(posts, site, theme) %}
+	<div class="bd-example">
+		<div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-ride="carousel">
+			<ol class="carousel-indicators">
+				{% for post in posts %}
+					<li data-target="#carouselExampleCaptions" data-slide-to="{{ loop.index0 }}" class="{{ loop.first ? 'active' }}"></li>
+				{% endfor %}
+			</ol>
+			<div class="carousel-inner">
+				{% for post in posts %}
+					{% set title	= post.title|e('wp_kses_post') %}
+					{% set link		= post.link|e('esc_url') %}
+					{% set thumb	= post.thumbnail %}
+
+					{% if site.language == 'en-GB' %}
+						{% set excerpt = post.preview %}
+					{% else %}
+						{% set excerpt = post.preview.read_more('Kompli Area') %}
+					{% endif %}
+
+					<div class="carousel-item{{ loop.first ? ' active' }}">
+						{% if thumb %}
+							<img src="{{ Image(thumb).src|resize(1600,427,'center') }}" class="d-block w-100" alt="{{ Image(thumb).alt|e('wp_kses_post') }}">
+						{% else %}
+							<img src="{{ theme.path }}/images/repubblika-rpl.png" class="d-block w-100" alt="{{ Image(thumb).alt|e('wp_kses_post') }}">
+						{% endif %}
+						<div class="arousel-caption d-none d-md-block">
+							<h2 class="excerpt-title p-2"><a href="{{ post.link }}">{{ title }}</a></h2>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+			{#<a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>#}
+		</div>
+	</div>
+{% endmacro posts_carousel %}
+
+
+{% macro upcoming_event(prop, shows, site, theme) %}
+	{% set lang = site.language %}
+
+	{% set months = [ '', 'Jannar', 'Frar', 'Marzu', 'April', 'Mejju', 'Ġunju', 'Lujlu', 'Awissu', 'Settembru', 'Ottubru', 'Novembru', 'Diċembru' ] %}
+
+	{% set text = prop.text_editor %}
+
+	{% import _self as spaceclass %}
+	{{ spaceclass.space_classes(prop.section_properties.full_width, prop.section_properties.text_color, prop.section_properties.background_color) }}
+
+	{% if prop.section_title %}
+		<h2 class="h1-responsive font-weight-bold mb-4 text-center">{{ prop.section_title }}</h2>
+	{% endif %}
+
+	{% for show in shows %}
+		{% set title = show.post_title|e('wp_kses_post') %}
+		{% set multiday = show.multiday_event %}
+		{% set start_date = show.start_date %}
+		{% set end_date = show.end_date %}
+
+		{% set xahar = start_date|date('m')|number_format %}
+
+
+		{% set artist = fn('get_the_title', show.artist)|e('wp_kses_post') %}
+		{% set artist_link = fn('get_field', 'artist_website', show.artist)|e('esc_url') %}
+
+		{% set venue_name = fn('get_the_title', show.venue)|e('wp_kses_post') %}
+		{% set venue = fn('get_fields', show.venue) %}
+
+		{% set admittance = show.admittance|e('wp_kses_post') %}
+		{% if lang == 'en-GB' %}
+			{% set admit_lng = admittance|split('|')[0] %}
+		{% else %}
+			{% set admit_lng = admittance|split('|')[1] %}
+		{% endif %}
+
+		{% set price = show.price|e('wp_kses_post') %}
+		{% set ticket_url = show.ticket_url|e('esc_url') %}
+		{% set ticket_phone = '+' ~ show.cc ~ show.number %}
+
+		{% set notes = show.notes|e('wp_kses_post') %}
+
+		{% set venue_address = venue.venue_address|e('wp_kses_post') %}
+		{% set venue_state_provence = venue.venue_state_provence|e('wp_kses_post') %}
+		{% set venue_city = venue.venue_city|e('wp_kses_post') %}
+		{% set venue_postal_code = venue.venue_postal_code|e('wp_kses_post') %}
+		{% set venue_website = venue.venue_website|e('esc_url') %}
+		{% set venue_phone = venue.contact_number|e('wp_kses_post') %}
+		{% set venue_country = venue.venue_country.label|e('wp_kses_post') %}
+
+		{% if price %}
+			{% set price_output = '<span>&euro;' ~ price ~ '</span><br>' %}
+		{% else %}
+			{% set price_output = '' %}
+		{% endif %}
+
+		{% if lang == 'en-GB' %}
+			{% set admittance_lng = 'Admittance' %}
+			{% set ticket_lng = 'Tickets' %}
+			{% set website_lng = 'website' %}
+			{% set phone_lng = 'phone' %}
+			{% set venue_lng = 'Venue' %}
+			{% set start_date_output = start_date|date('d/M/Y') %}
+			{% set end_date_output = end_date|date('d/M/Y') %}
+			{% set view_lng = 'Details' %}
+		{% else %}
+			{% set admittance_lng = 'Dħul' %}
+			{% set ticket_lng = 'Biljetti' %}
+			{% set website_lng = 'sit elettroniku' %}
+			{% set phone_lng = 'ċempel' %}
+			{% set venue_lng = 'Post' %}
+			{% set start_date_output = start_date|date('d') ~ '/' ~ months[xahar] ~ '/' ~ start_date|date('Y') %}
+			{% set end_date_output = end_date|date('d') ~ '/' ~ months[xahar] ~ '/' ~ end_date|date('Y') %}
+			{% set view_lng = 'Dettalji' %}
+		{% endif %}
+
+		{% if multiday %}
+			{% if start_date|date('dmY') == end_date|date('dmY') %}
+				{% set s_date = '<i class="far fa-calendar-alt"></i> ' ~ start_date_output ~ ' <i class="far fa-clock"></i> ' ~ start_date|date('H:i') %}
+				{% set e_date = ' - ' ~ end_date|date('H:i') %}
+			{% else %}
+				{% set s_date = '<i class="far fa-calendar-alt"></i> ' ~ start_date_output ~ ' <i class="far fa-clock"></i> ' ~ start_date|date('H:i') %}
+				{% set e_date = '<br><div class="mt-2"><i class="fas fa-calendar-alt"></i> ' ~ end_date_output ~ ' <i class="fas fa-clock"></i> ' ~ end_date|date('H:i') ~ '</div>' %}
+			{% endif %}
+		{% else %}
+			{% set s_date = '<i class="far fa-calendar-alt"></i> ' ~ start_date_output ~ ' <i class="far fa-clock"></i> ' ~ start_date|date('H:i') %}
+		{% endif %}
+		<div class="jumbotron white text-center hoverable p-4 z-depth-0">
+			<!-- Grid row -->
+			<div class="row">
+				<!-- Grid column -->
+				<h3 class="col-12 text-capitalize">{{ title }}</h3>
+				<div class="col-md-6 offset-md- x-md-3 my-3">
+					<h6>{{ s_date }}{{ e_date }}</h6>
+					<h6 class="font-weight-bold mt-3 m-0">{{ admittance_lng}}</h6>
+					<div>
+						<span>{{ admit_lng }}</span><br>
+						{{ price_output }}
+						{% if ticket_url or ticket_phone %}
+							<h6 class="font-weight-bold mt-3 m-0">{{ ticket_lng }}</h6>
+							{% if ticket_url %}
+								<a href="{{ ticket_url }}"><code class="p-0 d-block">{{ website_lng }}</code></a>
+							{% endif %}
+							{% if ticket_phone %}
+								<a href="tel:{{ ticket_phone }}"><code class="p-0 d-block">{{ phone_lng }}</code></a>
+							{% endif %}
+						{% endif %}
+					</div>
+				</div><!-- Grid column -->
+				<!-- Grid column -->
+				<div class="col-md-6 text-md-left l-md-3 mt-3">
+					<h4 class="h4 mb-4"><i class="fas fa-map-pin pr-1"></i>{{ venue_name }}</h4>
+					<div class="font-weight-normal">
+
+						{{ venue_address ? '<span>' ~ venue_address ~ '<br></span>' }}
+						{{ venue_state_provence ? '<span>' ~ venue_state_provence ~ '<br></span>' }}
+						{{ venue_city ? '<span>' ~ venue_city ~ '<br></span>' }}
+						{{ venue_postal_code ? '<span>' ~ venue_postal_code ~ '<br></span>' }}
+						{{ venue_country ? '<span>' ~ venue_country ~ '<br></span>' }}
+
+						{% if venue_website or venue_phone %}
+							<h6 class="font-weight-bold mt-3 m-0">Venue</h6>
+							{% if venue_website %}
+								<a href="{{ venue_website }}"><code class="p-0 d-block">{{ website_lng }}</code></a>
+							{% endif %}
+							{% if venue_phone.number %}
+								<a href="tel:+{{ venue_phone.cc }}{{ venue_phone.number }}"><code class="p-0 d-block">{{ phone_lng }}</code></a>
+							{% endif %}
+						{% endif %}
+					</div>
+				</div><!-- Grid column -->
+				<div class="col-6 mt-4">
+					<a href="{{ show.link }}" class="btn btn-primary">{{ view_lng }}</a>
+				</div>
+				<div class="col-6 mt-4">
+					<span class="addtocalendar atc-style-blue">
+						<var class="atc_event">
+							<var class="atc_date_start">{{ start_date|date('Y-m-d') }} {{ start_date|date('h:ia') }}</var>
+							<var class="atc_date_end">{{ end_date|date('Y-m-d') }} {{ end_date|date('h:ia') }}</var>
+							<var class="atc_timezone">Europe/Malta</var>
+							<var class="atc_title">{{ title }}</var>
+							<var class="atc_description">{{ notes }}</var>
+							<var class="atc_location">{{ venue_address ~ ' ' ~ venue_city ~ ' ' ~ venue_country }}</var>
+							<var class="atc_organizer">Repubblika</var>
+							<var class="atc_organizer_email">sam@repubblika.moc</var>
+						</var>
+					</span>
+					{#<form method="post" action="{{ theme.link }}/inc/calendar/download-ics.php">
+						<input type="hidden" name="date_start" value="{{ start_date|date('Y-m-d') }} {{ start_date|date('h:ia') }}">
+						<input type="hidden" name="date_end" value="{{ end_date|date('Y-m-d') }} {{ end_date|date('h:ia') }}">
+						<input type="hidden" name="location" value="{{ venue_address ~ ' ' ~ venue_city ~ ' ' ~ venue_country }}">
+						<input type="hidden" name="description" value="This is my description">
+						<input type="hidden" name="summary" value="This is my summary">
+						<input type="hidden" name="url" value="{{ show.link|e('esc_url') }}">
+						<input type="submit" class="btn btn-primary" value="Add to Calendar">
+					</form>#}
+				</div>
+			</div><!-- Grid row -->
+		</div><!-- News jumbotron -->
+	{% endfor %}
+
+	{% import _self as endspaceclass %}
+	{{ endspaceclass.end_space_classes(p) }}
+{% endmacro upcoming_event %}

@@ -21,3 +21,21 @@
 	clear: both;
 	margin: 0 0 1.5em;
 }
+
+.carousel-item {
+	position: relative;
+	.excerpt-title {
+		left: 0;
+		top: 30%;
+		position: absolute;
+		color: black;
+		background-color: rgba( $darkgrey, .3 );
+		padding-left: 5% !important;
+		@include colored-links( $red, $red, $red );
+	}
+}
+
+.carousel-indicators li {
+	//background-color: black;
+	border: 1px solid $red;
+}

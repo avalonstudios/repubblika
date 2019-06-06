@@ -9,28 +9,8 @@
  * @package Repubblika
  */
 
-?>
+$footer = Timber::get_context();
+$footer['post'] = new TimberPost();
+$footer['options'] = get_fields('option');
 
-	</div><!-- #content -->
-
-	<footer id="colophon" class="site-footer">
-		<div class="site-info">
-			<a href="<?php echo esc_url( __( 'https://wordpress.org/', 'repubblika' ) ); ?>">
-				<?php
-				/* translators: %s: CMS name, i.e. WordPress. */
-				printf( esc_html__( 'Proudly powered by %s', 'repubblika' ), 'WordPress' );
-				?>
-			</a>
-			<span class="sep"> | </span>
-				<?php
-				/* translators: 1: Theme name, 2: Theme author. */
-				printf( esc_html__( 'Theme: %1$s by %2$s.', 'repubblika' ), 'repubblika', '<a href="https://avalonstudios.eu">Avalon Studios</a>' );
-				?>
-		</div><!-- .site-info -->
-	</footer><!-- #colophon -->
-</div><!-- #page -->
-
-<?php wp_footer(); ?>
-
-</body>
-</html>
+Timber::render( 'sections/footer/footer.twig', $footer );

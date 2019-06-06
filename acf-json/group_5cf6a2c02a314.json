@@ -1,0 +1,139 @@
+{
+    "key": "group_5cf6a2c02a314",
+    "title": "Theme Settings",
+    "fields": [
+        {
+            "key": "field_5cf6a43d91ba7",
+            "label": "Number of posts",
+            "name": "num_of_posts",
+            "type": "button_group",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "6": "6",
+                "9": "9",
+                "12": "12"
+            },
+            "allow_null": 0,
+            "default_value": 12,
+            "layout": "horizontal",
+            "return_format": "value"
+        },
+        {
+            "key": "field_5cf6a2ccbddcb",
+            "label": "Number of columns",
+            "name": "num_of_cols",
+            "type": "button_group",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5cf6a43d91ba7",
+                        "operator": "==",
+                        "value": "12"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "2": "2",
+                "3": "3",
+                "4": "4",
+                "6": "6"
+            },
+            "allow_null": 0,
+            "default_value": 4,
+            "layout": "horizontal",
+            "return_format": "value"
+        },
+        {
+            "key": "field_5cf6a4d736887",
+            "label": "Number of columns",
+            "name": "num_of_cols",
+            "type": "button_group",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5cf6a43d91ba7",
+                        "operator": "==",
+                        "value": "9"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "3": "3"
+            },
+            "allow_null": 0,
+            "default_value": 3,
+            "layout": "horizontal",
+            "return_format": "value"
+        },
+        {
+            "key": "field_5cf6a4fb36888",
+            "label": "Number of columns",
+            "name": "num_of_cols",
+            "type": "button_group",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5cf6a43d91ba7",
+                        "operator": "==",
+                        "value": "6"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "2": "2",
+                "3": "3",
+                "6": "6"
+            },
+            "allow_null": 0,
+            "default_value": 3,
+            "layout": "horizontal",
+            "return_format": "value"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "theme-general-settings"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1559667999
+}

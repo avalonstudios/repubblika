@@ -5,7 +5,9 @@ $cloudflare = "//cdnjs.cloudflare.com/ajax/libs/";
 // Google Fonts
 $googleFonts = "//fonts.googleapis.com/css?family=";
 $googleFonts .= "Allerta+Stencil|";
-$googleFonts .= "PT+Serif:400,400i,700,700i&display=swap&subset=latin-ext";
+$googleFonts .= "Oswald:400,500,700|";
+$googleFonts .= "PT+Serif:400,400i,700,700i";
+$googleFonts .= "&display=swap&subset=latin-ext";
 wp_enqueue_style( 'ava-googlefonts', $googleFonts );
 
 
@@ -14,6 +16,10 @@ wp_enqueue_style( 'ava-bootstrap-css', $localLink. '/css/bootstrap.min.css', arr
 
 // MDB
 wp_enqueue_style( 'ava-mdb', $localLink . '/css/mdb.min.css' );
+
+// Calendar
+$link = "http://addtocalendar.com/atc/1.5/atc-style-blue.css";
+wp_enqueue_style( 'ava-calendar', $link, false, '1.5' );
 
 // FontAwesome
 //$link = "{$cloudflare}font-awesome/4.7.0/css/font-awesome.min.css";
@@ -44,7 +50,7 @@ wp_enqueue_script( 'ava-mdb-js', $localLink . '/js/mdb.min.js', array( 'ava-jque
 wp_enqueue_script( 'ava-custom', get_stylesheet_directory_uri() . "{$fldr}custom{$ext}", array(), "0.0.1{$cacheBuster}", true );
 
 // Google Maps
-//$link = "//maps.googleapis.com/maps/api/js?key=AIzaSyBJke8awiiax4MfVDhap0N1eW-4vG2gIoo";
-//wp_enqueue_script( 'ava-gmaps', $link, array( 'ava-jquery331' ), '0.0.1', true );
+$link = "//maps.googleapis.com/maps/api/js?key=AIzaSyBJke8awiiax4MfVDhap0N1eW-4vG2gIoo";
+wp_enqueue_script( 'ava-gmaps', $link, array( 'ava-jquery341' ), '0.0.1', true );
 
 wp_enqueue_style( 'repubblika-style', get_stylesheet_uri(), array(), "1.0{$cacheBuster}" );

@@ -27,3 +27,36 @@
 @mixin column-width($numberColumns: 3) {
 	width: map-get( $columns, $numberColumns ) - ( ( $columns__margin * ( $numberColumns - 1 ) ) / $numberColumns );
 }
+
+@mixin bp( $p, $q: null, $orient: width, $orientation: null ) {
+	@if ( $q != null ) {
+		@if ( $orientation == null ) {
+			@media (min-#{$orient}: $p * 1px) and (max-#{$orient}: $q * 1px) { @content; }
+		} @else {
+			@media (min-#{$orient}: $p * 1px) and (max-#{$orient}: $q * 1px) and (orientation: $orientation) { @content; }
+		}
+	} @else {
+		@if ( $orientation == null ) {
+			@media (min-#{$orient}: $p * 1px) { @content; }
+		} @else {
+			@media (min-#{$orient}: $p * 1px) and (orientation: $orientation) { @content; }
+		}
+	}
+}
+
+@function transit( $el, $time:250, $ease:ease-in-out, $delay:0 ) {
+	@return #{$el} #{$time}ms $ease #{$delay}s;
+}
+
+@mixin colored-links( $link, $hover: $link, $visited: $hover ) {
+	a {
+		color: $link !important;
+		transition: transit( color ), transit( border-bottom, .5 );
+		&:visited {
+			color: $visited !important;
+		}
+		&:hover {
+			color: $hover !important;
+		}
+	}
+}

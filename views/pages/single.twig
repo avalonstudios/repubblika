@@ -4,7 +4,7 @@
 {% block header %}
 	{% set post_title = post.title|e('wp_kses_post') %}
 	<h1 class="entry-title">{{ post_title }}{% if fn('is_sticky') %}<i class="fas fa-paperclip"></i>{% endif %}</h1>
-	{{ mcr.post_meta(post) }}
+	{{ mcr.post_meta(post, site) }}
 {% endblock %}
 
 
@@ -12,7 +12,9 @@
 	{% if password == 1 %}
 		{{ fn('get_the_password_form') }}
 	{% else %}
+		<div class="row no-gutters">
 		{{ post.content }}
+		</div>
 	{% endif %}
 	{% if post.pagination %}
 		{% set pages = post.pagination.pages %}

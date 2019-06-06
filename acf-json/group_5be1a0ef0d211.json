@@ -1,0 +1,100 @@
+{
+    "key": "group_5be1a0ef0d211",
+    "title": "Social Icons",
+    "fields": [
+        {
+            "key": "field_5be1a0fd82c23",
+            "label": "Social Icons",
+            "name": "social_icons",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "",
+            "sub_fields": [
+                {
+                    "key": "field_5be1a10482c24",
+                    "label": "Social Icon",
+                    "name": "social_icon",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "fb|facebook": "Facebook",
+                        "tw|twitter": "Twitter",
+                        "gplus|google-plus": "Google+",
+                        "li|linkedin": "Linkedin",
+                        "ins|instagram": "Instagram",
+                        "bnd|bandcamp": "Bandcamp",
+                        "pin|pinterest": "Pinterest",
+                        "vk|vk": "Vkontakte",
+                        "so|stack-overflow": "Stack Overflow",
+                        "yt|youtube": "Youtube",
+                        "slack|slack": "Slack",
+                        "git|github": "Github",
+                        "comm|comments": "Comments",
+                        "email|envelope-o": "Email",
+                        "dribbble|dribbble": "Dribbble",
+                        "reddit|reddit-alien": "Reddit"
+                    },
+                    "default_value": [],
+                    "allow_null": 1,
+                    "multiple": 0,
+                    "ui": 1,
+                    "ajax": 0,
+                    "return_format": "array",
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_5be1a11d82c25",
+                    "label": "Link",
+                    "name": "link",
+                    "type": "url",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": ""
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "theme-general-settings"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": false,
+    "description": "",
+    "modified": 1559474631
+}

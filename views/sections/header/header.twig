@@ -3,13 +3,20 @@
 
 	<header id="masthead" class="site-header">
 		<!-- SideNav slide-out button -->
-		{#<a data-activates="slide-out" class="button-collapse p-3 d-lg-none position-fixed"><i class="fas fa-bars"></i></a>#}
+		<div class="container">
+		{% if (logo) %}
+			{#<img src="{{ Image(logo).src|resize(81,71,'center') }}" alt="{{ Image(logo).alt }}" class="float-left">#}
+			{% set logo = theme.link ~ '/images/repubblika-logo' %}
+			<a class="float-left d-block d-lg-none pt-2" href="{{ site.link }}"><img src="{{ logo }}.png" alt="{{ Image(logo).alt }}"></a>
+		{% endif %}
+		<a data-activates="slide-out" class="button-collapse p-3 d-lg-none float-right"><i class="fas fa-bars"></i></a>
+		</div>
 		{% include 'menus/main-menu.twig' %}
 	</header><!-- #masthead -->
 
 	{% include 'menus/fixed-sidenav.twig' %}
 
-	<div class="py-5 d-non d-lg-block"></div>
+	<!-- <div class="py-5 d-non d-lg-block"></div> -->
 
-	<div id="content" class="site-content container">
+	<div id="content" class="site-content {{ fn('is_front_page') ? 'container-fluid' : 'container' }}">
 		<div class="row no-gutters">
