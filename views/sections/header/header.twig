@@ -19,4 +19,5 @@
 	<!-- <div class="py-5 d-non d-lg-block"></div> -->
 
 	<div id="content" class="site-content {{ fn('is_front_page') ? 'container-fluid' : 'container' }}">
+		{% include 'sections/header/announcements.twig' with {'announcements' : announcements} %}
 		<div class="row no-gutters">

@@ -2,9 +2,11 @@
 {% import 'sections/partials/_macros.twig' as mcr %}
 
 {% block header %}
-	{% set post_title = post.title|e('wp_kses_post') %}
-	<h1 class="entry-title">{{ post_title }}{% if fn('is_sticky') %}<i class="fas fa-paperclip"></i>{% endif %}</h1>
-	{{ mcr.post_meta(post, site) }}
+	<div class="pr-lg-5">
+		{% set post_title = post.title|e('wp_kses_post') %}
+		<h1 class="entry-title">{{ post_title }}{% if fn('is_sticky') %}<i class="fas fa-thumbtack float-right"></i>{% endif %}</h1>
+		{{ mcr.post_meta(post, site) }}
+	</div>
 {% endblock %}
 
 

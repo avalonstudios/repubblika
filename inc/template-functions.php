@@ -111,3 +111,31 @@ function ava_count_widgets( $sidebar_id ) {
 		return $widget_classes;
 	endif;
 }
+
+
+
+// Add custom columns to the Announcement post type:
+function set_custom_announcement_post_columns( $columns ) {
+
+	$columns['start_date']	= __( 'Start Date', 'your_text_domain' );
+	$columns['end_date']	= __( 'End Date', 'your_text_domain' );
+	return $columns;
+
+} add_filter( 'manage_announcement_posts_columns', 'set_custom_announcement_post_columns' );
+
+// Add the data to the custom columns for the book post type:
+function custom_announcement_columns( $column, $post_id ) {
+	switch ( $column ) {
+
+		case 'start_date' :
+			$startDate = get_field( 'start_date', $post_id );
+			echo date( 'dS M, Y, g:ia', $startDate );
+			break;
+
+		case 'end_date' :
+			$endDate = get_field( 'end_date', $post_id );
+			echo date( 'dS M, Y, g:ia', $endDate );
+			break;
+
+	}
+} add_action( 'manage_announcement_posts_custom_column' , 'custom_announcement_columns', 10, 2 );

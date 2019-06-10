@@ -152,6 +152,61 @@ function cpts_fn() {
 		'capability_type'		=> 'post',
 	);
 	register_post_type( 'venue', $args );
+
+
+
+	// Register Custom Post Type Announcement
+	$labels = array(
+		'name'					=> _x( 'Announcements', 'Post Type General Name', 'repubblika' ),
+		'singular_name'			=> _x( 'Announcement', 'Post Type Singular Name', 'repubblika' ),
+		'menu_name'				=> _x( 'Announcements', 'Admin Menu text', 'repubblika' ),
+		'name_admin_bar'		=> _x( 'Announcement', 'Add New on Toolbar', 'repubblika' ),
+		'archives'				=> __( 'Announcement Archives', 'repubblika' ),
+		'attributes'			=> __( 'Announcement Attributes', 'repubblika' ),
+		'parent_item_colon'		=> __( 'Parent Announcement:', 'repubblika' ),
+		'all_items'				=> __( 'All Announcements', 'repubblika' ),
+		'add_new_item'			=> __( 'Add New Announcement', 'repubblika' ),
+		'add_new'				=> __( 'Add New', 'repubblika' ),
+		'new_item'				=> __( 'New Announcement', 'repubblika' ),
+		'edit_item'				=> __( 'Edit Announcement', 'repubblika' ),
+		'update_item'			=> __( 'Update Announcement', 'repubblika' ),
+		'view_item'				=> __( 'View Announcement', 'repubblika' ),
+		'view_items'			=> __( 'View Announcements', 'repubblika' ),
+		'search_items'			=> __( 'Search Announcement', 'repubblika' ),
+		'not_found'				=> __( 'Not found', 'repubblika' ),
+		'not_found_in_trash'	=> __( 'Not found in Trash', 'repubblika' ),
+		'featured_image'		=> __( 'Featured Image', 'repubblika' ),
+		'set_featured_image'	=> __( 'Set featured image', 'repubblika' ),
+		'remove_featured_image'	=> __( 'Remove featured image', 'repubblika' ),
+		'use_featured_image'	=> __( 'Use as featured image', 'repubblika' ),
+		'insert_into_item'		=> __( 'Insert into Announcement', 'repubblika' ),
+		'uploaded_to_this_item'	=> __( 'Uploaded to this Announcement', 'repubblika' ),
+		'items_list'			=> __( 'Announcements list', 'repubblika' ),
+		'items_list_navigation'	=> __( 'Announcements list navigation', 'repubblika' ),
+		'filter_items_list'		=> __( 'Filter Announcements list', 'repubblika' ),
+	);
+	$args = array(
+		'label'					=> __( 'Announcement', 'repubblika' ),
+		'description'			=> __( '', 'repubblika' ),
+		'labels'				=> $labels,
+		'menu_icon'				=> 'dashicons-megaphone',
+		'supports'				=> array('title', 'editor', 'excerpt', 'thumbnail', 'revisions'),
+		'taxonomies'			=> array(),
+		'public'				=> true,
+		'show_ui'				=> true,
+		'show_in_menu'			=> true,
+		'menu_position'			=> 5,
+		'show_in_admin_bar'		=> true,
+		'show_in_nav_menus'		=> true,
+		'can_export'			=> true,
+		'has_archive'			=> true,
+		'hierarchical'			=> false,
+		'exclude_from_search'	=> false,
+		'show_in_rest'			=> true,
+		'publicly_queryable'	=> true,
+		'capability_type'		=> 'post',
+	);
+	register_post_type( 'announcement', $args );
 }
 // Hook into the 'init' action
 add_action( 'init', 'cpts_fn', 0 );

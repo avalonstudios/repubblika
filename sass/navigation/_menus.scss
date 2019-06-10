@@ -70,6 +70,8 @@
 		text-transform: uppercase;
 	}
 
+	@include colored-links( $red, black, $red );
+
 	.current_page_item > a,
 	.current-menu-item > a,
 	.current_page_ancestor > a,
@@ -144,6 +146,7 @@
 			//width: 200px;
 		}
 	}
+	@include colored-links( $red, black, $red );
 }
 
 .main-navigation {

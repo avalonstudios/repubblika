@@ -58,5 +58,13 @@
 		&:hover {
 			color: $hover !important;
 		}
+		&.ava-nv {
+			&:visited {
+				color: $link !important;
+			}
+			&:hover {
+				color: $hover !important;
+			}
+		}
 	}
 }

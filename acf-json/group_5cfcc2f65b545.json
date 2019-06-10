@@ -1,0 +1,58 @@
+{
+    "key": "group_5cfcc2f65b545",
+    "title": "Announcement Settings",
+    "fields": [
+        {
+            "key": "field_5cfcc30f27dec",
+            "label": "Start Date",
+            "name": "start_date",
+            "type": "date_time_picker",
+            "instructions": "The announcement will start showing on the date & time provided here.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "d\/m\/Y g:i a",
+            "return_format": "U",
+            "first_day": 1
+        },
+        {
+            "key": "field_5cfcc34827ded",
+            "label": "End Date",
+            "name": "end_date",
+            "type": "date_time_picker",
+            "instructions": "The announcement will stop showing on the date & time provided here.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "d\/m\/Y g:i a",
+            "return_format": "U",
+            "first_day": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "announcement"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1560068989
+}
