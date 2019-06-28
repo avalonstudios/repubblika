@@ -1,0 +1,510 @@
+{
+    "key": "group_5b324ded262b6",
+    "title": "Charts [BLOCK]",
+    "fields": [
+        {
+            "key": "field_5bc5bd1d4b0ab",
+            "label": "Chart Type",
+            "name": "chart_type",
+            "type": "radio",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "bar": "Bar",
+                "line": "Line",
+                "radar": "Radar",
+                "polarArea": "Polar Area",
+                "pie": "Pie",
+                "doughnut": "Doughnut"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "bar",
+            "layout": "horizontal",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
+            "key": "field_5bc5c1a74b0b1",
+            "label": "Bar Chart",
+            "name": "bar_chart",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5bc5bd1d4b0ab",
+                        "operator": "==",
+                        "value": "bar"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_5bc5c1eb4b0b2",
+                    "label": "Top Label",
+                    "name": "label",
+                    "type": "text",
+                    "instructions": "This label displays at the top of the Bar Graph",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "e.g. & of votes",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5bc5bd9b4b0ac",
+                    "label": "Chart Data",
+                    "name": "chart_data",
+                    "type": "repeater",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "collapsed": "",
+                    "min": 0,
+                    "max": 0,
+                    "layout": "block",
+                    "button_label": "",
+                    "sub_fields": [
+                        {
+                            "key": "field_5bc5bdbb4b0ad",
+                            "label": "Labels",
+                            "name": "labels",
+                            "type": "text",
+                            "instructions": "This Label display underneath each Bar.",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_5bc5bdce4b0ae",
+                            "label": "Data",
+                            "name": "data",
+                            "type": "number",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "min": "",
+                            "max": "",
+                            "step": ""
+                        },
+                        {
+                            "key": "field_5bc5bde64b0af",
+                            "label": "Background Color",
+                            "name": "background_color",
+                            "type": "color_picker",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "#rr0000"
+                        },
+                        {
+                            "key": "field_5bc5c412b0773",
+                            "label": "Background Color Opacity",
+                            "name": "background_color_opacity",
+                            "type": "range",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": 100,
+                            "min": "",
+                            "max": "",
+                            "step": "",
+                            "prepend": "",
+                            "append": ""
+                        }
+                    ]
+                },
+                {
+                    "key": "field_5bc5c440b0774",
+                    "label": "Border Width",
+                    "name": "border_width",
+                    "type": "range",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": 1,
+                    "min": "",
+                    "max": 10,
+                    "step": "",
+                    "prepend": "",
+                    "append": ""
+                }
+            ]
+        },
+        {
+            "key": "field_5bc5f1fb24885",
+            "label": "Line \/ Radar Chart",
+            "name": "line_chart",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5bc5bd1d4b0ab",
+                        "operator": "==",
+                        "value": "line"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5bc5bd1d4b0ab",
+                        "operator": "==",
+                        "value": "radar"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_5bc5f1fb24886",
+                    "label": "Top Labels",
+                    "name": "line_labels",
+                    "type": "text",
+                    "instructions": "This label displays at the top of the Line Graph and when user hovers over a Line. <b>Please use comma separated values.<\/b>",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5bc5f1fb2488c",
+                    "label": "Border Width",
+                    "name": "border_width",
+                    "type": "range",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "30",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": 1,
+                    "min": "",
+                    "max": 10,
+                    "step": "",
+                    "prepend": "",
+                    "append": ""
+                },
+                {
+                    "key": "field_5bc5f1fb24888",
+                    "label": "Labels",
+                    "name": "labels",
+                    "type": "text",
+                    "instructions": "This Label display underneath each Data Point. (Vertical points on the X-axis.)",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5bc5f1fb24887",
+                    "label": "Lines Data Points",
+                    "name": "lines_data_points",
+                    "type": "repeater",
+                    "instructions": "The number of LINES should match the number of TOP Labels.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "collapsed": "",
+                    "min": 0,
+                    "max": 0,
+                    "layout": "table",
+                    "button_label": "Add Line",
+                    "sub_fields": [
+                        {
+                            "key": "field_5bc5f1fb24889",
+                            "label": "Data",
+                            "name": "data",
+                            "type": "text",
+                            "instructions": "Comma separated values. <b>The number of Data Points should match the number of labels.<\/b>",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_5bc5f1fb2488a",
+                            "label": "Background Color",
+                            "name": "background_color",
+                            "type": "color_picker",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "#rr0000"
+                        },
+                        {
+                            "key": "field_5bc5f1fb2488b",
+                            "label": "Background Color Opacity",
+                            "name": "background_color_opacity",
+                            "type": "range",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": 100,
+                            "min": "",
+                            "max": "",
+                            "step": "",
+                            "prepend": "",
+                            "append": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "key": "field_5bc6cbd0c46e9",
+            "label": "Polar Area \/ Pie \/ Doughnut Chart",
+            "name": "pie_chart",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5bc5bd1d4b0ab",
+                        "operator": "==",
+                        "value": "polarArea"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5bc5bd1d4b0ab",
+                        "operator": "==",
+                        "value": "pie"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5bc5bd1d4b0ab",
+                        "operator": "==",
+                        "value": "doughnut"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_5bc6cc61a3aea",
+                    "label": "Line Labels",
+                    "name": "line_labels",
+                    "type": "text",
+                    "instructions": "This label displays at the top of the Line Graph and when user hovers over a Line. <b>Please use comma separated values.<\/b>",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5bc6cc04c46f2",
+                    "label": "Data Points",
+                    "name": "data",
+                    "type": "text",
+                    "instructions": "Comma separated values. <b>The number of Data Points should match the number of labels.<\/b>",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5bc6cc04c46f1",
+                    "label": "Lines Data Points",
+                    "name": "lines_data_points",
+                    "type": "repeater",
+                    "instructions": "The number of colors should match the number of Data Points.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "collapsed": "",
+                    "min": 0,
+                    "max": 0,
+                    "layout": "table",
+                    "button_label": "Add Line",
+                    "sub_fields": [
+                        {
+                            "key": "field_5bc6cc04c46f3",
+                            "label": "Background Color",
+                            "name": "background_color",
+                            "type": "color_picker",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "#rr0000"
+                        },
+                        {
+                            "key": "field_5bc6cc04c46f4",
+                            "label": "Background Color Opacity",
+                            "name": "background_color_opacity",
+                            "type": "range",
+                            "instructions": "",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": 100,
+                            "min": "",
+                            "max": "",
+                            "step": "",
+                            "prepend": "",
+                            "append": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "all"
+            }
+        ]
+    ],
+    "menu_order": -10,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1560333069
+}

@@ -133,11 +133,11 @@
 
 
 {% macro posts_carousel(posts, site, theme) %}
-	<div class="bd-example">
-		<div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-ride="carousel">
+	<div class="d-none d-md-block">
+		<div id="postsCarousel" class="carousel slide carousel-fade" data-ride="carousel">
 			<ol class="carousel-indicators">
 				{% for post in posts %}
-					<li data-target="#carouselExampleCaptions" data-slide-to="{{ loop.index0 }}" class="{{ loop.first ? 'active' }}"></li>
+					<li data-target="#postsCarousel" data-slide-to="{{ loop.index0 }}" class="{{ loop.first ? 'active' }}"></li>
 				{% endfor %}
 			</ol>
 			<div class="carousel-inner">
@@ -158,7 +158,7 @@
 						{% else %}
 							<img src="{{ theme.path }}/images/repubblika-rpl.png" class="d-block w-100" alt="{{ Image(thumb).alt|e('wp_kses_post') }}">
 						{% endif %}
-						<div class="arousel-caption d-none d-md-block">
+						<div class="arousel-caption d-non e d -md-block">
 							<h2 class="excerpt-title p-2"><a href="{{ post.link }}">{{ title }}</a></h2>
 						</div>
 					</div>

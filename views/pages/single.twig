@@ -3,9 +3,19 @@
 
 {% block header %}
 	<div class="pr-lg-5">
-		{% set post_title = post.title|e('wp_kses_post') %}
-		<h1 class="entry-title">{{ post_title }}{% if fn('is_sticky') %}<i class="fas fa-thumbtack float-right"></i>{% endif %}</h1>
+		{% set post_title	= post.title|e('wp_kses_post') %}
+		{% set thumb		= post.thumbnail|e('esc_url') %}
+		{% set thumb_alt	= post.thumbnail.alt|e('wp_kses_post') %}
+
+		<h1 class="entry-title{{ post_title ? '' : ' font-italic' }}">{{ post_title ?: '(no title)' }}{% if fn('is_sticky') %}<i class="fas fa-thumbtack float-right"></i>{% endif %}</h1>
+
 		{{ mcr.post_meta(post, site) }}
+
+		{% if thumb %}
+			<div class="my-4 post-thumbnail">
+				<img src="{{ thumb }}" alt="{{ thumb_alt }}" class="mx-auto d-block">
+			</div>
+		{% endif %}
 	</div>
 {% endblock %}
 
@@ -14,9 +24,7 @@
 	{% if password == 1 %}
 		{{ fn('get_the_password_form') }}
 	{% else %}
-		<div class="row no-gutters">
 		{{ post.content }}
-		</div>
 	{% endif %}
 	{% if post.pagination %}
 		{% set pages = post.pagination.pages %}
@@ -53,8 +61,10 @@
 		{% endif %}
 	</div>
 
-	<div class="container my-5">
+	<div class="my-5">
+		<hr>
 		{% include 'navigation/post-navigation.twig' %}
+		<hr>
 	</div>
 {% endblock %}
 

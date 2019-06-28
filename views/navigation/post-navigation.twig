@@ -21,38 +21,39 @@
 	</div>
 </nav>
 
-
+{#
 <div class="fixed-navigation d-none d-lg-block">
 	{% if prev_link is not null %}
 	<div class="nav-previous nav-fixed position-fixed white z-depth-1">
 		<div class="position-relative">
-			<div class="position-absolute z-depth-1">
-				<a class="px-2 text-nowrap" href="{{ prev_link }}" rel="prev">{{ prev_post_title }}</a>
-			</div>
-			<a href="{{ prev_link }}" class="fla">
+			<a href="{{ prev_link }}">
 				{% if prev_thumb %}
 					<img src="{{ Image(prev_thumb).src|resize(50,50) }}" alt="">
 				{% else %}
 					<img src="https://via.placeholder.com/50x50/FFFFFF/000000?text=<<">
 				{% endif %}
 			</a>
+			<div class="z-depth-1">
+				<a class="fixed-title position-absolute z-depth-1 px-2 text-nowrap ava-nv" href="{{ prev_link }}" rel="prev">{{ prev_post_title }}</a>
+			</div>
 		</div>
 	</div>
 	{% endif %}
 	{% if next_link is not null %}
 	<div class="nav-next nav-fixed position-fixed white z-depth-1">
 		<div class="position-relative">
-			<div class="position-absolute z-depth-1">
-				<a class="px-2 text-nowrap" href="{{ next_link }}" rel="next">{{ next_post_title }}</a>
+			<div class="z-depth-1">
+				<a class="fixed-title position-absolute z-depth-1 px-2 text-nowrap ava-nv" href="{{ next_link }}" rel="next">{{ next_post_title }}</a>
 			</div>
 			<a href="{{ next_link }}">
 				{% if next_thumb %}
-					<img src="{{ Image(next_thumb).src|resize(50,50) }}" alt="">
+					<img class="float-left" src="{{ Image(next_thumb).src|resize(50,50) }}" alt="">
 				{% else %}
-					<img src="https://via.placeholder.com/50x50/FFFFFF/000000?text=>>">
+					<img class="float-left" src="https://via.placeholder.com/50x50/FFFFFF/000000?text=>>">
 				{% endif %}
 			</a>
 		</div>
 	</div>
 	{% endif %}
 </div>
+#}

@@ -13,7 +13,12 @@ ol {
 li > ul,
 li > ol {
 	margin-bottom: 0;
-	margin-left: 1.5em;
+	@include bp( 992 ) {
+		margin-left: .5em;
+	}
+	@include bp( 992 ) {
+		margin-left: 1.5em;
+	}
 }
 
 dt {

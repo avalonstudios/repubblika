@@ -47,7 +47,8 @@ wp_enqueue_script( 'ava-bootstrap-js', $localLink . '/js/bootstrap.min.js', arra
 wp_enqueue_script( 'ava-mdb-js', $localLink . '/js/mdb.min.js', array( 'ava-jquery341' ), '1.0.0', true );
 
 // Custom JS
-wp_enqueue_script( 'ava-custom', get_stylesheet_directory_uri() . "{$fldr}custom{$ext}", array(), "0.0.1{$cacheBuster}", true );
+//wp_enqueue_script( 'ava-custom', get_stylesheet_directory_uri() . "{$fldr}custom{$ext}", array('ava-jquery341'), "0.0.1{$cacheBuster}", true );
+wp_enqueue_script( 'ava-custom', get_stylesheet_directory_uri() . "{$fldr}custom{$ext}", array('jquery'), "0.0.1{$cacheBuster}", true );
 
 // Google Maps
 $link = "//maps.googleapis.com/maps/api/js?key=AIzaSyBJke8awiiax4MfVDhap0N1eW-4vG2gIoo";

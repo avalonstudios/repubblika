@@ -1,0 +1,19 @@
+{% set uniqueID = random() %}
+
+{#<pre>{{dump(layout.line_chart)}}</pre>#}
+{% set current_chart = layout.pie_chart %}
+{% set c = current_chart|json_encode() %}
+
+<script>
+jQuery(document).ready(function($) {
+	$(window).load(function() {
+		getPieChart(
+				'{{ c }}' ,
+				'{{ uniqueID }}',
+				'{{ chart_type }}'
+				)
+	});
+});
+</script>
+
+<canvas id="piechart_{{ uniqueID }}"></canvas>

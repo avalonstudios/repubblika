@@ -7,3 +7,41 @@
 ## Menus
 --------------------------------------------------------------*/
 @import "menus";
+
+.fixed-navigation {
+	position: relative;
+	z-index: 1;
+	.next-link {
+		height: 50px;
+	}
+	.nav {
+		&-fixed {
+			top: 50%;
+		}
+		&-previous,
+		&-next {
+			a {
+				background-color: white;
+			}
+			.fixed-title {
+				height: 50px;
+				display: block;
+			}
+		}
+		&-previous {
+			left: 0;
+			.fixed-title {
+				left: 50px;
+				top: 0;
+			}
+		}
+		&-next {
+			right: 0;
+			.fixed-title {
+				a {
+					left: 50px;
+				}
+			}
+		}
+	}
+}

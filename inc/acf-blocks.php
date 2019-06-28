@@ -91,6 +91,22 @@ function my_register_blocks() {
 												],
 					];
 
+		// register a Charts Block.
+		acf_register_block_type( $settings );
+
+		$settings = [
+						'name'				=> 'add_chart_in_post',
+						'title'				=> __('Add Chart'),
+						'description'		=> __('Add a Chart block.'),
+						'render_callback'	=> 'add_chart_in_post_block',
+						'category'			=> 'widgets',
+						'html'				=> true,
+						'align'				=> 'full',
+						'supports'			=>	[
+													'align' => false,
+												],
+					];
+
 		// register a testimonial block.
 		acf_register_block_type( $settings );
 	}
@@ -230,4 +246,31 @@ function add_post_in_post_block( $block, $content = '', $is_preview = false, $po
 	$c[ 'fields' ] = get_fields();
 
 	Timber::render( 'acf-blocks/add_post_in_post_block.twig', $c );
+}
+
+function add_chart_in_post_block( $block, $content = '', $is_preview = false, $post_id = 0 ) {
+
+	$c = Timber::get_context();
+
+	// Create id attribute allowing for custom "anchor" value.
+	$c[ 'id' ] = $block[ 'id' ];
+	if ( !empty( $block[ 'anchor' ] ) ) {
+		$c[ 'id' ] = $block[ 'anchor' ];
+	}
+
+	// Create class attribute allowing for custom "class_name" and "align" values.
+	$c[ 'class_name' ] = 'custom-tag-archives';
+	if ( !empty( $block[ 'class_name' ] ) ) {
+		$c[ 'class_name' ] .= ' ' . $block[ 'class_name' ];
+	}
+	if ( !empty( $block[ 'align' ] ) ) {
+		$c[ 'class_name' ] .= ' align' . $block[ 'align' ];
+	}
+
+	echo 'Please click the pencil icon (<span class="dashicons dashicons-edit"></span>) to start.';
+
+	// Get ACF fields
+	$c[ 'layout' ] = get_fields();
+
+	Timber::render( 'acf-blocks/add_chart_in_post_block.twig', $c );
 }
