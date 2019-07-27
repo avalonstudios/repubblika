@@ -1,0 +1,118 @@
+{
+    "key": "group_5d1f0cb972e0d",
+    "title": "Videos",
+    "fields": [
+        {
+            "key": "field_5d1f0d3f5f08a",
+            "label": "Embed Type",
+            "name": "embedding_type",
+            "type": "radio",
+            "instructions": "<strong>URL e.g.:<\/strong> 'https:\/\/youtu.be\/ibNZVROabN8'\r\n<br>\r\n<strong>Embed Code e.g.:<\/strong> &#x3C;iframe width=&#x22;1280&#x22; height=&#x22;720&#x22; src=&#x22;https:\/\/www.youtube.com\/embed\/ibNZVROabN8&#x22; frameborder=&#x22;0&#x22; allow=&#x22;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&#x22; allowfullscreen&#x3E;&#x3C;\/iframe&#x3E;'",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "url": "URL",
+                "embed": "Embed Code"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "",
+            "layout": "horizontal",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
+            "key": "field_5d1f0d675f08b",
+            "label": "URL",
+            "name": "url",
+            "type": "oembed",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5d1f0d3f5f08a",
+                        "operator": "==",
+                        "value": "url"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "width": "",
+            "height": ""
+        },
+        {
+            "key": "field_5d1f0d7f5f08c",
+            "label": "Embed Code",
+            "name": "embed_code",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5d1f0d3f5f08a",
+                        "operator": "==",
+                        "value": "embed"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_5d1f0e2735d32",
+            "label": "Video Description",
+            "name": "video_description",
+            "type": "textarea",
+            "instructions": "150 character limit.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": 150,
+            "rows": "",
+            "new_lines": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "video"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1562316558
+}

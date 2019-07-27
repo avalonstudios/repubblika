@@ -3,6 +3,117 @@
     "title": "Theme Settings",
     "fields": [
         {
+            "key": "field_5d21a61287a1f",
+            "label": "Front Page Options",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5d21a72587a21",
+            "label": "YouTube API Key",
+            "name": "youtube_api_key",
+            "type": "password",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_5d21a61f87a20",
+            "label": "Get latest video from...",
+            "name": "get_latest_video_from",
+            "type": "radio",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "channel": "Channel",
+                "playlist": "Playlist"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "",
+            "layout": "horizontal",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
+            "key": "field_5d21a8c8504de",
+            "label": "Channel ID",
+            "name": "channel_id",
+            "type": "text",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5d21a61f87a20",
+                        "operator": "==",
+                        "value": "channel"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5d21a8e4504df",
+            "label": "Playlist ID",
+            "name": "playlist_id",
+            "type": "text",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5d21a61f87a20",
+                        "operator": "==",
+                        "value": "playlist"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_5cfcbefdf3978",
             "label": "Blog List Properties",
             "name": "",
@@ -151,5 +262,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1560068338
+    "modified": 1562487033
 }

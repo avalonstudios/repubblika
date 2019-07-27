@@ -1,0 +1,62 @@
+{
+    "key": "group_5d1ef968d72a5",
+    "title": "Section Properties [CLONE]",
+    "fields": [
+        {
+            "key": "field_5d1ef9863512a",
+            "label": "Active",
+            "name": "active",
+            "type": "true_false",
+            "instructions": "Allows you to deactivate this section without deleting it, thus losing its contents.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5d1ef99c3512b",
+            "label": "Section Title",
+            "name": "section_title",
+            "type": "text",
+            "instructions": "Not required, but sometimes you might want to add a title to a section. E.g.: <b>Court News<\/b>",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 0,
+    "description": "Section properties for Flex Builder (on Front Page)",
+    "modified": 1562311202
+}

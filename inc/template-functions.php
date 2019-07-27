@@ -114,17 +114,21 @@ function ava_count_widgets( $sidebar_id ) {
 
 
 
-// Add custom columns to the Announcement post type:
-function set_custom_announcement_post_columns( $columns ) {
+/**
+ * Add Start Date & End Date Columns
+ */
+function set_custom_start_end_post_columns( $columns ) {
 
 	$columns['start_date']	= __( 'Start Date', 'your_text_domain' );
 	$columns['end_date']	= __( 'End Date', 'your_text_domain' );
 	return $columns;
 
-} add_filter( 'manage_announcement_posts_columns', 'set_custom_announcement_post_columns' );
+}
 
-// Add the data to the custom columns for the book post type:
-function custom_announcement_columns( $column, $post_id ) {
+/**
+ * Populate Start Date & End Date Columns
+ */
+function custom_start_end_columns( $column, $post_id ) {
 	switch ( $column ) {
 
 		case 'start_date' :
@@ -138,4 +142,12 @@ function custom_announcement_columns( $column, $post_id ) {
 			break;
 
 	}
-} add_action( 'manage_announcement_posts_custom_column' , 'custom_announcement_columns', 10, 2 );
+}
+
+// ANNOUNCEMENTS - Start & End Date
+add_filter( 'manage_announcement_posts_columns', 'set_custom_start_end_post_columns' );
+add_action( 'manage_announcement_posts_custom_column' , 'custom_start_end_columns', 10, 2 );
+
+// EVENTS - Start & End Date
+add_filter( 'manage_event_posts_columns', 'set_custom_start_end_post_columns' );
+add_action( 'manage_event_posts_custom_column' , 'custom_start_end_columns', 10, 2 );

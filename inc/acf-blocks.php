@@ -7,10 +7,6 @@ function custom_gutenberg_styles() {
 }
 add_action('enqueue_block_editor_assets', 'custom_gutenberg_styles');
 
-
-
-
-
 add_action( 'enqueue_block_assets', 'ava_acf_blocks_scripts', 10, 0 );
 function ava_acf_blocks_scripts() {
 	$link		= get_template_directory_uri() . '/acf-blocks.css';
@@ -25,6 +21,20 @@ function ava_acf_blocks_scripts() {
 }
 
 
+function my_mario_block_category( $categories, $post ) {
+	return array_merge(
+		$categories,
+		array(
+			array(
+				'slug' => 'repubblika_block_category',
+				'title' => __( 'Repubblika Blocks', 'repubblika_block' ),
+			),
+		)
+	);
+} add_filter( 'block_categories', 'my_mario_block_category', 10, 2);
+
+
+
 add_action('acf/init', 'my_register_blocks');
 function my_register_blocks() {
 
@@ -35,7 +45,7 @@ function my_register_blocks() {
 						'title'				=> __('Custom Category Archives'),
 						'description'		=> __('A custom "display category" block.'),
 						'render_callback'	=> 'custom_category_archives_block',
-						'category'			=> 'widgets',
+						'category'			=> 'repubblika_block_category',
 						'html'				=> true,
 						'align'				=> 'full',
 						'supports'			=>	[
@@ -51,7 +61,7 @@ function my_register_blocks() {
 						'title'				=> __('Custom Tag Archives'),
 						'description'		=> __('A custom "display tag" block.'),
 						'render_callback'	=> 'custom_tag_archives_block',
-						'category'			=> 'widgets',
+						'category'			=> 'repubblika_block_category',
 						'html'				=> true,
 						'align'				=> 'full',
 						'supports'			=>	[
@@ -67,7 +77,7 @@ function my_register_blocks() {
 						'title'				=> __('Show Event in Post'),
 						'description'		=> __('Add a Show Event block.'),
 						'render_callback'	=> 'add_event_in_post_block',
-						'category'			=> 'widgets',
+						'category'			=> 'repubblika_block_category',
 						'html'				=> true,
 						'align'				=> 'full',
 						'supports'			=>	[
@@ -83,7 +93,7 @@ function my_register_blocks() {
 						'title'				=> __('Link Existing Post'),
 						'description'		=> __('Link to an existing Post block.'),
 						'render_callback'	=> 'add_post_in_post_block',
-						'category'			=> 'widgets',
+						'category'			=> 'repubblika_block_category',
 						'html'				=> true,
 						'align'				=> 'full',
 						'supports'			=>	[
@@ -99,7 +109,7 @@ function my_register_blocks() {
 						'title'				=> __('Add Chart'),
 						'description'		=> __('Add a Chart block.'),
 						'render_callback'	=> 'add_chart_in_post_block',
-						'category'			=> 'widgets',
+						'category'			=> 'repubblika_block_category',
 						'html'				=> true,
 						'align'				=> 'full',
 						'supports'			=>	[
@@ -242,6 +252,10 @@ function add_post_in_post_block( $block, $content = '', $is_preview = false, $po
 		$c[ 'class_name' ] .= ' align' . $block[ 'align' ];
 	}
 
+	if ( is_admin() ) {
+		echo 'Please click the pencil icon (<span class="dashicons dashicons-edit"></span>) to start.';
+	}
+
 	// Get ACF fields
 	$c[ 'fields' ] = get_fields();
 
@@ -267,7 +281,9 @@ function add_chart_in_post_block( $block, $content = '', $is_preview = false, $p
 		$c[ 'class_name' ] .= ' align' . $block[ 'align' ];
 	}
 
-	echo 'Please click the pencil icon (<span class="dashicons dashicons-edit"></span>) to start.';
+	if ( is_admin() ) {
+		echo 'Please click the pencil icon (<span class="dashicons dashicons-edit"></span>) to start.';
+	}
 
 	// Get ACF fields
 	$c[ 'layout' ] = get_fields();

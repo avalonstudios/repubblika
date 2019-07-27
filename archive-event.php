@@ -44,6 +44,9 @@ $args = [
 
 $c				= Timber::get_context();
 $c[ 'posts' ]	= new Timber\PostQuery( $args );
+
+$c[ 'sidebar' ] = Timber::get_sidebar( 'sidebar.php' );
+
 Timber::render( 'pages/archives/archive-event.twig', $c );
 
 get_footer();

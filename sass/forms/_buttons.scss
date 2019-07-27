@@ -19,8 +19,11 @@ input[type="submit"] {
 	&:focus {
 		border-color: $color__border-button-focus;
 	}
+} */
+
+a.btn {
+	@include colored-links( white, black, white );
 }
-*/
 
 .addtocalendar {
 	a {

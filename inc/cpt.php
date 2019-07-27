@@ -194,7 +194,7 @@ function cpts_fn() {
 		'taxonomies'			=> array(),
 		'public'				=> true,
 		'show_ui'				=> true,
-		'show_in_menu'			=> true,
+		'show_in_menu'			=> 'repubblika_index',
 		'menu_position'			=> 5,
 		'show_in_admin_bar'		=> true,
 		'show_in_nav_menus'		=> true,
@@ -207,6 +207,60 @@ function cpts_fn() {
 		'capability_type'		=> 'post',
 	);
 	register_post_type( 'announcement', $args );
+
+
+	// Register Custom Post Type Video
+	$labels = array(
+		'name'					=> _x( 'Videos', 'Post Type General Name', 'repubblika' ),
+		'singular_name'			=> _x( 'Video', 'Post Type Singular Name', 'repubblika' ),
+		'menu_name'				=> _x( 'Videos', 'Admin Menu text', 'repubblika' ),
+		'name_admin_bar'		=> _x( 'Video', 'Add New on Toolbar', 'repubblika' ),
+		'archives'				=> __( 'Video Archives', 'repubblika' ),
+		'attributes'			=> __( 'Video Attributes', 'repubblika' ),
+		'parent_item_colon'		=> __( 'Parent Video:', 'repubblika' ),
+		'all_items'				=> __( 'All Videos', 'repubblika' ),
+		'add_new_item'			=> __( 'Add New Video', 'repubblika' ),
+		'add_new'				=> __( 'Add New', 'repubblika' ),
+		'new_item'				=> __( 'New Video', 'repubblika' ),
+		'edit_item'				=> __( 'Edit Video', 'repubblika' ),
+		'update_item'			=> __( 'Update Video', 'repubblika' ),
+		'view_item'				=> __( 'View Video', 'repubblika' ),
+		'view_items'			=> __( 'View Videos', 'repubblika' ),
+		'search_items'			=> __( 'Search Video', 'repubblika' ),
+		'not_found'				=> __( 'Not found', 'repubblika' ),
+		'not_found_in_trash'	=> __( 'Not found in Trash', 'repubblika' ),
+		'featured_image'		=> __( 'Featured Image', 'repubblika' ),
+		'set_featured_image'	=> __( 'Set featured image', 'repubblika' ),
+		'remove_featured_image'	=> __( 'Remove featured image', 'repubblika' ),
+		'use_featured_image'	=> __( 'Use as featured image', 'repubblika' ),
+		'insert_into_item'		=> __( 'Insert into Video', 'repubblika' ),
+		'uploaded_to_this_item'	=> __( 'Uploaded to this Video', 'repubblika' ),
+		'items_list'			=> __( 'Videos list', 'repubblika' ),
+		'items_list_navigation'	=> __( 'Videos list navigation', 'repubblika' ),
+		'filter_items_list'		=> __( 'Filter Videos list', 'repubblika' ),
+	);
+	$args = array(
+		'label'					=> __( 'Video', 'repubblika' ),
+		'description'			=> __( '', 'repubblika' ),
+		'labels'				=> $labels,
+		'menu_icon'				=> 'dashicons-megaphone',
+		'supports'				=> array('title', 'thumbnail', 'revisions'),
+		'taxonomies'			=> array(),
+		'public'				=> true,
+		'show_ui'				=> true,
+		'show_in_menu'			=> 'repubblika_index',
+		'menu_position'			=> 5,
+		'show_in_admin_bar'		=> true,
+		'show_in_nav_menus'		=> true,
+		'can_export'			=> true,
+		'has_archive'			=> true,
+		'hierarchical'			=> false,
+		'exclude_from_search'	=> false,
+		'show_in_rest'			=> true,
+		'publicly_queryable'	=> true,
+		'capability_type'		=> 'post',
+	);
+	register_post_type( 'video', $args );
 }
 // Hook into the 'init' action
 add_action( 'init', 'cpts_fn', 0 );
@@ -220,9 +274,24 @@ function prefix_disable_gutenberg($current_status, $post_type) {
 
 
 /**
- * Register a custom menu page.
+ * Register Repubblika custom menu page.
  */
-function oo_custom_menu(){
+function ava_repubblika_menu(){
+	add_menu_page(
+		'Repubblika',
+		'Repubblika',
+		'edit_posts',
+		'repubblika_index',
+		'',
+		'',
+		6
+	);
+} add_action( 'admin_menu', 'ava_repubblika_menu' );
+
+/**
+ * Register Events custom menu page.
+ */
+function ava_events_menu(){
 	add_menu_page(
 		'Events',
 		'Events',
@@ -230,6 +299,6 @@ function oo_custom_menu(){
 		'events_index',
 		'',
 		'',
-		6
+		7
 	);
-} add_action( 'admin_menu', 'oo_custom_menu' );
+} add_action( 'admin_menu', 'ava_events_menu' );

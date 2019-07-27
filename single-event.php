@@ -9,9 +9,11 @@
 
 get_header();
 
-$show = Timber::get_context();
-$show['post'] = new TimberPost();
+$c = Timber::get_context();
+$c['post'] = new TimberPost();
 
-Timber::render( 'pages/single-event.twig', $show );
+$c[ 'sidebar' ] = Timber::get_sidebar( 'sidebar.php' );
+
+Timber::render( 'pages/single-event.twig', $c );
 
 get_footer();

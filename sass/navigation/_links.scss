@@ -1,4 +1,4 @@
-a {
+/*a {
 	color: $color__link;
 
 	&:visited {
@@ -16,6 +16,6 @@ a {
 	&:active {
 		outline: 0;
 	}
-}
+}*/
 
 @include colored-links( $red, black, pink );

@@ -3,10 +3,10 @@
     "title": "Events",
     "fields": [
         {
-            "key": "field_5c5870544b349",
-            "label": "This is a multi-day event",
-            "name": "multiday_event",
-            "type": "true_false",
+            "key": "field_5d20c0a4d869f",
+            "label": "Note:",
+            "name": "",
+            "type": "message",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -15,15 +15,13 @@
                 "class": "",
                 "id": ""
             },
-            "message": "",
-            "default_value": 0,
-            "ui": 1,
-            "ui_on_text": "",
-            "ui_off_text": ""
+            "message": "If inserting <b>Multiple Dates<\/b>, please make sure to set <i>Start Date<\/i> and <i>End Date<\/i> the same as the <b>first<\/b> and <b>last<\/b> date entered in the <b>Multiple Dates<\/b> selections.",
+            "new_lines": "wpautop",
+            "esc_html": 0
         },
         {
             "key": "field_5c586f149c8f0",
-            "label": "Date",
+            "label": "Start Date",
             "name": "start_date",
             "type": "date_time_picker",
             "instructions": "",
@@ -44,16 +42,8 @@
             "name": "end_date",
             "type": "date_time_picker",
             "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5c5870544b349",
-                        "operator": "==",
-                        "value": "1"
-                    }
-                ]
-            ],
+            "required": 1,
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "50",
                 "class": "",
@@ -62,6 +52,61 @@
             "display_format": "d\/m\/Y H:i",
             "return_format": "U",
             "first_day": 1
+        },
+        {
+            "key": "field_5d20bc569c124",
+            "label": "Select Individual Dates",
+            "name": "select_individual_dates",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "Add Date",
+            "sub_fields": [
+                {
+                    "key": "field_5d20bc739c125",
+                    "label": "Start Date",
+                    "name": "start_date",
+                    "type": "date_time_picker",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "d\/m\/Y H:i",
+                    "return_format": "U",
+                    "first_day": 1
+                },
+                {
+                    "key": "field_5d20bd0b911a7",
+                    "label": "End Date",
+                    "name": "end_date",
+                    "type": "date_time_picker",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "d\/m\/Y H:i",
+                    "return_format": "U",
+                    "first_day": 1
+                }
+            ]
         },
         {
             "key": "field_5c587edadede8",
@@ -228,5 +273,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1559737530
+    "modified": 1562427820
 }

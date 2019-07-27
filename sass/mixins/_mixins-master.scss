@@ -50,20 +50,20 @@
 
 @mixin colored-links( $link, $hover: $link, $visited: $hover ) {
 	a {
-		color: $link !important;
+		color: $link; //!important;
 		transition: transit( color ), transit( border-bottom, .5 );
 		&:visited {
-			color: $visited !important;
+			color: $visited; //!important;
 		}
 		&:hover {
-			color: $hover !important;
+			color: $hover; //!important;
 		}
 		&.ava-nv {
 			&:visited {
-				color: $link !important;
+				color: $link; //!important;
 			}
 			&:hover {
-				color: $hover !important;
+				color: $hover; //!important;
 			}
 		}
 	}
