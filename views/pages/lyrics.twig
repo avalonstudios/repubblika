@@ -1,0 +1,12 @@
+{% extends 'wrappers/basic-wrap.twig' %}
+
+{% block header %}
+	<h1 class="entry-title">{{ post.title }}</h1>
+{% endblock %}
+
+{% block content %}
+	{% for cat in categories %}
+		{% set term_link = fn('get_category_link', cat.term_id) %}
+		<h4><a href="{{ term_link }}" rel="bookmark">{{ cat.name }}</a> ({{ cat.count }})</h4>
+	{% endfor %}
+{% endblock %}

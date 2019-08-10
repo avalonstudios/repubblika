@@ -1,0 +1,5 @@
+{% import 'sections/partials/_macros.twig' as mcr %}
+
+{% if fields %}
+{{ mcr.upcoming_event(null, fields, site, theme) }}
+{% endif %}

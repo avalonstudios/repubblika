@@ -1,0 +1,14 @@
+{% spaceless %}
+<div id="primary" class="content-area col-12 col-lg-10 mb-5">
+	<main id="main" class="site-main">
+		<header class="my-5">{% block header %}{% endblock %}</header>
+		<div class="entry-content pr-lg-5 my-5">{% block content %}{% endblock %}</div>
+		{% block builder %}{% endblock %}
+		<footer class="entry-footer pr-lg-5 my-5">{% block footer %}{% endblock %}</footer>
+		{% block comments %}{% endblock %}
+	</main><!-- #main -->
+</div><!-- #primary -->
+
+{{ sidebar }}
+
+{% endspaceless %}

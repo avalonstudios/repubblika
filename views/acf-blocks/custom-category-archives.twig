@@ -1,0 +1,66 @@
+{% set lang = site.language %}
+{% if lang == 'en-GB' %}
+	{% set readmore = 'Read more' %}
+{% else %}
+	{% set readmore = 'Kompli aqra' %}
+	{% set months = [ '', 'Jannar', 'Frar', 'Marzu', 'April', 'Mejju', 'Ġunju', 'Lujlu', 'Awissu', 'Settembru', 'Ottubru', 'Novembru', 'Diċembru' ] %}
+{% endif %}
+<div id="{{ id|e('esc_html') }}" class="{{ class_name|e('esc_html') }} {{ width == 'full' ? 'col-md-12' : 'col-lg-6' }} pr-4">
+	{% if cats %}
+		<section class="magazine-section my-3">
+			<!-- Section heading -->
+		    <h3 class="h3-responsive font-weight-bold my-3">{{ title|e('wp_kses_post') }}</h3>
+			<!-- Grid row -->
+			<div class="ro">
+				<!-- Grid column -->
+				<div class="">
+					{% for post in posts %}
+						{% set thumb = post.thumbnail %}
+						<!-- Small news -->
+						<div class="single-news mb-4">
+							<!-- Grid row -->
+							<div class="row">
+								<!-- Grid column -->
+								{% if thumb %}
+									<div class="{{ width == 'half' ? 'col-md-12' : 'col-md-3' }}">
+										<!--Image-->
+										<div class="view overlay rounded z-depth-1 mb-4">
+											<img class="img-fluid" src="{{ Image(thumb).src|resize(380,250,'center') }}" alt="{{ Image(thumb).alt }}">
+											<a href="{{ post.link|e('esc_url') }}"><div class="mask rgba-white-slight"></div></a>
+										</div>
+									</div><!-- Grid column -->
+								{% endif %}
+								<!-- Grid column -->
+								<div class="{{ thumb ? 'col-md-9' : 'col-md-12' }} {{ width == 'half' ? 'col-md-12' : 'col-md-3' }}">
+									<!-- Excerpt -->
+									{% if lang == 'en-GB' %}
+										<p class="font-weight-bold dark-grey-text">{{ post.date('dS M, Y') }}</p>
+									{% else %}
+										<p class="font-weight-bold dark-grey-text">{{ post.date('d') }} ta' {{ months[post.date('m')|number_format] }}, {{ post.date('Y') }}</p>
+									{% endif %}
+
+									<div class="d-flex justify-content-between">
+										<div class="col-11 text-truncate pl-0 mb-3 text-wrap">
+											<a href="{{ post.link|e('esc_url') }}"><h4>{{ post.title|e('wp_kses_post') ?: '<em>(no title)</em>' }}</h4></a>
+											<div class="dark-grey-text">{{ post.preview.length(10).read_more(readmore) }}</div>
+										</div>
+										<a href="{{ post.link|e('esc_url') }}"><i class="fas fa-angle-double-right"></i></a>
+									</div>
+								</div><!-- Grid column -->
+							</div><!-- Grid row -->
+						</div><!-- Small news -->
+					{% endfor %}
+				</div><!-- Grid column -->
+			</div><!-- Grid row -->
+		</section>
+	{% else %}
+		Please click the pencil icon (<span class="dashicons dashicons-edit"></span>) to start.
+	{% endif %}
+	{#
+	<style type="text/css">
+		#{{ id|e('esc_html') }} {
+			background: {{ background_color }};
+			color: {{ text_color }};
+		}
+	</style> #}
+</div>

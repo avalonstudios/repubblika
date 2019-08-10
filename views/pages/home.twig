@@ -1,0 +1,96 @@
+{% extends 'wrappers/head-foot-wrap.twig' %}
+{% import 'sections/partials/_macros.twig' as mcr %}
+
+{% block content %}
+
+	{{ mcr.posts_carousel(stickies, site, theme) }}
+
+	{% include 'navigation/posts-pagination.twig' %}
+
+	{% set num_of_posts = options.num_of_posts %}
+	{% set num_of_cols = options.num_of_cols %}
+
+	{% if num_of_cols == 2 %}
+	    {% set divisor = 'col-12 col-sm-6' %}
+	{% elseif num_of_cols == 3 %}
+	    {% set divisor = 'col-12 col-md-4' %}
+	{% elseif num_of_cols == 4 %}
+	    {% set divisor = 'col-12 col-md-6 col-xl-3' %}
+	{% elseif num_of_cols == 6 %}
+	    {% set divisor = 'col-12 col-md-6 col-xl-2' %}
+	{% endif %}
+
+	{% set col1 = [] %}
+	{% set col2 = [] %}
+	{% set col3 = [] %}
+	{% set col4	= [] %}
+	{% set col5	= [] %}
+	{% set col6	= [] %}
+
+	{% for p in 1..num_of_posts %}
+		{% if (loop.index0 % num_of_cols) == 0 %}
+			{% set col1 = col1|merge([p]) %}
+		{% endif %}
+		{% if (loop.index0 % num_of_cols) == 1 %}
+			{% set col2 = col2|merge([p]) %}
+		{% endif %}
+		{% if (loop.index0 % num_of_cols) == 2 %}
+			{% set col3 = col3|merge([p]) %}
+		{% endif %}
+		{% if (loop.index0 % num_of_cols) == 3 %}
+			{% set col4 = col4|merge([p]) %}
+		{% endif %}
+		{% if (loop.index0 % num_of_cols) == 4 %}
+			{% set col5 = col5|merge([p]) %}
+		{% endif %}
+		{% if (loop.index0 % num_of_cols) == 5 %}
+			{% set col6 = col6|merge([p]) %}
+		{% endif %}
+	{% endfor %}
+
+	<div class="row">
+		<div class="{{ divisor }}">
+			{% for post in posts %}
+				{% if loop.index in col1 %}
+					{{ mcr.post_card(post, site, theme) }}
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="{{ divisor }}">
+			{% for post in posts %}
+				{% if loop.index in col2 %}
+					{{ mcr.post_card(post, site, theme) }}
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="{{ divisor }}">
+			{% for post in posts %}
+				{% if loop.index in col3 %}
+					{{ mcr.post_card(post, site, theme) }}
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="{{ divisor }}">
+			{% for post in posts %}
+				{% if loop.index in col4 %}
+					{{ mcr.post_card(post, site, theme) }}
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="{{ divisor }}">
+			{% for post in posts %}
+				{% if loop.index in col5 %}
+					{{ mcr.post_card(post, site, theme) }}
+				{% endif %}
+			{% endfor %}
+		</div>
+		<div class="{{ divisor }}">
+			{% for post in posts %}
+				{% if loop.index in col6 %}
+					{{ mcr.post_card(post, site, theme) }}
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+	{% include 'navigation/posts-pagination.twig' %}
+{% endblock %}

@@ -1,0 +1,122 @@
+{% extends 'wrappers/head-foot-wrap.twig' %}
+{% import 'sections/partials/_macros.twig' as mcr %}
+
+{% set show = post %}
+
+{% set months = [ '', 'Jannar', 'Frar', 'Marzu', 'April', 'Mejju', 'Ġunju', 'Lujlu', 'Awissu', 'Settembru', 'Ottubru', 'Novembru', 'Diċembru' ] %}
+
+{% block header %}
+	{% set title = show.post_title|e('wp_kses_post') %}
+	<h1 class="h1-responsive text-capitalize">{{ title }}</h1>
+{% endblock %}
+
+{% block content %}
+	{{ mcr.upcoming_event(null, post, site, theme, true) }}
+	{% set lang = site.language %}
+
+	{% set speakers = show.speaker %}
+
+	{% set notes = show.notes|e('wp_kses_post') %}
+
+	<!-- Grid row -->
+	<div class="row">
+		{% if post.content %}
+			<div class="col-12 mt-4">
+				{{ post.content|e('wp_kses_post') }}
+				{{ notes ? '' : '<hr>' }}
+			</div>
+		{% endif %}
+		{% if notes %}
+			<div class="col-12 mb-5">
+				<hr>
+				<p class="text-monospace">Note</p>
+				{{ notes }}
+				<hr>
+			</div>
+		{% endif %}
+
+		{% for speaker in speakers %}
+			{% set name 				= fn('get_the_title', speaker)|e('wp_kses_post') %}
+			{% set spkr 				= fn('get_fields', speaker) %}
+
+			{% set artist_website		= spkr.artist_website|e('esc_url') %}
+			{% set show_email			= spkr.show_email|e('wp_kses_post') %}
+			{% set show_contact_number	= spkr.show_contact_number|e('wp_kses_post') %}
+			{% set email				= spkr.email|e('wp_kses_post') %}
+			{% set contact_number		= spkr.contact_number|e('wp_kses_post') %}
+			{% set spkr_image			= spkr.image|e('wp_kses_post') %}
+			{% set short_bio			= spkr.short_bio|e('wp_kses_post') %}
+
+			{% set phone_number			= '+' ~ contact_number.cc ~ contact_number.number %}
+
+			{% if not short_bio %}
+				{% set pad_bottom = 'pb-3' %}
+			{% endif %}
+
+			{% if not spkr_image %}
+				{% set cols = 'col-12' %}
+			{% else %}
+				{% set cols = 'col-md-8' %}
+			{% endif %}
+
+			{% if loop.length == 1 %}
+				{% set card_cols = 'col-12' %}
+			{% elseif loop.length == 2 %}
+				{% set card_cols = 'col-12 col-lg-6' %}
+			{% elseif loop.length >= 3 %}
+				{% set card_cols = 'col-12 col-lg-4' %}
+			{% endif %}
+
+			<div class="mb-3 {{ card_cols }} {{ pad_bottom }}">
+				<div class="row no-gutters">
+					{% if spkr_image %}
+						<div class="col-md-4 mb-3">
+							<img src="{{ Image(spkr_image).src|resize(500,500,'center') }}" class="card-img" alt="{{ Image(spkr_image).src }}">
+						</div>
+					{% endif %}
+					<div class="{{ cols }}">
+						<div class="card-body pt-0">
+							<h5 class="card-title">{{ name }}</h5>
+
+							{% if short_bio %}
+								<div class="card-text">{{ short_bio }}</div>
+							{% endif %}
+
+							{% if artist_website %}
+								<small class="text-muted"><em class="mr-2">w:</em><a href="{{ artist_website }}" target="_blank">{{ artist_website }}</a></small><br>
+							{% endif %}
+
+							{% if show_email %}
+								<small class="text-muted"><em class="mr-2">e:</em><a href="mailto:{{ email }}">{{ email }}</a></small><br>
+							{% endif %}
+
+							{% if show_contact_number %}
+								<small class="text-muted"><em class="mr-2">t:</em><a href="tel:{{ phone_number }}">{{ phone_number }}</a></small><br>
+							{% endif %}
+
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+		<div class="col-12">
+			{% include 'sections/partials/_map.twig' %}
+			<span class="addtocalendar atc-style-blue">
+				<var class="atc_event">
+					<var class="atc_date_start">{{ start_date|date('Y-m-d') }} {{ start_date|date('h:ia') }}</var>
+					<var class="atc_date_end">{{ end_date|date('Y-m-d') }} {{ end_date|date('h:ia') }}</var>
+					<var class="atc_timezone">Europe/Malta</var>
+					<var class="atc_title">Star Wars Day Party</var>
+					<var class="atc_description">May the force be with you</var>
+					<var class="atc_location">{{ venue_address ~ ' ' ~ venue_city ~ ' ' ~ venue_country }}</var>
+					<var class="atc_organizer">Repubblika</var>
+					<var class="atc_organizer_email">sam@repubblika.moc</var>
+				</var>
+			</span>
+		</div>
+	</div><!-- Grid row -->
+{% endblock %}
+
+{% block builder %}
+	{% include 'sections/partials/content-builder.twig' %}
+{% endblock %}

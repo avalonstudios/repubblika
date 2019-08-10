@@ -1,0 +1,21 @@
+{% extends 'wrappers/head-foot-wrap.twig' %}
+
+{% block content %}
+	{% for album in post.meta('albums') %}
+		{% set album_title = album.album_title|e('wp_kses_post') %}
+		{% set text = album.text|e('wp_kses_post') %}
+		<div class="discography-album">
+			<h2>{{ album_title }}</h2>
+			<hr>
+			<div class="entry-content">{{ album.text }}</div>
+			{% if album.images|length %}
+				<div class="album-images d-flex flex-wrap justify-content-between mt-4">
+					{% for img in album.images %}
+						<img src="{{ Image(img.image).src|resize(250)|e('esc_url') }}" alt="{{ Image(img.image).src|e('wp_kses_post') }}">
+					{% endfor %}
+				</div>
+			{% endif %}
+			<hr>
+		</div>
+	{% endfor %}
+{% endblock %}

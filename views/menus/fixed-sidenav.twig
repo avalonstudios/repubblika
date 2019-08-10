@@ -1,0 +1,48 @@
+{% spaceless %}
+	<div id="slide-out" class="side-nav pt-3" style="transform: translateX(-100%);">
+		<ul class="custom-scrollbar list-unstyled m-0" style="max-height:100vh;">
+			<li class="side-nav-site-title">
+				{% include 'sections/header/branding.twig' %}
+				<hr class="float-left w-100 mb-0">
+			</li>
+			<!--Social-->
+			<li class="side-nav-social">
+				{% include 'menus/social-menu.twig' %}
+				<hr class="float-left my-1">
+			</li>
+			<!--/Social-->
+			<!-- Side navigation links -->
+			<li class="float-left pb-5">
+				<ul class="side-menu-navigation m-0 pb-5">
+					{% for item in menu.items %}
+						<li>
+							{% if item.children %}
+								<a class="nav-main-link" href="{{ item.link }}"{{ item.target ? ' target="_blank"' }}>{{ item.title }}</a>
+								<ul class="list-unstyled m-0 children">
+									{% for child in item.children %}
+										<li class="nav-drop-item">
+											<a class="waves-effect" href="{{ child.link }}"{{ item.target ? ' target="_blank"' }}>{{ child.title }}</a>
+											{% if child.children %}
+												<ul class="list-unstyled m-0 children">
+													{% for child in child.children %}
+														<li>
+															<a href="{{ child.link }}"{{ item.target ? ' target="_blank"' }}>{{ child.title }}</a>
+														</li>
+													{% endfor %}
+												</ul>
+											{% endif %}
+										</li>
+									{% endfor %}
+								</ul>
+							{% else %}
+								<a class="nav-main-link" href="{{ item.link }}"{{ item.target ? ' target="_blank"' }}>{{ item.title }}</a>
+							{% endif %}
+						</li>
+					{% endfor %}
+				</ul>
+			</li>
+			<!--/. Side navigation links -->
+		</ul>
+		<div class="sidenav-bg mask-strong"></div>
+	</div>
+{% endspaceless %}

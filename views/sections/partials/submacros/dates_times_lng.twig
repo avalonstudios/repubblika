@@ -1,0 +1,17 @@
+{% macro date_languages(site, start, end, separator) %}
+	{% set lang = site.language %}
+	{% set months = [ '', 'Jannar', 'Frar', 'Marzu', 'April', 'Mejju', 'Ġunju', 'Lujlu', 'Awissu', 'Settembru', 'Ottubru', 'Novembru', 'Diċembru' ] %}
+	{% if lang == 'en-GB' %}
+		<div class="d-block">
+			<time class="event-date" datetime="{{ start|date('c') }}"><i class="far fa-calendar-alt mr-1 green-text"></i>{{ start|date('dS') }} {{ start|date('F') }}, {{ start|date('Y') }} <i class="far fa-clock green-text"></i> {{ start|date('H:i') }}</time>
+			{{ separator }}
+			<time class="event-date" datetime="{{ end|date('c') }}"><i class="far fa-calendar-alt mr-1 red-text"></i>{{ end|date('dS') }} {{ end|date('F') }}, {{ end|date('Y') }} <i class="far fa-clock red-text"></i> {{ end|date('H:i') }}</time>
+		</div>
+	{% else %}
+		<div class="d-block">
+			<time class="entry-date published updated" datetime="{{ start|date('c') }}"><i class="far fa-calendar-alt mr-1 green-text"></i>{{ start|date('d') }} ta' {{ months[start|date('m')|number_format] }}, {{ start|date('Y') }} <i class="far fa-clock green-text"></i> {{ start|date('H:i') }}</time>
+			{{ separator }}
+			<time class="entry-date published updated" datetime="{{ end|date('c') }}"><i class="far fa-calendar-alt mr-1 red-text"></i>{{ end|date('d') }} ta' {{ months[end|date('m')|number_format] }}, {{ end|date('Y') }} <i class="far fa-clock red-text"></i> {{ end|date('H:i') }}</time>
+		</div>
+	{% endif %}
+{% endmacro date_languages %}

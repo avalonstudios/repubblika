@@ -1,0 +1,44 @@
+{% extends 'wrappers/head-foot-wrap.twig' %}
+{% import 'sections/partials/_macros.twig' as mcr %}
+
+{% block content %}
+	{% set posts_length = posts|length %}
+	<div class="float-left w-100">
+		<div class="row">
+			{% for post in posts %}
+				{% set embed_type	= post.embedding_type %}
+				{% set url			= post.url %}
+				{% set embed_code	= post.embed_code %}
+				{% set video_desc	= post.video_description|e('wp_kses_post') %}
+
+				{% if video_length == 1 %}
+					{% set cols = 12 %}
+				{% else %}
+					{% set cols = 6 %}
+				{% endif %}
+
+				{% if posts_length != 2 and posts_length != 4 %}
+					{% if loop.last %}
+						{% set cols = 12 %}
+					{% endif %}
+				{% endif %}
+
+				<div class="col-{{ cols }} mb-3">
+					{% if embed_type == 'url' %}
+						{% filter shortcodes %}
+							[video src="{{ url }}"]
+						{% endfilter %}
+					{% else %}
+						<div class="embed-container">
+							{{ embed_code }}
+						</div>
+					{% endif %}
+
+					{% if video_desc %}
+						<p class="m-0 p-3 grey lighten-4 w-100 mt-1 repubblika-border rborder-1">{{ video_desc }}</p>
+					{% endif %}
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

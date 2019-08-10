@@ -1,0 +1,113 @@
+{% spaceless %}
+
+{% if fn('is_front_page') %}
+
+	{% set lang = site.language %}
+
+	{% if lang == 'en-GB' %}
+		{% set btn_lng = 'read more' %}
+	{% else %}
+		{% set btn_lng = 'kompli aqra' %}
+	{% endif %}
+
+	{% set ann_length = announcements|length %}
+
+	{% if ann_length %}
+
+		<div class="d-block w-100 mt-5"></div>
+
+		{% if ann_length >= 4 %}
+			<div class="col-12">
+				<div id="carousel-example-multi" class="carousel slide carousel-multi-item v-2" data-ride="carousel">
+					<!--Controls-->
+					<div class="controls-top">
+						<a class="btn-floating" href="#carousel-example-multi" data-slide="prev"><i class="fas fa-chevron-left"></i></a>
+						<a class="btn-floating" href="#carousel-example-multi" data-slide="next"><i class="fas fa-chevron-right"></i></a>
+					</div><!--/.Controls-->
+
+					<!-- Indicators -->
+					<ol class="carousel-indicators">
+						{% for ann in announcements %}
+						<li data-target="#carousel-example-multi" data-slide-to="{{ loop.index0 }}" class="{{ loop.first ? 'active' : '' }}"></li>
+						{% endfor %}
+					</ol><!--/.Indicators-->
+
+					<div class="carousel-inner v-2" role="listbox">
+						{% for ann in announcements %}
+							{% set preview = ann.preview | truncate(30) | e('wp_kses_post') %}
+							{% set link = ann.link | e('esc_url') %}
+							{% set thumb = ann.thumbnail %}
+							{% set starts = ann.start_date|date('d/m/Y g:ia') %}
+							{% set ends = ann.end_date|date('d/m/Y g:ia') %}
+							<div class="carousel-item {{ loop.first ? 'active' : '' }}">
+								<div class="col-12 col-md-4">
+									<div class="card mb-2">
+										<div class="card-body">
+											<h4 class="card-title font-weight-bold">{{ ann.title }}</h4>
+											<p class="card-text">{{ preview }}</p>
+											<small>{{ starts }} - {{ ends }}</small>
+											<a href="{{ link }}" class="btn btn-primary btn-md btn-rounded">{{ btn_lng }}</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		{% elseif ann_length >= 2 and ann_length <= 3 %}
+			{% if ann_length == 2 %}
+				{% set cols = ' col-md-6' %}
+				{% set card = ' flex-row border-right transparent-card' %}
+				{% set img_width = 150 %}
+				{% set img_height = 150 %}
+			{% else %}
+				{% set cols = ' col-md-4' %}
+				{% set card = ' border-right transparent-card' %}
+				{% set img_width = 600 %}
+				{% set img_height = 150 %}
+			{% endif %}
+			<div class="card-deck">
+				{% for ann in announcements %}
+					{% set preview = ann.preview | truncate(30) | e('wp_kses_post') %}
+					{% set link = ann.link | e('esc_url') %}
+					{% set thumb = ann.thumbnail %}
+					{% set starts = ann.start_date|date('d/m/Y g:ia') %}
+					{% set ends = ann.end_date|date('d/m/Y g:ia') %}
+					<div class="col-12 mb-4 mb-md-0{{ cols }}">
+						<div class="card{{ card }}">
+							<div class="card-body">
+								<h4 class="card-title font-weight-bold">{{ ann.title }}</h4>
+								<p class="card-text">{{ preview }}</p>
+								<small>{{ starts }} - {{ ends }}</small>
+								<a href="{{ link }}" class="btn btn-primary btn-md btn-rounded">{{ btn_lng }}</a>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		{% elseif ann_length == 1 %}
+			{% for ann in announcements %}
+				{% set preview = ann.preview | truncate(30) | e('wp_kses_post') %}
+				{% set link = ann.link | e('esc_url') %}
+				{% set thumb = ann.thumbnail %}
+				{% set starts = ann.start_date|date('d/m/Y g:ia') %}
+				{% set ends = ann.end_date|date('d/m/Y g:ia') %}
+				<div class="col-12">
+					<div class="card mb-2 flex-row border-0 transparent-card">
+						<div class="card-body">
+							<h4 class="card-title font-weight-bold">{{ ann.title }}</h4>
+							<p class="card-text">{{ preview }}</p>
+							<small>{{ starts }} - {{ ends }}</small>
+							<a href="{{ link }}" class="btn btn-primary btn-md btn-rounded">{{ btn_lng }}</a>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		{% endif %}
+		<hr class="col-12 mt-5 mb-0">
+	{% endif %}
+
+{% endif %}
+
+{% endspaceless %}

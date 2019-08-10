@@ -1,0 +1,353 @@
+{% macro space_classes(full_width, text_color, background_color, custom_classes) %}
+	{% if full_width %}
+		{% set container = 'px-3 px-md-0 ' ~ custom_classes %}
+	{% else %}
+		{% set container = 'container ' ~ custom_classes  %}
+	{% endif %}
+
+	{% if background_color %}
+		{% set classes = ' py-5' %}
+	{% else %}
+		{% set classes = '' %}
+	{% endif %}
+
+	<section class="{{ container }}" style="color:{{ text_color }};background-color:{{ background_color }}">
+		<div class="{{ classes }}">
+{% endmacro space_classes %}
+
+{% macro end_space_classes(p) %}
+		</div>
+	</section>
+	<hr>
+{% endmacro end_space_classes %}
+
+
+{% macro acf_map(lat, lng, title, address, description, height, classes) %}
+	<div class="acf-map {{ classes }}" style="{{ height }}">
+		<div class="marker" data-lat="{{ lat }}" data-lng="{{ lng }}">
+			<h5>{{ title }}</h5>
+			<p>{{ description }}</p>
+			<p class="address">{{ address }}</p>
+		</div>
+	</div>
+{% endmacro acf_map %}
+
+{% macro text_editor(prop) %}
+	{% set text = prop.text_editor %}
+
+	{% import _self as spaceclass %}
+	{{ spaceclass.space_classes(prop.section_properties.full_width, prop.section_properties.text_color, prop.section_properties.background_color) }}
+
+		{{ text }}
+
+	{% import _self as endspaceclass %}
+	{{ endspaceclass.end_space_classes(p) }}
+{% endmacro text_editor %}
+
+{% macro logos(prop) %}
+	{% set logos = prop.logos_rep %}
+
+	{% import _self as spaceclass %}
+	{{ spaceclass.space_classes(prop.section_properties.full_width, prop.section_properties.text_color, prop.section_properties.background_color) }}
+
+	{% if logos|length %}
+		<div class="d-flex justify-content-around">
+			{% for logo in logos %}
+				{% set url = logo.url|e('esc_url') %}
+				<a href="{{ url }}" target="_blank"><img src="{{ Image(logo.image).src|resize(null,60,'center') }}" alt="{{ Image(logo.image).alt }}"></a>
+			{% endfor %}
+		</div>
+	{% endif %}
+
+	{% import _self as endspaceclass %}
+	{{ endspaceclass.end_space_classes(p) }}
+{% endmacro logos %}
+
+{% macro post_meta(post, site) %}
+	{% set lang = site.language %}
+	{% set months = [ '', 'Jannar', 'Frar', 'Marzu', 'April', 'Mejju', 'Ġunju', 'Lujlu', 'Awissu', 'Settembru', 'Ottubru', 'Novembru', 'Diċembru' ] %}
+	{% if lang == 'en-GB' %}
+		<div class="entry-meta small-text">
+			{% set date = post.date %}
+			{% set modified_date = post.modified_date %}
+			<span class="author vcard"><i class="far fa-user mr-1"></i><a class="url fn n" href="{{ post.author.link|e('esc_url') }}">{{ post.author.name|e('wp_kses_post') }}</a><br></span>
+			<span class="posted-on ml-">
+			{% if modified_date != date %}
+				<time class="entry-date published" datetime="{{ date|date('c') }}"><i class="far fa-calendar-alt mr-1"></i>{{ date }}</time>,
+				<small class="font-italic">updated on <time class="update" datetime="{{ modified_date|date('c') }}">{{ modified_date }}</time></small>
+			{% else %}
+				<time class="entry-date published updated" datetime="{{ date|date('c') }}"><i class="far fa-calendar-alt mr-1"></i>{{ date }}</time>
+			{% endif %}
+			</span>
+		</div><!-- .entry-meta -->
+	{% else %}
+		<div class="entry-meta small-text">
+			{% set date = post.date %}
+			{% set modified_date = post.modified_date %}
+			<span class="author vcard"><i class="far fa-user mr-1"></i><a class="url fn n" href="{{ post.author.link|e('esc_url') }}">{{ post.author.name|e('wp_kses_post') }}</a><br></span>
+			<span class="posted-on ml-">
+			{% if modified_date != date %}
+				<i class="far fa-calendar-alt mr-1"></i><time class="entry-date published" datetime="{{ date|date('c') }}">{{ date|date('d') }} ta' {{ months[date|date('m')|number_format] }}, {{ date|date('Y') }}</time>,
+				<small class="font-italic">aġġornat <time class="update" datetime="{{ modified_date|date('c') }}">{{ modified_date|date('d') }} ta' {{ months[modified_date|date('m')|number_format] }}, {{ modified_date|date('Y') }}</time></small>
+			{% else %}
+				<time class="entry-date published updated" datetime="{{ date|date('c') }}"><i class="far fa-calendar-alt mr-1"></i>{{ date|date('d') }} ta' {{ months[date|date('m')|number_format] }}, {{ date|date('Y') }}</time>
+			{% endif %}
+			</span>
+		</div><!-- .entry-meta -->
+	{% endif %}
+{% endmacro post_meta %}
+
+{% macro post_card(post, site, theme) %}
+	{% set title = post.title|e('wp_kses_post') %}
+	{% set link = post.link|e('esc_url') %}
+	{% set thumb = post.thumbnail %}
+	{% if fn('is_sticky') %}
+		{% set sticky = '<i class="fas fa-thumbtack float-right"></i>' %}
+	{% endif %}
+	{% if site.language == 'en-GB' %}
+		{% set excerpt = post.preview %}
+	{% else %}
+		{% set excerpt = post.preview.read_more('Kompli Area') %}
+	{% endif %}
+	<article id="post-{{ post.id }}" class="{{ post.class }} card transparent-card pb-4 mb-4">
+		{% if thumb %}
+			<a href="{{ link }}"><img class="card-img" src="{{ Image(thumb).src|resize(750,460,'center') }}" alt=""></a>
+		{% else %}
+			<a href="{{ link }}"><img src="{{ theme.path }}/images/repubblika-rpl.png" alt=""></a>
+		{% endif %}
+		<header class="card-header">
+			{% if title %}
+				<a href="{{ link }}"><h4 class="card-title">{{ title }}{{ sticky }}</h4></a>
+			{% else %}
+				<a href="{{ link }}"><h4 class="card-title font-italic">(no title){{ sticky }}</h4></a>
+			{% endif %}
+			<div class="card-meta">
+				{{ _self.post_meta(post, site) }}
+			</div>
+		</header>
+		<div class="card-body">
+			<p class="card-text">{{ excerpt }}</p>
+		</div>
+	</article>
+{% endmacro post_card %}
+
+
+{% macro posts_carousel(posts, site, theme) %}
+	<div class="d-none d-md-block">
+		<div id="postsCarousel" class="carousel slide carousel-fade" data-ride="carousel">
+			<ol class="carousel-indicators">
+				{% for post in posts %}
+					<li data-target="#postsCarousel" data-slide-to="{{ loop.index0 }}" class="{{ loop.first ? 'active' }}"></li>
+				{% endfor %}
+			</ol>
+			<div class="carousel-inner">
+				{% for post in posts %}
+					{% set title	= post.title|e('wp_kses_post') %}
+					{% set link		= post.link|e('esc_url') %}
+					{% set thumb	= post.thumbnail %}
+
+					{% if site.language == 'en-GB' %}
+						{% set excerpt = post.preview %}
+					{% else %}
+						{% set excerpt = post.preview.read_more('Kompli Area') %}
+					{% endif %}
+
+					<div class="carousel-item{{ loop.first ? ' active' }}">
+						{% if thumb %}
+							<img src="{{ Image(thumb).src|resize(1600,427,'center') }}" class="d-block w-100" alt="{{ Image(thumb).alt|e('wp_kses_post') }}">
+						{% else %}
+							<img src="{{ theme.path }}/images/repubblika-rpl.png" class="d-block w-100" alt="{{ Image(thumb).alt|e('wp_kses_post') }}">
+						{% endif %}
+						<div class="arousel-caption d-non e d -md-block">
+							<h2 class="excerpt-title p-2"><a href="{{ post.link }}">{{ title }}</a></h2>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+			{#<a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>#}
+		</div>
+	</div>
+{% endmacro posts_carousel %}
+
+
+{% macro upcoming_event_content(show, site, theme, singular) %}
+	{% set lang = site.language %}
+
+	{% set months = [ '', 'Jannar', 'Frar', 'Marzu', 'April', 'Mejju', 'Ġunju', 'Lujlu', 'Awissu', 'Settembru', 'Ottubru', 'Novembru', 'Diċembru' ] %}
+
+	{% set title = show.post_title|e('wp_kses_post') %}
+	{% set multiday = show.multiday_event %}
+	{% set start_date = show.start_date %}
+	{% set end_date = show.end_date %}
+
+	{% set xahar = start_date|date('m')|number_format %}
+
+	{% set artist = fn('get_the_title', show.artist)|e('wp_kses_post') %}
+	{% set artist_link = fn('get_field', 'artist_website', show.artist)|e('esc_url') %}
+
+	{% set venue_name = fn('get_the_title', show.venue)|e('wp_kses_post') %}
+	{% set venue = fn('get_fields', show.venue) %}
+
+	{% set admittance = show.admittance|e('wp_kses_post') %}
+	{% if lang == 'en-GB' %}
+		{% set admit_lng = admittance|split('|')[0] %}
+	{% else %}
+		{% set admit_lng = admittance|split('|')[1] %}
+	{% endif %}
+
+	{% set price = show.price|e('wp_kses_post') %}
+	{% set ticket_url = show.ticket_url|e('esc_url') %}
+	{% set ticket_phone = '+' ~ show.cc ~ show.number %}
+
+	{% set notes = show.notes|e('wp_kses_post') %}
+
+	{% set venue_address = venue.venue_address|e('wp_kses_post') %}
+	{% set venue_state_provence = venue.venue_state_provence|e('wp_kses_post') %}
+	{% set venue_city = venue.venue_city|e('wp_kses_post') %}
+	{% set venue_postal_code = venue.venue_postal_code|e('wp_kses_post') %}
+	{% set venue_website = venue.venue_website|e('esc_url') %}
+	{% set venue_phone = venue.contact_number|e('wp_kses_post') %}
+	{% set venue_country = venue.venue_country.label|e('wp_kses_post') %}
+
+	{% if price %}
+		{% set price_output = '<span>&euro;' ~ price ~ '</span><br>' %}
+	{% else %}
+		{% set price_output = '' %}
+	{% endif %}
+
+	{% if lang == 'en-GB' %}
+		{% set admittance_lng = 'Admittance' %}
+		{% set ticket_lng = 'Tickets' %}
+		{% set website_lng = 'website' %}
+		{% set phone_lng = 'phone' %}
+		{% set venue_lng = 'Venue' %}
+		{% set start_date_output = start_date|date('d/M/Y') %}
+		{% set end_date_output = end_date|date('d/M/Y') %}
+		{% set view_lng = 'Details' %}
+		{% set other_dates_lng = "Other Dates" %}
+	{% else %}
+		{% set admittance_lng = 'Dħul' %}
+		{% set ticket_lng = 'Biljetti' %}
+		{% set website_lng = 'sit elettroniku' %}
+		{% set phone_lng = 'ċempel' %}
+		{% set venue_lng = 'Post' %}
+		{% set start_date_output = start_date|date('d') ~ '/' ~ months[xahar] ~ '/' ~ start_date|date('Y') %}
+		{% set end_date_output = end_date|date('d') ~ '/' ~ months[xahar] ~ '/' ~ end_date|date('Y') %}
+		{% set view_lng = 'Dettalji' %}
+		{% set other_dates_lng = "Dati Oħra" %}
+	{% endif %}
+
+	{% if multiday %}
+		{% if start_date|date('dmY') == end_date|date('dmY') %}
+			{% set s_date = '<i class="far fa-calendar-alt"></i> ' ~ start_date_output ~ ' <i class="far fa-clock"></i> ' ~ start_date|date('H:i') %}
+			{% set e_date = ' - ' ~ end_date|date('H:i') %}
+		{% else %}
+			{% set s_date = '<i class="far fa-calendar-alt"></i> ' ~ start_date_output ~ ' <i class="far fa-clock"></i> ' ~ start_date|date('H:i') %}
+			{% set e_date = '<br><div class="mt-2"><i class="fas fa-calendar-alt"></i> ' ~ end_date_output ~ ' <i class="fas fa-clock"></i> ' ~ end_date|date('H:i') ~ '</div>' %}
+		{% endif %}
+	{% else %}
+		{% set s_date = '<i class="far fa-calendar-alt"></i> ' ~ start_date_output ~ ' <i class="far fa-clock"></i> ' ~ start_date|date('H:i') %}
+	{% endif %}
+	<div class="text-center {{ singular ? '' : 'p-4 jumbotron' }} z-depth-0">
+		<!-- Grid row -->
+		<div class="row">
+			{% if not singular %}
+			<h3 class="col-12 text-capitalize">{{ title }}</h3>
+			{% endif %}
+			<div class="col-md-6 text-right my-3">
+				<h6>{{ s_date }}{{ e_date }}</h6>
+				<h6 class="font-weight-bold mt-3 m-0">{{ admittance_lng}}</h6>
+				<div>
+					<span>{{ admit_lng }}</span><br>
+					{{ price_output }}
+					{% if ticket_url or ticket_phone %}
+						<h6 class="font-weight-bold mt-3 m-0">{{ ticket_lng }}</h6>
+						{% if ticket_url %}
+							<a href="{{ ticket_url }}"><code class="p-0 d-block">{{ website_lng }}</code></a>
+						{% endif %}
+						{% if ticket_phone %}
+							<a href="tel:{{ ticket_phone }}"><code class="p-0 d-block">{{ phone_lng }}</code></a>
+						{% endif %}
+					{% endif %}
+				</div>
+			</div><!-- Grid column -->
+			<!-- Grid column -->
+			<div class="col-md-6 text-md-left l-md-3 mt-3">
+				<h4 class="h4 mb-4"><i class="fas fa-map-pin pr-1"></i>{{ venue_name }}</h4>
+				<div class="font-weight-normal">
+					{{ venue_address ? '<span>' ~ venue_address ~ '<br></span>' }}
+					{{ venue_state_provence ? '<span>' ~ venue_state_provence ~ '<br></span>' }}
+					{{ venue_city ? '<span>' ~ venue_city ~ '<br></span>' }}
+					{{ venue_postal_code ? '<span>' ~ venue_postal_code ~ '<br></span>' }}
+					{{ venue_country ? '<span>' ~ venue_country ~ '<br></span>' }}
+
+					{% if venue_website or venue_phone %}
+						<h6 class="font-weight-bold mt-3 m-0">{{ venue_lng }}</h6>
+						{% if venue_website %}
+							<a href="{{ venue_website }}"><code class="p-0 d-block">{{ website_lng }}</code></a>
+						{% endif %}
+						{% if venue_phone.number %}
+							<a href="tel:+{{ venue_phone.cc }}{{ venue_phone.number }}"><code class="p-0 d-block">{{ phone_lng }}</code></a>
+						{% endif %}
+					{% endif %}
+				</div>
+			</div><!-- Grid column -->
+
+			<!-- Other Dates -->
+			<div class="d-block w-100 text-center mt-4 oswald-font">
+				{% import 'sections/partials/submacros/dates_times_lng.twig' as submcr %}
+				{% set multiple_dates = show.meta('select_individual_dates') %}
+				<h5><strong>{{ other_dates_lng }}</strong></h5>
+				{% for multiple_date in multiple_dates %}
+					{{ submcr.date_languages(site, multiple_date.start_date, multiple_date.end_date, ' - ') }}
+				{% endfor %}
+			</div>
+
+			{% if not singular %}
+				<div class="col-6 mt-4">
+					<a href="{{ show.link }}" class="btn btn-primary">{{ view_lng }}</a>
+				</div>
+				<div class="col-6 mt-4">
+					<span class="addtocalendar atc-style-blue">
+						<var class="atc_event">
+							<var class="atc_date_start">{{ start_date|date('Y-m-d') }} {{ start_date|date('h:ia') }}</var>
+							<var class="atc_date_end">{{ end_date|date('Y-m-d') }} {{ end_date|date('h:ia') }}</var>
+							<var class="atc_timezone">Europe/Malta</var>
+							<var class="atc_title">{{ title }}</var>
+							<var class="atc_description">{{ notes }}</var>
+							<var class="atc_location">{{ venue_address ~ ' ' ~ venue_city ~ ' ' ~ venue_country }}</var>
+							<var class="atc_organizer">Repubblika</var>
+							<var class="atc_organizer_email">sam@repubblika.moc</var>
+						</var>
+					</span>
+				</div>
+			{% endif %}
+		</div><!-- Grid row -->
+	</div><!-- News jumbotron -->
+{% endmacro upcoming_event_content %}
+
+{% macro upcoming_event(prop, shows, site, theme, singular) %}
+	{% set full_width			= prop.section_properties.full_width %}
+	{% set text_color			= prop.section_properties.text_color %}
+	{% set background_color		= prop.section_properties.background_color %}
+
+	{{ _self.space_classes(full_width, text_color, background_color, 'mb-5') }}
+
+	{% if singular %}
+	    {{ _self.upcoming_event_content(shows, site, theme, singular) }}
+	{% else %}
+		{% for show in shows %}
+			{{ _self.upcoming_event_content(show, site, theme, singular) }}
+		{% endfor %}
+	{% endif %}
+
+	{{ _self.end_space_classes(p) }}
+
+{% endmacro upcoming_event %}

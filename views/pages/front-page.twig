@@ -1,0 +1,38 @@
+{% set fw = post.meta('full_width') %}
+{% extends fw ? 'wrappers/head-foot-wrap-no-sidebar.twig' : 'wrappers/head-foot-wrap.twig' %}
+
+{% block header %}
+{#
+	<div class="position-relative">
+		<h1 class="page-title">{{ post.title }}</h1>
+	</div>
+#}
+	<div class="my-5"></div>
+{% endblock %}
+
+{% block content %}
+    {#{{ post.content }}
+
+	<form method="post" action="{{ theme.link }}/inc/calendar/download-ics.php">
+		<input type="hidden" name="date_start" value="2017-1-16 9:00AM">
+		<input type="hidden" name="date_end" value="2017-1-16 10:00AM">
+		<input type="hidden" name="location" value="123 Fake St, New York, NY">
+		<input type="hidden" name="description" value="This is my description">
+		<input type="hidden" name="summary" value="This is my summary">
+		<input type="hidden" name="url" value="http://example.com">
+		<input type="submit" value="Add to Calendar">
+	</form>
+<pre>{{dump(flex)}}</pre>
+<br>
+{% set content = post.meta('add_content') %}
+<pre>{{ dump(content) }}</pre>
+    #}
+
+    {% include 'sections/partials/content-builder.twig' %}
+
+{% endblock %}
+
+{% block builder %}
+    {#
+    #}
+{% endblock %}

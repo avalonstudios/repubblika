@@ -1,0 +1,298 @@
+
+{% macro title(title) %}
+	{% if title %}
+		<div class="d-block w-100">
+			<h2 class="section-title repubblika-border m-0">{{ title }}</h2>
+			<hr class="float-left w-100 m-0 mb-4">
+		</div>
+	{% endif %}
+{% endmacro title %}
+
+
+{% macro full_text_editor(cont) %}
+
+	{% set title = cont.sec_prop.section_title|e('wp_kses_post') %}
+	{% set text = cont.wysiwyg|e('wp_kses_post') %}
+
+	<section class="full-text-editor mb-5 float-left w-100">
+
+		{{ _self.title(title) }}
+
+		{{ text }}
+
+	</section>
+
+{% endmacro full_text_editor %}
+
+{% macro video(cont, site) %}
+	{% set title	= cont.sec_prop.section_title|e('wp_kses_post') %}
+	{% set videos	= cont.videos %}
+	{% set videos_length = videos|length %}
+
+	{% set lang = site.language %}
+	{% if lang == 'en-GB' %}
+		{% set view_archive = 'All Videos' %}
+	{% else %}
+		{% set view_archive = 'Videos Kollha' %}
+	{% endif %}
+
+	<section class="video-embed mb-5 float-left w-100">
+
+		{{ _self.title(title) }}
+
+		{% if videos_length %}
+
+			<div class="float-left w-100">
+				<div class="row">
+					{% for video in videos %}
+						{% set embed_type	= video.embedding_type %}
+						{% set url			= video.url %}
+						{% set embed_code	= video.embed_code %}
+						{% set video_desc	= video.video_description|e('wp_kses_post') %}
+
+						{% if videos_length == 1 %}
+							{% set cols = 12 %}
+						{% else %}
+							{% set cols = 6 %}
+						{% endif %}
+
+						{% if videos_length != 2 and videos_length != 4 %}
+							{% if loop.last %}
+								{% set cols = 12 %}
+							{% endif %}
+						{% endif %}
+
+						<div class="col-{{ cols }} mb-3">
+							<div class="embed-container">
+								{% if embed_type == 'url' %}
+									{{ url }}
+								{% else %}
+									{{ embed_code }}
+								{% endif %}
+							</div>
+
+							{% if video_desc %}
+								<p class="m-0 p-3 grey lighten-4 w-100 mt-1 repubblika-border rborder-1">{{ video_desc }}</p>
+							{% endif %}
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		{% endif %}
+		<div class="float-left w-100">
+			<div class="text-center pt-4">
+				<a href="{{ fn('get_post_type_archive_link', 'video') }}" class="btn btn-secondary">{{ view_archive }}</a>
+			</div>
+		</div>
+	</section>
+{% endmacro video %}
+
+{% macro videos(cont, site) %}
+	{% set title			= cont.sec_prop.section_title|e('wp_kses_post') %}
+	{% set videos			= cont.video_selection %}
+	{% set videos_length	= videos|length %}
+
+	{% set lang = site.language %}
+	{% if lang == 'en-GB' %}
+		{% set view_archive = 'All Videos' %}
+	{% else %}
+		{% set view_archive = 'Videos Kollha' %}
+	{% endif %}
+
+	<section class="video-embed mb-5 float-left w-100">
+
+		{{ _self.title(title) }}
+
+		{% if videos_length %}
+
+			<div class="float-left w-100">
+				<div class="row">
+					{% for video in videos %}
+						{% set embed_type	= video.embedding_type %}
+						{% set url			= video.url %}
+						{% set embed_code	= video.embed_code %}
+						{% set video_desc	= video.video_description|e('wp_kses_post') %}
+
+						{% if videos_length == 1 %}
+							{% set cols = 12 %}
+						{% else %}
+							{% set cols = 6 %}
+						{% endif %}
+
+						{% if videos_length != 2 and videos_length != 4 %}
+							{% if loop.last %}
+								{% set cols = 12 %}
+							{% endif %}
+						{% endif %}
+
+						<div class="col-{{ cols }} mb-3">
+								{% if embed_type == 'url' %}
+									{% filter shortcodes %}
+										[video src="{{ url }}" width="1920" height="1080"]
+									{% endfilter %}
+								{% else %}
+									<div class="embed-container">
+										{{ embed_code }}
+									</div>
+								{% endif %}
+
+							{% if video_desc %}
+								<p class="m-0 p-3 grey lighten-4 w-100 mt-1 repubblika-border rborder-1">{{ video_desc }}</p>
+							{% endif %}
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		{% endif %}
+		<div class="float-left w-100">
+			<div class="text-center pt-4">
+				<a href="{{ fn('get_post_type_archive_link', 'video') }}" class="btn btn-secondary">{{ view_archive }}</a>
+			</div>
+		</div>
+	</section>
+{% endmacro videos %}
+
+{% macro join_application_form(cont) %}
+	{% set title = cont.sec_prop.section_title|e('wp_kses_post') %}
+	{% set text = cont.wysiwyg|e('wp_kses_post') %}
+	{% set page_link = cont.application_form %}
+
+	<section class="full-text-editor mb-5 float-left w-100">
+
+		{{ _self.title(title) }}
+
+		{{ text }}
+
+		{% if page_link %}
+			<div class="text-center pt-4">
+				<a href="{{ page_link }}" class="btn btn-secondary">Join Us</a>
+			</div>
+		{% endif %}
+
+	</section>
+{% endmacro join_application_form %}
+
+{% macro donations(cont) %}
+	{% set title = cont.sec_prop.section_title|e('wp_kses_post') %}
+	{% set text = cont.wysiwyg|e('wp_kses_post') %}
+	{% set link_url = cont.donation_link.url %}
+	{% set link_text = cont.donation_link.title %}
+	{% set link_target = cont.donation_link.target %}
+
+	<section class="full-text-editor mb-5 float-left w-100">
+
+		{{ _self.title(title) }}
+
+		{{ text }}
+
+		{% if link_url %}
+			<div class="text-center pt-4">
+				<a href="{{ link_url }}" class="btn btn-secondary" {{ link_target ? 'target="_blank"' }}>{{ link_text ?: 'Donate' }}</a>
+			</div>
+		{% endif %}
+
+	</section>
+{% endmacro donations %}
+
+{% macro latest_events(cont, events, site) %}
+	{% import 'sections/partials/submacros/dates_times_lng.twig' as submcr %}
+	{% set lang = site.language %}
+	{% set title = cont.sec_prop.section_title|e('wp_kses_post') %}
+	{% set num_of_events = cont.number_of_events %}
+
+	<section class="full-text-editor mb-5 float-left w-100">
+
+		{{ _self.title(title) }}
+
+		<!-- Card deck -->
+		<div class="card-deck col-12 m-0 p-0">
+			{% for event in events|slice(0, num_of_events) %}
+				{% set title = event.post_title|e('wp_kses_post') %}
+				{% set content = event.post_content|e('wp_kses_post') %}
+				{% set notes = event.preview.length(25).read_more('')|e('wp_kses_post') %}
+				{% set start_date = event.start_date %}
+				{% set end_date = event.end_date %}
+				{% set admittance = event.admittance %}
+				{% set price = event.price %}
+				{% set multiple_dates = event.meta('select_individual_dates') %}
+
+				{% if lang == 'en-GB' %}
+					{% set admit_lng = admittance|split('|')[0] %}
+					{% set admittance_title_lng = "Entrance" %}
+					{% set price_title_lng = "Price" %}
+					{% set dates_lng = "Dates &amp; Times" %}
+					{% set other_dates_lng = 'Other Dates' %}
+				{% else %}
+					{% set admit_lng = admittance|split('|')[1] %}
+					{% set admittance_title_lng = "Dħul" %}
+					{% set price_title_lng = "Prezz" %}
+					{% set dates_lng = "Dati u Ħinijiet" %}
+					{% set other_dates_lng = 'Date Oħra' %}
+				{% endif %}
+
+				<!-- Card -->
+				<div class="card mb-4">
+					<!--Card content-->
+					<div class="card-body">
+
+						{# Title #}
+						<h4 class="card-title border-bottom pb-3">{{ title ?: '<span class="font-italic">(no title)</span>' }}</h4>
+
+						{# Notes #}
+						{{ notes ? '<p class="card-text">' ~ notes ~ '</p>' }}
+
+						{# Dates #}
+						<strong class="d-block">{{ dates_lng }}</strong>
+						{{ submcr.date_languages(site, start_date, end_date, '<br>') }}
+
+						<div class="d-block mt-4">
+							<span class="d-block">{{ price_title_lng }}: <strong>&euro;{{ price }}</strong></span>
+							<span class="d-block">{{ admittance_title_lng }}: <strong>{{ admit_lng }}</strong></span>
+						</div>
+
+						{% if multiple_dates|length %}
+							<strong class="d-block mt-4">{{ other_dates_lng }}</strong>
+							<small class="oswald-font">
+								{% for multiple_date in multiple_dates %}
+									{{ submcr.date_languages(site, multiple_date.start_date, multiple_date.end_date, ' - ') }}
+								{% endfor %}
+							</small>
+						{% endif %}
+
+						{# Button Link #}
+						<a href="{{ event.link }}" class="d-block text-center mt-4"><button type="button" class="btn btn-secondary btn-md">{{ lang == 'en-GB' ? 'Read more' : 'Dettalji' }}</button></a>
+						{#
+						<pre>{{ dump(speakers) }}</pre>
+						#}
+					</div>
+				</div><!-- Card -->
+			{% endfor %}
+		</div>
+
+		{% if lang == 'en-GB' %}
+			{% set view_archive = 'View Events' %}
+		{% else %}
+			{% set view_archive = 'Attivitajiet Kollha' %}
+		{% endif %}
+
+		<div class="text-center pt-4">
+			<a href="{{ fn('get_post_type_archive_link', 'event') }}" class="btn btn-secondary">{{ view_archive }}</a>
+		</div>
+	</section>
+{% endmacro latest_events %}
+
+{% macro latest_video(cont, videoID, site) %}
+	{% set title 		= cont.sec_prop.section_title|e('wp_kses_post') %}
+
+	<section class="video-embed mb-5 float-left w-100">
+
+		{{ _self.title(title) }}
+
+		<div class="video-embed">
+			<div class="embed-container">
+				<iframe width="1920" height="1080" src="https://www.youtube.com/embed/{{ videoID }}?feature=oembed" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+			</div>
+		</div>
+
+	</section>
+{% endmacro latest_video %}

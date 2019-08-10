@@ -1,0 +1,18 @@
+<div class="site-branding">
+	{% if (logo) %}
+		{#<img src="{{ Image(logo).src|resize(81,71,'center') }}" alt="{{ Image(logo).alt }}" class="float-left">#}
+		{% set logo = theme.link ~ '/images/repubblika-logo' %}
+		<a class="float-left d-block d-lg-none" href="{{ site.link }}"><img src="{{ logo }}.png" alt="{{ Image(logo).alt }}"></a>
+		<a class="float-left d-none d-lg-block" href="{{ site.link }}"><img src="{{ logo }}-large.png" alt="{{ Image(logo).alt }}"></a>
+	{% endif %}
+	<div class="site-name float-left">
+		{% if fn('is_front_page') and fn('is_home') %}
+			<h1 class="site-title"><a href="{{ site.link }}" rel="home">{{ site.name }}</a></h1>
+		{% else %}
+			<p class="site-title"><a href="{{ site.link }}" rel="home">{{ site.name }}</a></p>
+		{% endif %}
+		{% if (site.description) or fn('is_customize_preview') %}
+			<p class="site-description">{{ site.description }}</p>
+		{% endif %}
+	</div>
+</div><!-- .site-branding -->

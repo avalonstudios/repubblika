@@ -1,0 +1,87 @@
+{% import 'sections/partials/_macros.twig' as mcr %}
+{% import 'sections/partials/flex-content.twig' as flex %}
+
+{% spaceless %}
+	{% set builder = post.meta('add_content') %}
+
+	{% for section in builder %}
+
+		{% set section_index = loop.index %}
+
+		{% set layout = section.acf_fc_layout %}
+
+		{% if layout == 'full_text_editor' %}
+
+			{% set active = section.sec_prop.active %}
+
+			{% if active %}
+
+				{{ flex.full_text_editor(section) }}
+
+			{% endif %}
+
+		{% elseif layout == 'video' %}
+
+			{% set active = section.sec_prop.active %}
+
+			{% if active %}
+
+				{{ flex.video(section, site) }}
+
+			{% endif %}
+
+		{% elseif layout == 'videos' %}
+
+			{% set active = section.sec_prop.active %}
+
+			{% if active %}
+
+				{{ flex.videos(section, site) }}
+
+			{% endif %}
+
+		{% elseif layout == 'join_application_form' %}
+
+			{% set active = section.sec_prop.active %}
+
+			{% if active %}
+
+				{{ flex.join_application_form(section) }}
+
+			{% endif %}
+
+		{% elseif layout == 'donations' %}
+
+			{% set active = section.sec_prop.active %}
+
+			{% if active %}
+
+				{{ flex.donations(section) }}
+
+			{% endif %}
+
+		{% elseif layout == 'latest_events' %}
+
+			{% set active = section.sec_prop.active %}
+
+			{% if active and events|length > 0 %}
+
+				{{ flex.latest_events(section, events, site) }}
+
+			{% endif %}
+
+		{% elseif layout == 'latest_video' %}
+
+			{% set active = section.sec_prop.active %}
+
+			{% if active %}
+
+				{{ flex.latest_video(section, videoID, site) }}
+
+			{% endif %}
+
+		{% endif %}<!-- layout switcher -->
+
+	{% endfor %}
+
+{% endspaceless %}

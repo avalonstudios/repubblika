@@ -1,0 +1,27 @@
+{% if (posts.pagination.prev or posts.pagination.next) %}
+<nav aria-label="Page navigation" class="{{ padding }} posts-navigation py-4 m-0">
+	<ul class="pagination pg-blue justify-content-center m-0">
+		{% if posts.pagination.prev %}
+			<li class="page-item">
+				<a href="{{posts.pagination.prev.link}}" class="page-link prev {{posts.pagination.prev.link|length ? '' : 'invisible'}}">Prev</a>
+			</li>
+		{% endif %}
+
+		{% for page in posts.pagination.pages %}
+			<li class="page-item">
+				{% if page.link %}
+					<a href="{{page.link}}" class="page-link {{page.class}}">{{page.title}}</a>
+				{% else %}
+					<span class="page-link disabled {{page.class}}">{{page.title}}</span>
+				{% endif %}
+			</li>
+		{% endfor %}
+
+		{% if posts.pagination.next %}
+			<li class="page-item">
+				<a href="{{posts.pagination.next.link}}" class="page-link next {{posts.pagination.next.link|length ? '' : 'invisible'}}">Next</a>
+			</li>
+		{% endif %}
+	</ul>
+</nav>
+{% endif %}

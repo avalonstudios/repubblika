@@ -1,0 +1,6 @@
+{% extends 'wrappers/head-foot-wrap.twig' %}
+{% import 'sections/partials/_macros.twig' as mcr %}
+
+{% block content %}
+	{{ mcr.upcoming_event(null, posts, site, theme, null) }}
+{% endblock %}

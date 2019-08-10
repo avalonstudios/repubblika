@@ -1,0 +1,9 @@
+{% spaceless %}
+<div id="primary" class="content-area col-12 no-sidebar mb-5">
+	<main id="main" class="site-main">
+		<header class="mt-5">{% block header %}{% endblock %}</header>
+		<div class="entry-content my-5">{% block content %}{% endblock %}</div>
+		{% block builder %}{% endblock %}
+	</main><!-- #main -->
+</div><!-- #primary -->
+{% endspaceless %}

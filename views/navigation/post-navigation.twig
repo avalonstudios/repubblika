@@ -1,0 +1,59 @@
+{% set prev_link = post.prev.link|e('esc_url') %}
+{% set next_link = post.next.link|e('esc_url') %}
+{% set prev_post_title = post.prev.post_title|e('wp_kses_post') %}
+{% set next_post_title = post.next.post_title|e('wp_kses_post') %}
+{% set prev_thumb = post.prev.thumbnail|e('esc_url') %}
+{% set next_thumb = post.next.thumbnail|e('esc_url') %}
+
+<nav class="navigation post-navigation" role="navigation">
+	<h2 class="screen-reader-text">Post navigation</h2>
+	<div class="nav-links">
+		{% if prev_link is not null %}
+		<div class="nav-previous">
+			<a href="{{ prev_link }}" rel="prev"><i class="fas fa-caret-left" aria-hidden="true"></i> {{ prev_post_title }}</a>
+		</div>
+		{% endif %}
+		{% if next_link is not null %}
+		<div class="nav-next">
+			<a href="{{ next_link }}" rel="next">{{ next_post_title }} <i class="fas fa-caret-right" aria-hidden="true"></i></a>
+		</div>
+		{% endif %}
+	</div>
+</nav>
+
+{#
+<div class="fixed-navigation d-none d-lg-block">
+	{% if prev_link is not null %}
+	<div class="nav-previous nav-fixed position-fixed white z-depth-1">
+		<div class="position-relative">
+			<a href="{{ prev_link }}">
+				{% if prev_thumb %}
+					<img src="{{ Image(prev_thumb).src|resize(50,50) }}" alt="">
+				{% else %}
+					<img src="https://via.placeholder.com/50x50/FFFFFF/000000?text=<<">
+				{% endif %}
+			</a>
+			<div class="z-depth-1">
+				<a class="fixed-title position-absolute z-depth-1 px-2 text-nowrap ava-nv" href="{{ prev_link }}" rel="prev">{{ prev_post_title }}</a>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+	{% if next_link is not null %}
+	<div class="nav-next nav-fixed position-fixed white z-depth-1">
+		<div class="position-relative">
+			<div class="z-depth-1">
+				<a class="fixed-title position-absolute z-depth-1 px-2 text-nowrap ava-nv" href="{{ next_link }}" rel="next">{{ next_post_title }}</a>
+			</div>
+			<a href="{{ next_link }}">
+				{% if next_thumb %}
+					<img class="float-left" src="{{ Image(next_thumb).src|resize(50,50) }}" alt="">
+				{% else %}
+					<img class="float-left" src="https://via.placeholder.com/50x50/FFFFFF/000000?text=>>">
+				{% endif %}
+			</a>
+		</div>
+	</div>
+	{% endif %}
+</div>
+#}
