@@ -77,7 +77,7 @@ function ava_custom_color_picker_palette() { ?>
 			});
 		})(jQuery);
 	</script>
-<?php
+	<?php
 } add_action('acf/input/admin_footer', 'ava_custom_color_picker_palette');
 
 
@@ -112,8 +112,6 @@ function ava_count_widgets( $sidebar_id ) {
 	endif;
 }
 
-
-
 /**
  * Add Start Date & End Date Columns
  */
@@ -132,14 +130,14 @@ function custom_start_end_columns( $column, $post_id ) {
 	switch ( $column ) {
 
 		case 'start_date' :
-			$startDate = get_field( 'start_date', $post_id );
-			echo date( 'dS M, Y, g:ia', $startDate );
-			break;
+		$startDate = get_field( 'start_date', $post_id );
+		echo date( 'dS M, Y, g:ia', $startDate );
+		break;
 
 		case 'end_date' :
-			$endDate = get_field( 'end_date', $post_id );
-			echo date( 'dS M, Y, g:ia', $endDate );
-			break;
+		$endDate = get_field( 'end_date', $post_id );
+		echo date( 'dS M, Y, g:ia', $endDate );
+		break;
 
 	}
 }
@@ -151,3 +149,76 @@ add_action( 'manage_announcement_posts_custom_column' , 'custom_start_end_column
 // EVENTS - Start & End Date
 add_filter( 'manage_event_posts_columns', 'set_custom_start_end_post_columns' );
 add_action( 'manage_event_posts_custom_column' , 'custom_start_end_columns', 10, 2 );
+
+
+/**
+ * This filters out EXPIRED EVENTS in ANY related Event Taxonomy (taxonomy-event_type.php)
+ * @param  [type] $query [description]
+ * @return [type]        [description]
+ */
+function event_type_taxonomy_archive_filter($query) {
+	if ( ! is_admin() && $query->is_main_query() ) {
+		$now = date('Ymd');
+		$nowEvent = date('Y-m-d H:i:s');
+		$now = date('Y-m-d H:i:s');
+		if ( $query->is_archive ) {
+			$query->set(
+				'meta_query',
+				[
+					'relation'	=> 'OR',
+					[
+						'key'		=> 'start_date',
+						'value'		=> $now,
+						'compare'	=> '>',
+						'type'		=> 'DATETIME',
+					],
+					[
+						'key'		=> 'end_date',
+						'value'		=> $now,
+						'compare'	=> '>',
+						'type'		=> 'DATETIME',
+					],
+					/*[
+						'key'		=> 'expiration_date',
+						'value'		=> $now,
+						'compare'	=> '>=',
+					],
+					[
+						'key'		=> 'end_date',
+						'value'		=> $nowEvent,
+						'compare'	=> '>=',
+					],*/
+				]
+			);
+		}
+	}
+} add_action( 'pre_get_posts', 'event_type_taxonomy_archive_filter' );
+
+
+function repubblika_archive_titles( $title ) {
+
+	if ( is_category() ) {
+
+		$title = single_cat_title( '', false );
+
+	} elseif ( is_tag() ) {
+
+		$title = single_tag_title( '', false );
+
+	} elseif ( is_author() ) {
+
+		$title = '<span class="vcard">' . get_the_author() . '</span>';
+
+	} elseif ( is_post_type_archive() ) {
+
+		$title = post_type_archive_title( '', false );
+
+	} elseif ( is_tax() ) {
+
+		$title = pll__('Event Type') . ': ' . single_term_title( '', false );
+
+	}
+
+	return $title;
+
+} add_filter( 'get_the_archive_title', 'repubblika_archive_titles' );

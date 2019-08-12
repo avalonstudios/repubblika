@@ -273,6 +273,21 @@ function prefix_disable_gutenberg($current_status, $post_type) {
 
 
 
+
+
+
+add_action( 'init', function() {
+	register_extended_taxonomy( 'event_type', 'event',	[
+															# Use radio buttons in the meta box in Admin area
+															'meta_box'			=> 'radio',
+															'hierarchical'		=> false,
+														],
+														[
+															'slug'				=> 'event-categories'
+														],
+	);
+} );
+
 /**
  * Register Repubblika custom menu page.
  */
@@ -302,3 +317,15 @@ function ava_events_menu(){
 		7
 	);
 } add_action( 'admin_menu', 'ava_events_menu' );
+
+//http://repubblika.test/wp-admin/edit-tags.php?taxonomy=event_type&post_type=event
+
+function custom_link_events_menu() {
+    add_submenu_page(
+    	'events_index',
+    	'Event Types',
+    	'Event Types',
+    	'edit_posts',
+    	'edit-tags.php?taxonomy=event_type&post_type=event'
+    );
+ } add_action( 'admin_menu', 'custom_link_events_menu' );

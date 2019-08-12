@@ -25,6 +25,14 @@ a.btn {
 	@include colored-links( white, black, white );
 }
 
+.white-skin {
+	.btn {
+		&-primary {
+			background-color: $red !important;
+		}
+	}
+}
+
 .addtocalendar {
 	a {
 		border-radius: 0 !important;

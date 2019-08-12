@@ -3,7 +3,7 @@
 function ava_disable_editor( $id = false ) {
 
 	$excluded_templates = array(
-		'front-page.php',
+		//'front-page.php',
 		//'templates/contact.php'
 	);
 

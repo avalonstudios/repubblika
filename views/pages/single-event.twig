@@ -8,6 +8,13 @@
 {% block header %}
 	{% set title = show.post_title|e('wp_kses_post') %}
 	<h1 class="h1-responsive text-capitalize">{{ title }}</h1>
+	<span>Filed under: </span>
+	{% for cat in event_cats %}
+		{% set term_id		= cat.term_id %}
+		{% set term_name	= cat.name %}
+		{% set term_link	= fn('get_term_link', term_id, 'event_type') %}
+		<a href="{{ term_link }}">{{ term_name }}</a>
+	{% endfor %}
 {% endblock %}
 
 {% block content %}
@@ -17,7 +24,6 @@
 	{% set speakers = show.speaker %}
 
 	{% set notes = show.notes|e('wp_kses_post') %}
-
 	<!-- Grid row -->
 	<div class="row">
 		{% if post.content %}

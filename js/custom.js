@@ -10,6 +10,9 @@ jQuery( function ( $ ) {
 	var ps = new PerfectScrollbar(sideNavScrollbar);
 	//$( 'select' ).materialSelect();
 
+	$( window ).on( 'load', onLoad );
+	$( window ).on( 'resize', onResize );
+
 	makeButtons();
 
 	$( '.carousel.carousel-multi-item.v-2 .carousel-item' ).each( function() {
@@ -50,6 +53,41 @@ jQuery( function ( $ ) {
 		h.appendChild(s);
 	}
 });
+
+function onLoad() {
+//	contentAndFooter();
+}
+
+function onResize() {
+//	contentAndFooter();
+}
+
+function contentAndFooter() {
+	let content = $( '#content' );
+	let siteFooter = $( '#colophon' );
+
+	let wH = $( window ).innerHeight();
+	let menuHeight = $( '.navbar.main-navigation' ).outerHeight();
+	let contentHeight = content.outerHeight();
+
+	let totalHeight = menuHeight + contentHeight;
+
+	if ( totalHeight < wH ) {
+		siteFooter.addClass( 'fixed-bottom' );
+	}
+	content.css( 'margin-top', menuHeight + 'px' );
+
+	/*let missionStatement = $( '.mission-statement' );
+	let bottomBtns = $( '.bottom-buttons' );
+	let bbHeight = bottomBtns.outerHeight();
+
+	let msHeight = contentHeight - bbHeight + menuHeight;
+
+	if ( missionStatement.length ) {
+		missionStatement.css( 'height', '100vh' ).css( 'height', '-=' + msHeight + 'px' );
+	}*/
+}
+
 
 function makeButtons() {
 	$( 'input[type="submit"]' ).addClass( 'btn btn-primary' );

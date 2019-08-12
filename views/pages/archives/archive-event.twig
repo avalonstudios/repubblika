@@ -1,6 +1,10 @@
 {% extends 'wrappers/head-foot-wrap.twig' %}
 {% import 'sections/partials/_macros.twig' as mcr %}
 
+{% block header %}
+    <h4>{{ fn('get_the_archive_title') }}</h4>
+{% endblock %}
+
 {% block content %}
 	{{ mcr.upcoming_event(null, posts, site, theme, null) }}
 {% endblock %}

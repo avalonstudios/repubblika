@@ -155,4 +155,8 @@
 			display: none;
 		}
 	}
+	.home & {
+		background-color: transparent;
+		box-shadow: none;
+	}
 }

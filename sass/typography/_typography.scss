@@ -17,3 +17,9 @@ textarea {
 .oswald-font {
 	font-family: $oswald;
 }
+
+@for $i from 1 through 20 {
+	.cs-#{$i} {
+		letter-spacing: $i * 0.1em;
+	}
+}

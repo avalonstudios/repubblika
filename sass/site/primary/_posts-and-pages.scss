@@ -76,3 +76,46 @@
 		border: $size solid $red;
 	}
 }
+
+.home {
+	height: 100vh;
+	margin: 0;
+	background: rgba( black, .06 );
+}
+
+.mission-statement {
+	.full-text-editor {
+		margin: 0 !important;
+		background: white;
+		box-shadow: 10px 10px 125px 157px rgba(255,255,255,1);
+		border-radius: 100%;
+		letter-spacing: .1em;
+		@include bp( 1 ) {
+			@include font-size( 1.3 );
+		}
+		@include bp( 1024 ) {
+			@include font-size( 2.3 );
+		}
+		@include bp( 1440 ) {
+			@include font-size( 2.7 );
+		}
+	}
+	@include bp( 768 ) {
+		display: block;
+		width: 50%;
+	}
+	@include bp( 1024 ) {
+		width: 100%;
+	}
+	&-wrapper {
+		display: table;
+		height: 60vh;
+		@include bp( 1, 768, width, 'landscape') {
+			height: 0;
+		}
+	}
+	&-container {
+		display: table-cell;
+		vertical-align: middle;
+	}
+}

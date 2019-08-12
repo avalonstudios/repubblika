@@ -80,6 +80,16 @@
 
 			{% endif %}
 
+		{% elseif layout == 'buttons' %}
+
+			{% set active = section.sec_prop.active %}
+
+			{% if active %}
+
+				{{ flex.buttons(section, site) }}
+
+			{% endif %}
+
 		{% endif %}<!-- layout switcher -->
 
 	{% endfor %}

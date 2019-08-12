@@ -1,3 +1,5 @@
+{% import 'sections/partials/flex-content.twig' as flex %}
+
 {% set fw = post.meta('full_width') %}
 {% extends fw ? 'wrappers/head-foot-wrap-no-sidebar.twig' : 'wrappers/head-foot-wrap.twig' %}
 
@@ -26,12 +28,50 @@
 <br>
 {% set content = post.meta('add_content') %}
 <pre>{{ dump(content) }}</pre>
-    #}
-
     {% include 'sections/partials/content-builder.twig' %}
+    #}
+<div class="front-page-content">
+	{% set builder = post.meta('add_content') %}
+
+	{% for section in builder %}
+
+		{% set layout = section.acf_fc_layout %}
+
+		{% if layout == 'full_text_editor' %}
+
+			{% set active = section.sec_prop.active %}
+
+			{% if active %}
+
+				<div class="mission-statement-wrapper w-100">
+					<div class="mission-statement-container w-100 mx-auto text-center">
+						<div class="mission-statement mx-auto">
+							{{ flex.full_text_editor(section) }}
+						</div>
+					</div>
+				</div>
+
+			{% endif %}
+
+		{% endif %}
+
+		{% if layout == 'buttons' %}
+			{% set active = section.sec_prop.active %}
+
+			{% if active %}
+
+				<div class="bottom-buttons d-flex justify-content-around w-100">
+				    {{ flex.buttons(section, site) }}
+				</div>
+
+			{% endif %}
+
+	    {% endif %}
+
+	{% endfor %}
+</div>
 
 {% endblock %}
-
 {% block builder %}
     {#
     #}

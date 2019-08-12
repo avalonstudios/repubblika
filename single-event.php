@@ -9,11 +9,16 @@
 
 get_header();
 
-$c = Timber::get_context();
-$c['post'] = new TimberPost();
+$c					= Timber::get_context();
+$c[ 'post' ]		= new TimberPost();
 
-$c[ 'sidebar' ] = Timber::get_sidebar( 'sidebar.php' );
+$args = [
+	'taxonomy'		=> 'event_type'
+];
+
+$c[ 'event_cats' ]	= wp_get_post_terms( $post->ID, 'event_type' );
+
+$c[ 'sidebar' ]		= Timber::get_sidebar( 'sidebar.php' );
 
 Timber::render( 'pages/single-event.twig', $c );
-
 get_footer();
