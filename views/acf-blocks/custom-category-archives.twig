@@ -3,7 +3,7 @@
 	{% set readmore = 'Read more' %}
 {% else %}
 	{% set readmore = 'Kompli aqra' %}
-	{% set months = [ '', 'Jannar', 'Frar', 'Marzu', 'April', 'Mejju', 'Ġunju', 'Lujlu', 'Awissu', 'Settembru', 'Ottubru', 'Novembru', 'Diċembru' ] %}
+	{# {% set months = [ '', 'Jannar', 'Frar', 'Marzu', 'April', 'Mejju', 'Ġunju', 'Lujlu', 'Awissu', 'Settembru', 'Ottubru', 'Novembru', 'Diċembru' ] %} #}
 {% endif %}
 <div id="{{ id|e('esc_html') }}" class="{{ class_name|e('esc_html') }} {{ width == 'full' ? 'col-md-12' : 'col-lg-6' }} pr-4">
 	{% if cats %}

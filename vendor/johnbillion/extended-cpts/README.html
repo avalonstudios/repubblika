@@ -1,0 +1,173 @@
+<html>
+      <head>
+        <meta charset="UTF-8">
+        <title>README.md</title>
+      </head>
+      <body>
+        <p><a href="https://travis-ci.org/johnbillion/extended-cpts"><img src="https://travis-ci.org/johnbillion/extended-cpts.svg?branch=master" alt="Build Status"></a>
+<a href="https://packagist.org/packages/johnbillion/extended-cpts"><img src="https://img.shields.io/packagist/v/johnbillion/extended-cpts.svg" alt="Stable Release"></a>
+<a href="https://github.com/johnbillion/extended-cpts/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-GPL_v2%2B-blue.svg" alt="License"></a>
+<a href="https://wordpress.org/support/update-php/"><img src="https://img.shields.io/badge/php-7-blue.svg" alt="PHP 7"></a>
+<a href="https://github.com/johnbillion/extended-cpts/wiki"><img src="https://img.shields.io/badge/documentation-wiki-blue.svg" alt="Documentation"></a></p>
+<h1 id="extended-cpts">Extended CPTs</h1>
+<p>Extended CPTs is a library which provides extended functionality to WordPress custom post types and taxonomies. This allows developers to quickly build post types and taxonomies without having to write the same code again and again.</p>
+<p><a href="https://github.com/johnbillion/extended-cpts/wiki">See the wiki for full documentation.</a></p>
+<h2 id="improved-defaults-for-post-types">Improved Defaults for Post Types</h2>
+<ul>
+<li>Automatically generated labels and post updated messages (in English)</li>
+<li>Public post type with admin UI and post thumbnails enabled</li>
+<li>Hierarchical with <code>page</code> capability type</li>
+<li>Optimal admin menu placement</li>
+</ul>
+<h2 id="improved-defaults-for-taxonomies">Improved Defaults for Taxonomies</h2>
+<ul>
+<li>Automatically generated labels and term updated messages (in English)</li>
+<li>Hierarchical public taxonomy with admin UI enabled</li>
+</ul>
+<h2 id="extended-admin-features">Extended Admin Features</h2>
+<ul>
+<li>Declarative creation of table columns on the post type listing screen:<ul>
+<li>Columns for post meta, taxonomy terms, featured images, post fields, <a href="https://wordpress.org/plugins/posts-to-posts/">Posts 2 Posts</a> connections, and custom functions</li>
+<li>Sortable columns for post meta, taxonomy terms, and post fields</li>
+<li>User capability restrictions</li>
+<li>Default sort column and sort order</li>
+</ul>
+</li>
+<li>Declarative creation of table columns on the taxonomy term listing screen:<ul>
+<li>Columns for term meta and custom functions</li>
+<li>User capability restrictions</li>
+</ul>
+</li>
+<li>Filter controls on the post type listing screen to enable filtering posts by post meta and taxonomy terms</li>
+<li>Override the &#39;Featured Image&#39; and &#39;Enter title here&#39; text</li>
+<li>Several custom meta boxes available for taxonomies on the post editing screen:<ul>
+<li>Simplified list of checkboxes</li>
+<li>Radio buttons</li>
+<li>Dropdown menu</li>
+<li>Custom function</li>
+</ul>
+</li>
+<li>Post types and taxonomies automatically added to the &#39;At a Glance&#39; section on the dashboard</li>
+</ul>
+<h2 id="extended-front-end-features-for-post-types">Extended Front-end Features for Post Types</h2>
+<ul>
+<li>Specify a custom permalink structure:<ul>
+<li>For example <code>reviews/%year%/%month%/%review%</code></li>
+<li>Supports all relevant rewrite tags including dates and custom taxonomies</li>
+<li>Automatic integration with the <a href="https://wordpress.org/plugins/rewrite-testing/">Rewrite Rule Testing</a> plugin</li>
+</ul>
+</li>
+<li>Specify public query vars which enable filtering by post meta</li>
+<li>Specify public query vars which enable sorting by post meta, taxonomy terms, and post fields</li>
+<li>Override default public or private query vars such as <code>posts_per_page</code>, <code>orderby</code>, <code>order</code>, and <code>nopaging</code></li>
+<li>Add the post type to the site&#39;s main RSS feed</li>
+</ul>
+<h2 id="minimum-requirements">Minimum Requirements</h2>
+<p><strong>PHP:</strong> 7.0<br><strong>WordPress:</strong> 4.8  </p>
+<h2 id="installation">Installation</h2>
+<p>Extended CPTs is a developer library, not a plugin, which means you need to include it somewhere in your own project.
+You can use Composer:</p>
+<pre><code class="lang-bash">composer require johnbillion/extended-cpts
+</code></pre>
+<p>Or you can download the library and include it manually:</p>
+<pre><code class="lang-php">require_once &#39;extended-cpts/extended-cpts.php&#39;;
+</code></pre>
+<p>Note that <em>Extended Taxonomies</em> is part of this library since version 4.0, so there&#39;s no need to include the separate <em>Extended Taxonomies</em> library.</p>
+<h2 id="usage">Usage</h2>
+<p>Need a simple post type with no frills? You can register a post type with a single parameter:</p>
+<pre><code class="lang-php">add_action( &#39;init&#39;, function() {
+    register_extended_post_type( &#39;article&#39; );
+} );
+</code></pre>
+<p>And you can register a taxonomy with just two parameters:</p>
+<pre><code class="lang-php">add_action( &#39;init&#39;, function() {
+    register_extended_taxonomy( &#39;location&#39;, &#39;article&#39; );
+} );
+</code></pre>
+<p>Try it. You&#39;ll have a hierarchical public post type with an admin UI, a hierarchical public taxonomy with an admin UI, and all the labels and updated messages for them will be automatically generated.</p>
+<p>Or for a bit more functionality:</p>
+<pre><code class="lang-php">add_action( &#39;init&#39;, function() {
+    register_extended_post_type( &#39;story&#39;, [
+
+        # Add the post type to the site&#39;s main RSS feed:
+        &#39;show_in_feed&#39; =&gt; true,
+
+        # Show all posts on the post type archive:
+        &#39;archive&#39; =&gt; [
+            &#39;nopaging&#39; =&gt; true,
+        ],
+
+        # Add some custom columns to the admin screen:
+        &#39;admin_cols&#39; =&gt; [
+            &#39;story_featured_image&#39; =&gt; [
+                &#39;title&#39;          =&gt; &#39;Illustration&#39;,
+                &#39;featured_image&#39; =&gt; &#39;thumbnail&#39;
+            ],
+            &#39;story_published&#39; =&gt; [
+                &#39;title&#39;       =&gt; &#39;Published&#39;,
+                &#39;meta_key&#39;    =&gt; &#39;published_date&#39;,
+                &#39;date_format&#39; =&gt; &#39;d/m/Y&#39;
+            ],
+            &#39;story_genre&#39; =&gt; [
+                &#39;taxonomy&#39; =&gt; &#39;genre&#39;
+            ],
+        ],
+
+        # Add a dropdown filter to the admin screen:
+        &#39;admin_filters&#39; =&gt; [
+            &#39;story_genre&#39; =&gt; [
+                &#39;taxonomy&#39; =&gt; &#39;genre&#39;
+            ],
+            &#39;story_rating&#39; =&gt; [
+                &#39;meta_key&#39; =&gt; &#39;star_rating&#39;,
+            ],
+        ],
+
+    ], [
+
+        # Override the base names used for labels:
+        &#39;singular&#39; =&gt; &#39;Story&#39;,
+        &#39;plural&#39;   =&gt; &#39;Stories&#39;,
+        &#39;slug&#39;     =&gt; &#39;stories&#39;,
+
+    ] );
+
+    register_extended_taxonomy( &#39;genre&#39;, &#39;story&#39;, [
+
+        # Use radio buttons in the meta box for this taxonomy on the post editing screen:
+        &#39;meta_box&#39; =&gt; &#39;radio&#39;,
+
+        # Add a custom column to the admin screen:
+        &#39;admin_cols&#39; =&gt; [
+            &#39;updated&#39; =&gt; [
+                &#39;title&#39;       =&gt; &#39;Updated&#39;,
+                &#39;meta_key&#39;    =&gt; &#39;updated_date&#39;,
+                &#39;date_format&#39; =&gt; &#39;d/m/Y&#39;
+            ],
+        ],
+
+    ] );
+} );
+</code></pre>
+<p>Bam, we now have:</p>
+<ul>
+<li>A &#39;Stories&#39; post type, with correctly generated labels and post updated messages, three custom columns in the admin area (two of which are sortable), stories added to the main RSS feed, and all stories displayed on the post type archive.</li>
+<li>A &#39;Genre&#39; taxonomy attached to the &#39;Stories&#39; post type, with correctly generated labels and term updated messages, and a custom column in the admin area.</li>
+</ul>
+<p>The <code>register_extended_post_type()</code> and <code>register_extended_taxonomy()</code> functions are ultimately wrappers for the <code>register_post_type()</code> and <code>register_taxonomy()</code> functions in WordPress core, so any of the parameters from those functions can be used.</p>
+<p>There&#39;s quite a bit more you can do. <a href="https://github.com/johnbillion/extended-cpts/wiki">See the wiki for full documentation.</a></p>
+<h2 id="contributing-and-testing">Contributing and Testing</h2>
+<p>Please see <a href="CONTRIBUTING.md">CONTRIBUTING.md</a> for information on contributing.</p>
+<p>Please see <a href="tests/README.md">the tests readme</a> for information on running the unit test suite.</p>
+<h2 id="license-gplv2-or-later">License: GPLv2 or later</h2>
+<p>This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+
+      </body>
+    </html>

@@ -1,0 +1,42 @@
+{% extends 'wrappers/head-foot-wrap.twig' %}
+{% import 'sections/partials/_macros.twig' as mcr %}
+
+{% block header %}
+	{% set post_title		= post.title|e('wp_kses_post') %}
+	{% set designation		= post.meta('designation')|e('wp_kses_post') %}
+	<h1 class="entry-title{{ post_title ? '' : ' font-italic' }}">{{ post_title ?: '(no title)' }}</h1>
+	<h6 class="font-weight-bold red-text py-2">{{ designation }}</h6>
+{% endblock %}
+
+{% block content %}
+	{% if password == 1 %}
+		{{ fn('get_the_password_form') }}
+	{% else %}
+		{% set thumb		= post.thumbnail|e('esc_url')|resize(300, 300) %}
+		{% set thumb_alt	= post.thumbnail.alt|e('wp_kses_post') %}
+
+		{% if thumb %}
+			<img src="{{ thumb }}" alt="{{ thumb_alt }}" class="ml-3 mb-3 float-right">
+		{% endif %}
+
+		{{ post.content }}
+
+	{% endif %}
+{% endblock %}
+
+{% block footer %}
+	<hr>
+	{% include 'menus/posts-social-menu.twig' %}
+
+	<a href="{{ fn('get_post_type_archive_link', 'committee_members') }}" class="btn btn-secondary"><i class="fas fa-angle-double-left mr-2"></i>{{ fn('pll_e', 'members') }}</a>
+
+	{% set prev_link = post.prev.link|e('esc_url') %}
+	{% set next_link = post.next.link|e('esc_url') %}
+	{% if prev_link or next_link %}
+		<div class="my-5">
+			<hr>
+			{% include 'navigation/post-navigation.twig' %}
+			<hr>
+		</div>
+	{% endif %}
+{% endblock %}

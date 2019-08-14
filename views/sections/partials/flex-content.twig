@@ -1,4 +1,3 @@
-
 {% macro title(title) %}
 	{% if title %}
 		<div class="d-block w-100">
@@ -28,13 +27,6 @@
 	{% set title	= cont.sec_prop.section_title|e('wp_kses_post') %}
 	{% set videos	= cont.videos %}
 	{% set videos_length = videos|length %}
-
-	{% set lang = site.language %}
-	{% if lang == 'en-GB' %}
-		{% set view_archive = 'All Videos' %}
-	{% else %}
-		{% set view_archive = 'Videos Kollha' %}
-	{% endif %}
 
 	<section class="video-embed mb-5 float-left w-100">
 
@@ -81,7 +73,7 @@
 		{% endif %}
 		<div class="float-left w-100">
 			<div class="text-center pt-4">
-				<a href="{{ fn('get_post_type_archive_link', 'video') }}" class="btn btn-secondary">{{ view_archive }}</a>
+				<a href="{{ fn('get_post_type_archive_link', 'video') }}" class="btn btn-secondary">{{ fn('pll_e', 'All Videos') }}</a>
 			</div>
 		</div>
 	</section>
@@ -91,13 +83,6 @@
 	{% set title			= cont.sec_prop.section_title|e('wp_kses_post') %}
 	{% set videos			= cont.video_selection %}
 	{% set videos_length	= videos|length %}
-
-	{% set lang = site.language %}
-	{% if lang == 'en-GB' %}
-		{% set view_archive = 'All Videos' %}
-	{% else %}
-		{% set view_archive = 'Videos Kollha' %}
-	{% endif %}
 
 	<section class="video-embed mb-5 float-left w-100">
 
@@ -146,7 +131,7 @@
 		{% endif %}
 		<div class="float-left w-100">
 			<div class="text-center pt-4">
-				<a href="{{ fn('get_post_type_archive_link', 'video') }}" class="btn btn-secondary">{{ view_archive }}</a>
+				<a href="{{ fn('get_post_type_archive_link', 'video') }}" class="btn btn-secondary">{{ fn('pll_e', 'All Videos') }}</a>
 			</div>
 		</div>
 	</section>
@@ -216,20 +201,6 @@
 				{% set price = event.price %}
 				{% set multiple_dates = event.meta('select_individual_dates') %}
 
-				{% if lang == 'en-GB' %}
-					{% set admit_lng = admittance|split('|')[0] %}
-					{% set admittance_title_lng = "Entrance" %}
-					{% set price_title_lng = "Price" %}
-					{% set dates_lng = "Dates &amp; Times" %}
-					{% set other_dates_lng = 'Other Dates' %}
-				{% else %}
-					{% set admit_lng = admittance|split('|')[1] %}
-					{% set admittance_title_lng = "Dħul" %}
-					{% set price_title_lng = "Prezz" %}
-					{% set dates_lng = "Dati u Ħinijiet" %}
-					{% set other_dates_lng = 'Date Oħra' %}
-				{% endif %}
-
 				<!-- Card -->
 				<div class="card mb-4">
 					<!--Card content-->
@@ -242,16 +213,16 @@
 						{{ notes ? '<p class="card-text">' ~ notes ~ '</p>' }}
 
 						{# Dates #}
-						<strong class="d-block">{{ dates_lng }}</strong>
+						<strong class="d-block">{{ fn('pll_e', 'Dates &amp; Times') }}</strong>
 						{{ submcr.date_languages(site, start_date, end_date, '<br>') }}
 
 						<div class="d-block mt-4">
-							<span class="d-block">{{ price_title_lng }}: <strong>&euro;{{ price }}</strong></span>
-							<span class="d-block">{{ admittance_title_lng }}: <strong>{{ admit_lng }}</strong></span>
+							<span class="d-block">{{ fn('pll_e', 'Price') }}: <strong>&euro;{{ price }}</strong></span>
+							<span class="d-block">{{ fn('pll_e', 'Entrance') }}: <strong>{{ admit_lng }}</strong></span>
 						</div>
 
 						{% if multiple_dates|length %}
-							<strong class="d-block mt-4">{{ other_dates_lng }}</strong>
+							<strong class="d-block mt-4">{{ fn('pll_e', 'Other Dates') }}</strong>
 							<small class="oswald-font">
 								{% for multiple_date in multiple_dates %}
 									{{ submcr.date_languages(site, multiple_date.start_date, multiple_date.end_date, ' - ') }}
@@ -260,23 +231,14 @@
 						{% endif %}
 
 						{# Button Link #}
-						<a href="{{ event.link }}" class="d-block text-center mt-4"><button type="button" class="btn btn-secondary btn-md">{{ lang == 'en-GB' ? 'Read more' : 'Dettalji' }}</button></a>
-						{#
-						<pre>{{ dump(speakers) }}</pre>
-						#}
+						<a href="{{ event.link }}" class="d-block text-center mt-4"><button type="button" class="btn btn-secondary btn-md">{{ fn('pll_e', 'read more') }}</button></a>
 					</div>
 				</div><!-- Card -->
 			{% endfor %}
 		</div>
 
-		{% if lang == 'en-GB' %}
-			{% set view_archive = 'View Events' %}
-		{% else %}
-			{% set view_archive = 'Attivitajiet Kollha' %}
-		{% endif %}
-
 		<div class="text-center pt-4">
-			<a href="{{ fn('get_post_type_archive_link', 'event') }}" class="btn btn-secondary">{{ view_archive }}</a>
+			<a href="{{ fn('get_post_type_archive_link', 'event') }}" class="btn btn-secondary">{{ fn('pll_e', 'View Events') }}</a>
 		</div>
 	</section>
 {% endmacro latest_events %}

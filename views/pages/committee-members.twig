@@ -1,0 +1,49 @@
+{% extends 'wrappers/head-foot-wrap.twig' %}
+
+{% block header %}
+	<h1 class="page-title">{{ fn('pll_e', 'Executive Committee Members') }}</h1>
+{% endblock %}
+
+{% block content %}
+	{% set members = flds.members %}
+	{% include 'navigation/posts-pagination.twig' %}
+	{% if members|length %}
+		<div class="card-deck committee-members">
+			{% for member in members %}
+				{% set title			= member.name|e('wp_kses_post') %}
+				{% set image			= Image(member.image).src|resize(360, 360)|e('esc_url') %}
+				{% set designation		= member.designation|e('wp_kses_post') %}
+				{% set favourite_quote	= member.favourite_quote|e('wp_kses_post') %}
+				{% set link				= member.link|e('esc_url') %}
+
+				<!-- Card Regular -->
+				<div class="card card-cascade mb-4 committee-member">
+					<!-- Card image -->
+					<div class="view view-cascade overlay">
+						<img class="card-img-top" src="{{ image }}" alt="Card image cap">
+						<a href="{{ link }}"><div class="mask rgba-white-slight"></div></a>
+					</div>
+
+					<div class="card-body card-body-cascade text-center">
+
+						<h4 class="card-title"><strong>{{ title }}</strong></h4>
+
+						<h6 class="font-weight-bold indigo-text py-2">{{ designation }}</h6>
+
+						{% if favourite_quote %}
+							<p class="card-text">{{ favourite_quote }}</p>
+						{% endif %}
+
+						{% include 'menus/posts-social-menu.twig' with {'icons' : member.social_icons.social_icons} %}
+
+					</div>
+				</div><!-- Card Regular -->
+				{% if loop.index is divisibleby(2) %}
+				</div>
+				<div class="card-deck">
+				{% endif %}
+			{% endfor %}
+		</div>
+	{% endif %}
+	{% include 'navigation/posts-pagination.twig' %}
+{% endblock %}

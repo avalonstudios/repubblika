@@ -277,6 +277,10 @@ function prefix_disable_gutenberg($current_status, $post_type) {
 
 
 add_action( 'init', function() {
+	/**
+	 * Add Event Categories to "event" CPT
+	 * e.g. Seminars, Video, Film Night, etc...
+	 */
 	register_extended_taxonomy( 'event_type', 'event',	[
 															# Use radio buttons in the meta box in Admin area
 															'meta_box'			=> 'radio',
@@ -286,6 +290,51 @@ add_action( 'init', function() {
 															'slug'				=> 'event-categories'
 														],
 	);
+	/**
+	 * Add Committee Members Post Type
+	 */
+	register_extended_post_type( 'committee_members', array(
+
+		# Add the post type to the site's main RSS feed:
+		'show_in_feed' => true,
+
+		# Show under Repubblika custom admin menu
+		'show_in_menu'	=> 'repubblika_index',
+
+		'public'				=> true,
+		'show_ui'				=> true,
+		'menu_position'			=> 5,
+		'show_in_admin_bar'		=> true,
+		'show_in_nav_menus'		=> true,
+		'can_export'			=> true,
+		'has_archive'			=> true,
+		'hierarchical'			=> false,
+		'exclude_from_search'	=> false,
+		'show_in_rest'			=> true,
+		'publicly_queryable'	=> true,
+
+		# Show all posts on the post type archive:
+		/*'archive' => array(
+			'nopaging' => true
+		),*/
+
+		# Add some custom columns to the admin screen:
+		'admin_cols' => array(
+			'designation' => array(
+				'title'				=> 'Designation',
+				'meta_key'			=> 'designation',
+			),
+			'featured_image' => array(
+				'title'				=> 'Photo',
+				'featured_image'	=> 'thumbnail'
+			),
+		),
+	), array(
+		# Override the base names used for labels:
+		'singular'					=> 'Committee Member',
+		'plural'					=> 'Committee Members',
+		'slug'						=> 'committee-members'
+	) );
 } );
 
 /**

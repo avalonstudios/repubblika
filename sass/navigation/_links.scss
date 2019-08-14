@@ -19,3 +19,7 @@
 }*/
 
 @include colored-links( $red, black, pink );
+
+.rep-category {
+	@include colored-links( $red, black, $red );
+}

@@ -180,7 +180,9 @@
 {% macro upcoming_event_content(show, site, theme, singular) %}
 	{% set lang = site.language %}
 
-	{% set months = [ '', 'Jannar', 'Frar', 'Marzu', 'April', 'Mejju', 'Ġunju', 'Lujlu', 'Awissu', 'Settembru', 'Ottubru', 'Novembru', 'Diċembru' ] %}
+	{# {% set months = [ '', 'Jannar', 'Frar', 'Marzu', 'April', 'Mejju', 'Ġunju', 'Lujlu', 'Awissu', 'Settembru', 'Ottubru', 'Novembru', 'Diċembru' ] %}
+	#}
+	{% set months = [ '', 'Jan', 'Fra', 'Mar', 'Apr', 'Mej', 'Ġun', 'Lul', 'Aww', 'Sett', 'Ott', 'Nov', 'Diċ' ] %}
 
 	{% set title = show.post_title|e('wp_kses_post') %}
 	{% set multiday = show.multiday_event %}
@@ -223,28 +225,14 @@
 	{% endif %}
 
 	{% if lang == 'en-GB' %}
-		{% set admittance_lng = 'Admittance' %}
-		{% set ticket_lng = 'Tickets' %}
-		{% set website_lng = 'website' %}
-		{% set phone_lng = 'phone' %}
-		{% set venue_lng = 'Venue' %}
 		{% set start_date_output = start_date|date('d/M/Y') %}
 		{% set end_date_output = end_date|date('d/M/Y') %}
-		{% set view_lng = 'Details' %}
-		{% set other_dates_lng = "Other Dates" %}
 	{% else %}
-		{% set admittance_lng = 'Dħul' %}
-		{% set ticket_lng = 'Biljetti' %}
-		{% set website_lng = 'sit elettroniku' %}
-		{% set phone_lng = 'ċempel' %}
-		{% set venue_lng = 'Post' %}
 		{% set start_date_output = start_date|date('d') ~ '/' ~ months[xahar] ~ '/' ~ start_date|date('Y') %}
 		{% set end_date_output = end_date|date('d') ~ '/' ~ months[xahar] ~ '/' ~ end_date|date('Y') %}
-		{% set view_lng = 'Dettalji' %}
-		{% set other_dates_lng = "Dati Oħra" %}
 	{% endif %}
 
-	{% if multiday %}
+	{# {% if multiday %} #}
 		{% if start_date|date('dmY') == end_date|date('dmY') %}
 			{% set s_date = '<i class="far fa-calendar-alt"></i> ' ~ start_date_output ~ ' <i class="far fa-clock"></i> ' ~ start_date|date('H:i') %}
 			{% set e_date = ' - ' ~ end_date|date('H:i') %}
@@ -252,9 +240,9 @@
 			{% set s_date = '<i class="far fa-calendar-alt"></i> ' ~ start_date_output ~ ' <i class="far fa-clock"></i> ' ~ start_date|date('H:i') %}
 			{% set e_date = '<br><div class="mt-2"><i class="fas fa-calendar-alt"></i> ' ~ end_date_output ~ ' <i class="fas fa-clock"></i> ' ~ end_date|date('H:i') ~ '</div>' %}
 		{% endif %}
-	{% else %}
+	{# {% else %}
 		{% set s_date = '<i class="far fa-calendar-alt"></i> ' ~ start_date_output ~ ' <i class="far fa-clock"></i> ' ~ start_date|date('H:i') %}
-	{% endif %}
+	{% endif %} #}
 	<div class="text-center {{ singular ? '' : 'p-4 jumbotron' }} z-depth-0">
 		<!-- Grid row -->
 		<div class="row">
@@ -263,19 +251,10 @@
 			{% endif %}
 			<div class="col-md-6 text-right my-3">
 				<h6>{{ s_date }}{{ e_date }}</h6>
-				<h6 class="font-weight-bold mt-3 m-0">{{ admittance_lng}}</h6>
+				<h6 class="font-weight-bold mt-3 m-0">{{ fn('pll_e', 'Admittance')}}</h6>
 				<div>
 					<span>{{ admit_lng }}</span><br>
 					{{ price_output }}
-					{% if ticket_url or ticket_phone %}
-						<h6 class="font-weight-bold mt-3 m-0">{{ ticket_lng }}</h6>
-						{% if ticket_url %}
-							<a href="{{ ticket_url }}"><code class="p-0 d-block">{{ website_lng }}</code></a>
-						{% endif %}
-						{% if ticket_phone %}
-							<a href="tel:{{ ticket_phone }}"><code class="p-0 d-block">{{ phone_lng }}</code></a>
-						{% endif %}
-					{% endif %}
 				</div>
 			</div><!-- Grid column -->
 			<!-- Grid column -->
@@ -288,31 +267,51 @@
 					{{ venue_postal_code ? '<span>' ~ venue_postal_code ~ '<br></span>' }}
 					{{ venue_country ? '<span>' ~ venue_country ~ '<br></span>' }}
 
-					{% if venue_website or venue_phone %}
-						<h6 class="font-weight-bold mt-3 m-0">{{ venue_lng }}</h6>
-						{% if venue_website %}
-							<a href="{{ venue_website }}"><code class="p-0 d-block">{{ website_lng }}</code></a>
-						{% endif %}
-						{% if venue_phone.number %}
-							<a href="tel:+{{ venue_phone.cc }}{{ venue_phone.number }}"><code class="p-0 d-block">{{ phone_lng }}</code></a>
-						{% endif %}
-					{% endif %}
 				</div>
 			</div><!-- Grid column -->
-
-			<!-- Other Dates -->
-			<div class="d-block w-100 text-center mt-4 oswald-font">
-				{% import 'sections/partials/submacros/dates_times_lng.twig' as submcr %}
-				{% set multiple_dates = show.meta('select_individual_dates') %}
-				<h5><strong>{{ other_dates_lng }}</strong></h5>
-				{% for multiple_date in multiple_dates %}
-					{{ submcr.date_languages(site, multiple_date.start_date, multiple_date.end_date, ' - ') }}
-				{% endfor %}
+		</div>
+		<div class="row">
+			<div class="col-md-6 text-right my-3">
+				{% if ticket_url or ticket_phone %}
+					<h6 class="font-weight-bold mt-3 m-0">{{ fn('pll_e', 'Tickets') }}</h6>
+					{% if ticket_url %}
+						<a href="{{ ticket_url }}"><code class="p-0 d-block">{{ fn('pll_e', 'website') }}</code></a>
+					{% endif %}
+					{% if ticket_phone %}
+						<a href="tel:{{ ticket_phone }}"><code class="p-0 d-block">{{ fn('pll_e', 'phone') }}</code></a>
+					{% endif %}
+				{% endif %}
 			</div>
+			<div class="col-md-6 text-md-left l-md-3 mt-3">
+				{% if venue_website or venue_phone %}
+					<h6 class="font-weight-bold mt-3 m-0">{{ fn('pll_e', 'Venue') }}</h6>
+					{% if venue_website %}
+						<a href="{{ venue_website }}"><code class="p-0 d-block">{{ fn('pll_e', 'website') }}</code></a>
+					{% endif %}
+					{% if venue_phone.number %}
+						<a href="tel:+{{ venue_phone.cc }}{{ venue_phone.number }}"><code class="p-0 d-block">{{ fn('pll_e', 'phone') }}</code></a>
+					{% endif %}
+				{% endif %}
+			</div>
+		</div>
+		<div class="row">
 
+			{% set multiple_dates = show.meta('select_individual_dates') %}
+			{% if multiple_dates %}
+				{% import 'sections/partials/submacros/dates_times_lng.twig' as submcr %}
+				<!-- Other Dates -->
+				<div class="d-block w-100 text-center mt-4 oswald-font">
+					<h5><strong>{{ fn('pll_e', 'Other Dates') }}</strong></h5>
+					{% for multiple_date in multiple_dates %}
+						{{ submcr.date_languages(site, multiple_date.start_date, multiple_date.end_date, ' - ') }}
+					{% endfor %}
+				</div>
+			{% endif %}
+		</div>
+		<div class="row">
 			{% if not singular %}
 				<div class="col-6 mt-4">
-					<a href="{{ show.link }}" class="btn btn-primary">{{ view_lng }}</a>
+					<a href="{{ show.link }}" class="btn btn-primary">{{ fn('pll_e', 'Details') }}</a>
 				</div>
 				<div class="col-6 mt-4">
 					<span class="addtocalendar atc-style-blue">

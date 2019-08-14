@@ -13,20 +13,34 @@ get_header();
 global $post, $page, $pages, $multipage;
 setup_postdata( $post );
 
-$single = Timber::get_context();
-$single['post'] = new TimberPost();
+$c = Timber::get_context();
+$c['post'] = new TimberPost();
 
 // Overwrite whole post with paginated piece, if viewing a
 // paginated page of the overall post
 if ( $multipage ) {
-	$single['post']->post_content = $pages[ $page - 1 ];
+	$c['post']->post_content = $pages[ $page - 1 ];
 }
 
 if ( post_password_required() ) {
-	$single['password'] = true;
+	$c['password'] = true;
 }
 
-Timber::render( 'pages/single.twig', $single );
+$c[ 'sidebar' ] = Timber::get_sidebar( 'sidebar.php' );
 
-get_sidebar();
+$postType = get_post_type();
+
+switch ( $postType ) {
+	case 'committee_members':
+		Timber::render( 'pages/single-committee_members.twig', $c );
+		break;
+
+	default:
+		Timber::render( 'pages/single.twig', $c );
+		break;
+}
+
+
+
+
 get_footer();

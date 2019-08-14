@@ -36,6 +36,7 @@ function repubblika_pingback_header() {
 }
 add_action( 'wp_head', 'repubblika_pingback_header' );
 
+
 /**
  * Add ACF Options Pages
  */
@@ -161,7 +162,7 @@ function event_type_taxonomy_archive_filter($query) {
 		$now = date('Ymd');
 		$nowEvent = date('Y-m-d H:i:s');
 		$now = date('Y-m-d H:i:s');
-		if ( $query->is_archive ) {
+		if ( $query->is_archive && ! is_post_type_archive( 'committee_members' ) ) {
 			$query->set(
 				'meta_query',
 				[
@@ -222,3 +223,4 @@ function repubblika_archive_titles( $title ) {
 	return $title;
 
 } add_filter( 'get_the_archive_title', 'repubblika_archive_titles' );
+
