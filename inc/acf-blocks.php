@@ -119,6 +119,22 @@ function my_register_blocks() {
 
 		// register a testimonial block.
 		acf_register_block_type( $settings );
+
+		$settings = [
+						'name'				=> 'add_custom_news_archive_in_page',
+						'title'				=> __('News Custom Archive'),
+						'description'		=> __('Add a News Custom Archive to the Page with Page Template: News Custom Archive.'),
+						'render_callback'	=> 'add_custom_news_archive_in_page_block',
+						'category'			=> 'repubblika_block_category',
+						'html'				=> true,
+						'align'				=> 'full',
+						'supports'			=>	[
+													'align' => false,
+												],
+					];
+
+		// register a testimonial block.
+		acf_register_block_type( $settings );
 	}
 }
 
@@ -289,4 +305,51 @@ function add_chart_in_post_block( $block, $content = '', $is_preview = false, $p
 	$c[ 'layout' ] = get_fields();
 
 	Timber::render( 'acf-blocks/add_chart_in_post_block.twig', $c );
+}
+
+function add_custom_news_archive_in_page_block( $block, $content = '', $is_preview = false, $post_id = 0 ) {
+
+	$c = Timber::get_context();
+
+	// Create id attribute allowing for custom "anchor" value.
+	$c[ 'id' ] = $block[ 'id' ];
+	if ( !empty( $block[ 'anchor' ] ) ) {
+		$c[ 'id' ] = $block[ 'anchor' ];
+	}
+
+	// Create class attribute allowing for custom "class_name" and "align" values.
+	$c[ 'class_name' ] = 'news-custom-archives';
+	if ( !empty( $block[ 'class_name' ] ) ) {
+		$c[ 'class_name' ] .= ' ' . $block[ 'class_name' ];
+	}
+	if ( !empty( $block[ 'align' ] ) ) {
+		$c[ 'class_name' ] .= ' align' . $block[ 'align' ];
+	}
+
+	if ( is_admin() ) {
+		echo 'Please click the pencil icon (<span class="dashicons dashicons-edit"></span>) to start.';
+	}
+
+	$c[ 'fields' ] = get_fields();
+
+	/*// Get ACF fields
+	$news = get_field('news_category');
+
+	$posts_array = get_posts(
+	    array(
+	        'posts_per_page' => 5,
+	        'post_type' => 'new',
+	        'tax_query' => array(
+	            array(
+	                'taxonomy' => 'news_type',
+	                'field' => 'term_id',
+	                'terms' => $news,
+	            )
+	        )
+	    )
+	);
+
+	$c[ 'posts' ] = $posts_array;*/
+
+	Timber::render( 'acf-blocks/add_custom_news_archive_in_page_block.twig', $c );
 }

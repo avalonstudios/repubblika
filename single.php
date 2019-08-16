@@ -31,11 +31,15 @@ $c[ 'sidebar' ] = Timber::get_sidebar( 'sidebar.php' );
 $postType = get_post_type();
 
 switch ( $postType ) {
-	case 'committee_members':
+	case 'committee_members' :
 		Timber::render( 'pages/single-committee_members.twig', $c );
 		break;
 
-	default:
+	case 'new' :
+		Timber::render( 'pages/single-news_custom_archive.twig', $c );
+		break;
+
+	default :
 		Timber::render( 'pages/single.twig', $c );
 		break;
 }

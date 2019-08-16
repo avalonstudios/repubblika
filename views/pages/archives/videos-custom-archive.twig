@@ -1,0 +1,94 @@
+{% set fw = post.meta('full_width') %}
+{% extends fw ? 'wrappers/head-foot-wrap-no-sidebar.twig' : 'wrappers/head-foot-wrap.twig' %}
+
+{% block header %}
+	{% if fn('is_archive') %}
+		<h4>{{ fn('get_the_archive_title') }}</h4>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+
+	{{ post.content|e('wp_kses_post') }}
+
+	{% for post in posts %}
+		{% set title			= post.title|e('wp_kses_post') %}
+		{% set thumb			= post.thumbnail %}
+		{% set link				= post.link|e('esc_url') %}
+
+		{% set e_type = post.meta('embedding_type') %}
+		{% set vid_desc = post.content|e('wp_kses_post') %}
+
+		<div class="archive-posts row mx-0 mb- p-5 {{ cycle(['even', 'odd'], loop.index0) }}">
+
+			{% set width = 540 %}
+			{% set height = 330 %}
+
+			<a href="{{ link }}" class="col-12"><h4>{{ title }}</h4></a>
+
+			<div class="col-12 col-md-8">
+				{% if thumb %}
+					<div class="post-thumbnail">
+						<img src="{{ Image(thumb).src|resize(width, height, 'center') }}" alt="{{ Image(thumb).alt|e('wp_kses_post') }}">
+						<i class="fas fa-play" data-toggle="modal" data-target="#modal-{{ loop.index }}"></i>
+					</div>
+				{% else %}
+					{% if e_type == 'url' %}
+						{% set url = post.url %}
+						{% filter shortcodes %}
+							[video src="{{ url }}"]
+						{% endfilter %}
+					{% else %}
+						<div class="embed-responsive embed-responsive-16by9 z-depth-1-half">
+							{% set embed_code = post.embed_code %}
+							{{ embed_code }}
+						</div>
+					{% endif %}
+				{% endif %}
+			</div>
+
+			<div class="video-body col-12 col-md-4 position-relative py-3">
+				<div class="pr-content">{{ vid_desc|truncate(20) }}</div>
+				<div class="row video-btns">
+					{% if thumb %}
+						<div class="col-12 text-center pt-4">
+							<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-{{ loop.index }}">{{ fn('pll_e', 'watch video') }}</button>
+						</div>
+					{% endif %}
+					<div class="col-12 text-center pt-4">
+						<a href="{{ link }}" class="pr-button btn btn-primary mb-0">{{ fn('pll_e', 'read more') }}</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="modal-{{ loop.index }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<!--Content-->
+				<div class="modal-content">
+					<!--Body-->
+					<div class="modal-body mb-0 p-0">
+							{% if e_type == 'url' %}
+								{% set url = post.url %}
+								{% filter shortcodes %}
+									[video src="{{ url }}"]
+								{% endfilter %}
+							{% else %}
+								<div class="embed-responsive embed-responsive-16by9 z-depth-1-half">
+									{% set embed_code = post.embed_code %}
+									{{ embed_code }}
+								</div>
+							{% endif %}
+							{#<iframe class="embed-responsive-item" src="https://www.youtube.com/embed/A3PDXmYoF5U" allowfullscreen></iframe>#}
+					</div>
+					<!--Footer-->
+					<div class="modal-footer justify-content-center flex-column flex-md-row">
+						<button type="button" class="btn btn-outline-primary btn-rounded btn-md ml-4" data-dismiss="modal">{{ fn('pll_e', 'close') }}</button>
+					</div>
+				</div><!--/.Content-->
+			</div>
+		</div><!--Modal: modalYT-->
+
+	{% endfor %}
+	{% include 'navigation/posts-pagination.twig' %}
+{% endblock %}

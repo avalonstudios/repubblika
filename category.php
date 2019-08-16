@@ -28,7 +28,7 @@ $c[ 'options' ] = get_fields( 'options' );
 
 $c[ 'posts' ] = new Timber\PostQuery();
 
-$c[ 'sidebar' ] = Timber::get_sidebar( 'sidebar.php' );
+$c[ '' ] = Timber::get_sidebar( 'sidebar.php' );
 
 Timber::render( 'pages/home.twig', $c );
 

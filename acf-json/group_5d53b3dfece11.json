@@ -84,25 +84,6 @@
                     "maxlength": ""
                 },
                 {
-                    "key": "field_5d53b3e01aa7d",
-                    "label": "Favourite quote",
-                    "name": "favourite_quote",
-                    "type": "textarea",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "maxlength": "",
-                    "rows": "",
-                    "new_lines": ""
-                },
-                {
                     "key": "field_5d53b3e01ae7c",
                     "label": "Social Links",
                     "name": "social_icons",
@@ -150,5 +131,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1565767158
+    "modified": 1565771915
 }

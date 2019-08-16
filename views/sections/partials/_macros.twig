@@ -70,7 +70,9 @@
 		<div class="entry-meta small-text">
 			{% set date = post.date %}
 			{% set modified_date = post.modified_date %}
+			{% if post.author.name %}
 			<span class="author vcard"><i class="far fa-user mr-1"></i><a class="url fn n" href="{{ post.author.link|e('esc_url') }}">{{ post.author.name|e('wp_kses_post') }}</a><br></span>
+			{% endif %}
 			<span class="posted-on ml-">
 			{% if modified_date != date %}
 				<time class="entry-date published" datetime="{{ date|date('c') }}"><i class="far fa-calendar-alt mr-1"></i>{{ date }}</time>,
@@ -84,7 +86,9 @@
 		<div class="entry-meta small-text">
 			{% set date = post.date %}
 			{% set modified_date = post.modified_date %}
+			{% if post.author.name %}
 			<span class="author vcard"><i class="far fa-user mr-1"></i><a class="url fn n" href="{{ post.author.link|e('esc_url') }}">{{ post.author.name|e('wp_kses_post') }}</a><br></span>
+			{% endif %}
 			<span class="posted-on ml-">
 			{% if modified_date != date %}
 				<i class="far fa-calendar-alt mr-1"></i><time class="entry-date published" datetime="{{ date|date('c') }}">{{ date|date('d') }} ta' {{ months[date|date('m')|number_format] }}, {{ date|date('Y') }}</time>,

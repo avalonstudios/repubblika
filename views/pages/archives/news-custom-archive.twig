@@ -1,0 +1,42 @@
+{% set fw = post.meta('full_width') %}
+{% extends fw ? 'wrappers/head-foot-wrap-no-sidebar.twig' : 'wrappers/head-foot-wrap.twig' %}
+
+{% block content %}
+	{% for post in posts %}
+		{% set title			= post.title|e('wp_kses_post') %}
+		{% set thumb			= post.thumbnail %}
+		{% set link				= post.link|e('esc_url') %}
+		{% set date_published	= post.meta('date_published') %}
+
+		{% set terms = post.terms('news_type') %}
+
+		<div class="archive-posts row mx-0 p-5 {{ cycle(['even', 'odd'], loop.index0) }}">
+
+			<div class="pr-thumbnail col-4 {{ cycle(['order-1', 'order-2'], loop.index0) }}">
+				{% if thumb %}
+					<a href="{{ link }}"><img class="pr-image" src="{{ Image(thumb).src|resize(300, 300, 'center') }}" alt="{{ Image(thumb).alt|e('wp_kses_post') }}"></a>
+				{% else %}
+					<a href="{{ link }}"><div class="no-thumb-image d-block"></div></a>
+				{% endif %}
+			</div>
+
+			<div class="pr-body col-8 {{ cycle(['order-2', 'order-1'], loop.index0) }}">
+				<div class="mb-4">
+					<a href="{{ link }}" rel="bookmark"><h4>{{ title ?: '(no title)' }}</h4></a>
+					<div class="d-block category-pin-tag">
+						{% for term in terms %}
+							<a href="{{ term.link }}" rel="bookmark"><i class="fas fa-bookmark"></i>{{ term.title }}</a>
+						{% endfor %}
+					</div>
+					{% if date_published %}
+						<span class="oswald-font cs-1">{{ date_published|date('dS M, Y') }}</span>
+					{% endif %}
+				</div>
+				<div class="pr-content">{{ post.content|truncate(50)|e('wp_kses_post') }}</div>
+				<a href="{{ link }}" class="pr-button btn btn-primary {{ cycle(['float-right', 'float-left'], loop.index0) }}">{{ fn('pll_e', 'read more') }}</a>
+			</div>
+
+		</div>
+	{% endfor %}
+	{% include 'navigation/posts-pagination.twig' %}
+{% endblock %}

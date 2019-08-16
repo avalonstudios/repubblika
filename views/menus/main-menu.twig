@@ -15,6 +15,7 @@
 			{% if not fn('is_front_page') %}
 				{% include 'menus/social-menu.twig' %}
 			{% endif %}
+			<!-- First level -->
 			<ul class="nav navbar-nav nav-flex ml-auto">
 				{% for item in menu.items %}
 					{% if loop.first %}
@@ -22,17 +23,29 @@
 					{% else %}
 					<li class="nav-item mx-2 wow animation-delay-{{ loop.index }} {{ item.classes|join(' ') }}">
 					{% endif %}
-						<a class="nav-link" href="{{ item.link }}"{{ item.target ? 'target="_blank"' }}>{{ item.title }}</a>
+						<a class="nav-link" href="{{ item.link }}"{{ item.target ? 'target="_blank"' }}>{{ item.title }}{{ item.children ? '<i class="fas fa-caret-down"></i>' }}</a>
 						{% if item.children %}
+							<!-- Second level -->
 							<ul class="nav-drop">
 								{% for child in item.children %}
 									<li class="nav-drop-item">
-										<a href="{{ child.link }}"{{ item.target ? 'target="_blank"' }}>{{ child.title }}</a>
+										<a href="{{ child.link }}"{{ item.target ? 'target="_blank"' }}>{{ child.children ? '<i class="fas fa-caret-left"></i>' }}{{ child.title }}</a>
 										{% if child.children %}
+											<!-- Third level -->
 											<ul class="nav-drop">
 												{% for child in child.children %}
 													<li class="nav-drop-item">
-														<a href="{{ child.link }}"{{ item.target ? 'target="_blank"' }}>{{ child.title }}</a>
+														<a href="{{ child.link }}"{{ item.target ? 'target="_blank"' }}>{{ child.children ? '<i class="fas fa-caret-left"></i>' }}{{ child.title }}</a>
+														{% if child.children %}
+															<!-- Fourth level -->
+															<ul class="nav-drop">
+																{% for child in child.children %}
+																	<li class="nav-drop-item">
+																		<a href="{{ child.link }}"{{ item.target ? 'target="_blank"' }}>{{ child.children ? '<i class="fas fa-caret-left"></i>' }}{{ child.title }}</a>
+																	</li>
+																{% endfor %}
+															</ul>
+														{% endif %}
 													</li>
 												{% endfor %}
 											</ul>

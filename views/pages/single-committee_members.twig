@@ -30,13 +30,7 @@
 
 	<a href="{{ fn('get_post_type_archive_link', 'committee_members') }}" class="btn btn-secondary"><i class="fas fa-angle-double-left mr-2"></i>{{ fn('pll_e', 'members') }}</a>
 
-	{% set prev_link = post.prev.link|e('esc_url') %}
-	{% set next_link = post.next.link|e('esc_url') %}
-	{% if prev_link or next_link %}
-		<div class="my-5">
-			<hr>
-			{% include 'navigation/post-navigation.twig' %}
-			<hr>
-		</div>
+	{% include 'navigation/post-navigation.twig' %}
+
 	{% endif %}
 {% endblock %}

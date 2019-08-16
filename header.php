@@ -24,7 +24,7 @@
 <?php
 
 $args = [
-	'depth'	=> 3,
+	'depth'	=> 4,
 ];
 
 $logo			= get_theme_mod( 'custom_logo' );

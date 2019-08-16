@@ -162,7 +162,10 @@ function event_type_taxonomy_archive_filter($query) {
 		$now = date('Ymd');
 		$nowEvent = date('Y-m-d H:i:s');
 		$now = date('Y-m-d H:i:s');
-		if ( $query->is_archive && ! is_post_type_archive( 'committee_members' ) ) {
+		/*if ( is_post_type_archive( 'committee_members' ) && is_tax( 'news_type' ) && is_category() ) {
+			return;
+		}*/
+		if ( is_post_type_archive( 'event' ) ) {//$query->is_archive ) {
 			$query->set(
 				'meta_query',
 				[
@@ -216,7 +219,19 @@ function repubblika_archive_titles( $title ) {
 
 	} elseif ( is_tax() ) {
 
-		$title = pll__('Event Type') . ': ' . single_term_title( '', false );
+		if ( get_taxonomy( 'video_type' ) ) {
+
+			$title = pll__('Video Type') . ': ' . single_term_title( '', false );
+
+		} elseif ( get_taxonomy( 'event_type' ) ) {
+
+			$title = pll__('Event Type') . ': ' . single_term_title( '', false );
+
+		} elseif ( get_taxonomy( 'news_type' ) ) {
+
+			$title = pll__('News Type') . ': ' . single_term_title( '', false );
+
+		}
 
 	}
 
