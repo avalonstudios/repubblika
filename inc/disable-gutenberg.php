@@ -3,8 +3,10 @@
 function ava_disable_editor( $id = false ) {
 
 	$excluded_templates = array(
+		//'pg-templates/news-custom-archive.php'
 		//'front-page.php',
 		//'templates/contact.php'
+		'front-page.php'
 	);
 
 	$excluded_ids = array(

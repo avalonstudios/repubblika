@@ -9,9 +9,7 @@
 
 get_header();
 
-
-$now = date('Y-m-d H:i:s');
-$startDate = get_field('start_date');
+$tax = get_queried_object_id();
 
 global $paged;
 if ( ! isset( $paged ) || ! $paged ) {
@@ -21,6 +19,13 @@ if ( ! isset( $paged ) || ! $paged ) {
 $args = [
 	'post_type'		=>	'video',
 	'paged'			=>	$paged,
+	'tax_query'		=>	[
+							[
+								'taxonomy'	=> 'video_type',
+								'field'		=> 'term_id',
+								'terms'		=>	$tax,
+							],
+						],
 ];
 
 $c				= Timber::get_context();

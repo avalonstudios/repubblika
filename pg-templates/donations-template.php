@@ -1,8 +1,8 @@
 <?php
 /**
- * The template for displaying all single posts
+ * Template Name: Donations Page
  *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#single-post
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
  * @package Repubblika
  */
@@ -26,25 +26,10 @@ if ( post_password_required() ) {
 	$c['password'] = true;
 }
 
+$c				= Timber::get_context();
+$c[ 'options' ]	= get_fields( 'options' );
+$c[ 'post' ]	= new TimberPost();
 $c[ 'sidebar' ] = Timber::get_sidebar( 'sidebar.php' );
-
-$postType = get_post_type();
-
-switch ( $postType ) {
-	case 'committee_members' :
-		Timber::render( 'pages/single-committee_members.twig', $c );
-		break;
-
-	case 'new' :
-		Timber::render( 'pages/single-news_custom_archive.twig', $c );
-		break;
-
-	default :
-		Timber::render( 'pages/single.twig', $c );
-		break;
-}
-
-
-
+Timber::render( 'pages/donations.twig', $c );
 
 get_footer();

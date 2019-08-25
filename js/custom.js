@@ -52,6 +52,30 @@ jQuery( function ( $ ) {
 		var h = d[g]('body')[0];
 		h.appendChild(s);
 	}
+
+	toastr.options = {
+		"closeButton": true,
+		"debug": false,
+		"newestOnTop": true,
+		"progressBar": false,
+		"positionClass": "md-toast-bottom-right",
+		"preventDuplicates": false,
+		"onclick": null,
+		"showDuration": 300,
+		"hideDuration": 1000,
+		"timeOut": 5000,
+		"extendedTimeOut": 1000,
+		"showEasing": "swing",
+		"hideEasing": "linear",
+		"showMethod": "fadeIn",
+		"hideMethod": "fadeOut"
+	}
+	let clipboard = new ClipboardJS('.copy-btn');
+	clipboard.on( 'success', ( e ) => {
+		let alert = e.text;
+		toastr[ "success" ]( alert, "Copied" );
+		e.clearSelection();
+	});
 });
 
 function onLoad() {

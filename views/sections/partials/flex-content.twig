@@ -264,7 +264,7 @@
 {% endmacro button_maker %}
 
 {% macro buttons(cont) %}
-	{% for btns in cont.buttons_buttons %}
+	{% for btns in cont.buttons.buttons %}
 		{% set btn_type = btns.btn_link_type %}
 		{% if btn_type == 'int' %}
 			{% set link = btns.btn_int_grp.button|e('wp_kses_post') %}

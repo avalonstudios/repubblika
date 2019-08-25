@@ -4,7 +4,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
- * @package Rua_Room
+ * @package Repubblika
  */
 
 if ( function_exists( 'wpcf7_enqueue_scripts' ) ) {

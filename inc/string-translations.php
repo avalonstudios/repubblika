@@ -12,6 +12,11 @@ pll_register_string( 'repubblika', 'Details', 'rep_group' );
 pll_register_string( 'repubblika', 'Other Dates', 'rep_group' );
 
 pll_register_string( 'repubblika', 'All Videos', 'rep_group' );
+pll_register_string( 'repubblika', 'watch video', 'rep_group' );
+
+pll_register_string( 'repubblika', 'close', 'rep_group' );
+
+pll_register_string( 'repubblika', 'back to news list', 'rep_group' );
 
 pll_register_string( 'repubblika', 'Entrance', 'rep_group' );
 pll_register_string( 'repubblika', 'Price', 'rep_group' );
@@ -21,4 +26,6 @@ pll_register_string( 'repubblika', 'View Events', 'rep_group' );
 pll_register_string( 'repubblika', 'Executive Committee Members', 'rep_group' );
 pll_register_string( 'repubblika', 'profile', 'rep_group' );
 pll_register_string( 'repubblika', 'members', 'rep_group' );
+
+pll_register_string( 'repubblika', 'press release', 'rep_group' );
 

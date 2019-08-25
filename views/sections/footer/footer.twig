@@ -1,5 +1,10 @@
+{% import 'sections/partials/flex-content.twig' as flex %}
 		</div><!-- .row -->
 	</div><!-- #content -->
+
+	<div class="bottom-buttons d-flex justify-content-around w-100">
+		{{ flex.buttons(options) }}
+	</div>
 
 	<footer id="colophon" class="site-footer">
 		<div class="site-info text-center pt-3 pb-5 pb-md-3">
@@ -11,24 +16,6 @@
 </div><!-- #page -->
 
 {{ fn('wp_footer') }}
-{#
-{% set news_array = [] %}
-{% for news in options.news %}
-	{% set news_item = news.new_item|striptags('<a>')|truncate(15) %}
-	{% set news_array = news_array|merge([news_item]) %}
-{% endfor %}
-{% set news_output = news_array %}
-<script>
-/*
-jQuery(function($) {
-	$(window).on('load', function() {
-		let arr = '{{ news_output }}';
-		news_ticker(arr);
-	});
-});
-*/
-</script>
-#}
 
 </body>
 </html>

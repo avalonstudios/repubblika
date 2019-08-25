@@ -1,0 +1,48 @@
+{% extends 'wrappers/head-foot-wrap.twig' %}
+{% import 'sections/partials/_macros.twig' as mcr %}
+
+{% set months = [ '', 'Jannar', 'Frar', 'Marzu', 'April', 'Mejju', 'Ġunju', 'Lujlu', 'Awissu', 'Settembru', 'Ottubru', 'Novembru', 'Diċembru' ] %}
+
+{% block header %}
+	{% set title = post.post_title|e('wp_kses_post') %}
+	<h1 class="h1-responsive">{{ title }}</h1>
+	{% if post.terms('video_type')|length %}
+		<span class="cat-link d-block rep-category">
+			{% for term in post.terms('video_type') %}
+				<h4><span class="mr-2"><i class="far fa-folder-open"></i></span><a href="{{ term.link }}" rel="bookmark">{{ term }}</a></h4>
+			{% endfor %}
+		</span>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+	{% set lang = site.language %}
+
+	{% set content = post.content|e('wp_kses_post') %}
+	{% if content %}
+		<div class="mb-5">
+			{{ content }}
+		</div>
+	{% endif %}
+
+	{% set e_type = post.meta('embedding_type') %}
+	{% if e_type == 'url' %}
+		{% set url = post.url %}
+		{% filter shortcodes %}
+			[video src="{{ url }}"]
+		{% endfilter %}
+	{% else %}
+		<div class="embed-responsive embed-responsive-16by9">
+			{% set embed_code = post.embed_code %}
+			{{ embed_code }}
+		</div>
+	{% endif %}
+{% endblock %}
+
+{% block footer %}
+	{% include 'navigation/post-navigation.twig' %}
+{% endblock %}
+
+{% block builder %}
+	{% include 'sections/partials/content-builder.twig' %}
+{% endblock %}
