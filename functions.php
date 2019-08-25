@@ -187,7 +187,7 @@ function my_acf_init() {
 } add_action('acf/init', 'my_acf_init');
 
 require_once "inc/cpt.php";
-//require_once "inc/acf-fields.php";
+require_once "inc/acf-fields.php";
 require_once "inc/acf-blocks.php";
 require_once "inc/disable-gutenberg.php";
 require_once "inc/string-translations.php";
