@@ -239,3 +239,19 @@ function repubblika_archive_titles( $title ) {
 
 } add_filter( 'get_the_archive_title', 'repubblika_archive_titles' );
 
+
+function rep_set_cookie() {
+	if ( ! isset( $_COOKIE[ 'rep_cookie' ] ) ) {
+		setcookie( 'rep_cookie', rand(), strtotime( '+1 year' ), '/' );
+	}
+} add_action( 'init', 'rep_set_cookie' );
+
+function add_user_id_pmpro_email( $temail_body, $instance ) {
+
+	$userID = "Ref. Code: {$_COOKIE[ 'rep_cookie' ]} <br><br>";
+
+	$output = $userID . $temail_body;
+
+	return $output;
+
+} add_filter( 'pmpro_email_body', 'add_user_id_pmpro_email', 10, 2 );

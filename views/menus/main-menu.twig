@@ -23,24 +23,24 @@
 					{% else %}
 					<li class="nav-item mx-2 wow animation-delay-{{ loop.index }} {{ item.classes|join(' ') }}">
 					{% endif %}
-						<a class="nav-link" href="{{ item.link }}"{{ item.target ? 'target="_blank"' }}>{{ item.title }}{{ item.children ? '<i class="fas fa-caret-down"></i>' }}</a>
+						<a class="nav-link top-level" href="{{ item.link }}"{{ item.target ? 'target="_blank"' }}>{{ item.title }}{{ item.children ? '<i class="fas fa-caret-down"></i>' }}</a>
 						{% if item.children %}
 							<!-- Second level -->
 							<ul class="nav-drop">
 								{% for child in item.children %}
-									<li class="nav-drop-item">
+									<li class="nav-drop-item {{ child.classes|join(' ') }}">
 										<a href="{{ child.link }}"{{ item.target ? 'target="_blank"' }}>{{ child.children ? '<i class="fas fa-caret-left"></i>' }}{{ child.title }}</a>
 										{% if child.children %}
 											<!-- Third level -->
 											<ul class="nav-drop">
 												{% for child in child.children %}
-													<li class="nav-drop-item">
+													<li class="nav-drop-item {{ child.classes|join(' ') }}">
 														<a href="{{ child.link }}"{{ item.target ? 'target="_blank"' }}>{{ child.children ? '<i class="fas fa-caret-left"></i>' }}{{ child.title }}</a>
 														{% if child.children %}
 															<!-- Fourth level -->
 															<ul class="nav-drop">
 																{% for child in child.children %}
-																	<li class="nav-drop-item">
+																	<li class="nav-drop-item {{ child.classes|join(' ') }}">
 																		<a href="{{ child.link }}"{{ item.target ? 'target="_blank"' }}>{{ child.children ? '<i class="fas fa-caret-left"></i>' }}{{ child.title }}</a>
 																	</li>
 																{% endfor %}

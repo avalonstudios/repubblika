@@ -6,6 +6,7 @@ function ava_disable_editor( $id = false ) {
 		//'pg-templates/news-custom-archive.php'
 		//'front-page.php',
 		//'templates/contact.php'
+		'front-page.php'
 	);
 
 	$excluded_ids = array(

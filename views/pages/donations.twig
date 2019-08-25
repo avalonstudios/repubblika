@@ -1,0 +1,63 @@
+{% set fw = post.meta('full_width') %}
+{% extends fw ? 'wrappers/head-foot-wrap-no-sidebar.twig' : 'wrappers/head-foot-wrap.twig' %}
+
+
+{% block header %}
+	<div class="my-5"></div>
+{% endblock %}
+
+{% block content %}
+    <article id="post-{{ post.id }}" class="{{ post.class }}">
+    	<header class="entry-header">
+    		<h1 class="entry-title">{{ post.title }}</h1>
+    	</header><!-- .entry-header -->
+
+	   	<div class="entry-content">
+	   		{% if password == 1 %}
+	   			{{ fn('get_the_password_form') }}
+	   		{% else %}
+	   			{{ post.content }}
+	   			{% set banks = options.banks %}
+	   			{% for bank in banks %}
+	   				{% set bnk = bank.bank.label|e('wp_kses_post') %}
+	   				{% set acc = bank.account_no|e('wp_kses_post') %}
+	   				{% set iban = bank.iban_no|e('wp_kses_post') %}
+	   				{% set note = bank.note|e('wp_kses_post') %}
+					<div class="card" style="widh: 20rem;">
+						<div class="card-body">
+							<h5 class="font-weight-bold m-0">{{ bnk }}</h5>
+						</div>
+						<ul class="list-group list-group-flush m-0">
+							<li class="list-group-item py-4"><strong>Account No.: </strong><span id="acc_{{ loop.index }}" class="mr-2">{{ acc }}</span><span class="badge badge-pill pink copy-btn p-2" data-clipboard-target="#acc_{{ loop.index }}"><i class="fa fa-copy"></i> copy</span></li>
+							<li class="list-group-item py-4"><strong>IBAN No.: </strong><span id="iban_{{ loop.index }}" class="mr-2">{{ iban }}</span><span class="badge badge-pill pink copy-btn p-2" data-clipboard-target="#iban_{{ loop.index }}"><i class="fa fa-copy"></i> copy</span></li>
+							<li class="list-group-item py-4"><strong>Note: </strong><span id="note">{{ note }}</span></li>
+						</ul>
+					</div>
+	   			{% endfor %}
+	   		{% endif %}
+	   		{% if post.pagination %}
+	   			{% set pages = post.pagination.pages %}
+	   			<div class="my-5">
+	   				<span>Pages: </span>
+	   				{% for page in pages %}
+	   					{% if page.current %}
+	   						<span class="current">{{ page.title }}</span>{{ loop.last ? '' : ', ' }}
+	   					{% else %}
+	   						<a href="{{ page.link }}">{{ page.title }}</a>{{ loop.last ? '' : ', ' }}
+	   					{% endif %}
+	   				{% endfor %}
+	   			</div>
+	   		{% endif %}
+    	</div><!-- .entry-content -->
+
+		{% if fn('get_edit_post_link') %}
+    		<footer class="entry-footer">
+    			<a href="{{ post.edit_link }}" class="btn btn-secondary white">Edit <span class="sr-only">{{ post.title }}</span></a>
+    		</footer><!-- .entry-footer -->
+    	{% endif %}
+    </article><!-- #post-<?php the_ID(); ?> -->
+{% endblock %}
+
+{% block builder %}
+    {% include 'sections/partials/content-builder.twig' %}
+{% endblock %}

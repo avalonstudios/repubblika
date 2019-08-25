@@ -28,6 +28,6 @@ $c[ 'posts' ]	= new Timber\PostQuery( $args );
 
 $c[ 'sidebar' ] = Timber::get_sidebar( 'sidebar.php' );
 
-Timber::render( 'pages/archives/archive-video.twig', $c );
+Timber::render( 'pages/archives/videos-custom-archive.twig', $c );
 
 get_footer();

@@ -129,10 +129,8 @@
 }
 
 .archive-posts {
-	position: relative;
-	margin-bottom: 2em;
 	&.even {
-		border: 1px solid $darkgrey;
+		background-color: $lightred;
 		.video-body {
 			background: $grey;
 		}
@@ -140,7 +138,12 @@
 	&.odd {
 		background-color: $grey;
 		.video-body {
-			background: white;
+			background: $lightred;
+		}
+	}
+	.video-body {
+		@include bp( 768 ) {
+			height: 100%;
 		}
 	}
 	.post-thumbnail {
@@ -180,6 +183,7 @@
 .no-thumb-image {
 	height: 100%;
 	&:after {
+		min-height: 70px;
 		content: '';
 		background-image: url( 'images/repubblika-rpl.png' );
 		background-repeat: no-repeat;

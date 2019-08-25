@@ -43,3 +43,13 @@ a.btn {
 	margin: 5.25px;
 	@include colored-links( $red, black, $red );
 }
+
+input.rep-ninja-submit {
+	&:hover {
+		color: white !important;
+	}
+}
+
+.copy-btn {
+	cursor: pointer;
+}

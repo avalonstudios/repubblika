@@ -117,7 +117,8 @@
 		{% if thumb %}
 			<a href="{{ link }}"><img class="card-img" src="{{ Image(thumb).src|resize(750,460,'center') }}" alt=""></a>
 		{% else %}
-			<a href="{{ link }}"><img src="{{ theme.path }}/images/repubblika-rpl.png" alt=""></a>
+			<a href="{{ link }}"><div class="no-thumb-image d-block"></div></a>
+			{#<a href="{{ link }}"><img src="{{ theme.path }}/images/repubblika-rpl.png" alt=""></a>#}
 		{% endif %}
 		<header class="card-header">
 			{% if title %}

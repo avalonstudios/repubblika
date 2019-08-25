@@ -23,7 +23,7 @@
 
 	{% if thumb %}
 		<div class="my-4 post-thumbnail">
-			<img src="{{ thumb }}" alt="{{ thumb_alt }}" class="mx-auto d-block">
+			<img src="{{ thumb|resize(900, null, 'center') }}" alt="{{ thumb_alt }}" class="mx-auto d-block">
 		</div>
 	{% endif %}
 {% endblock %}
