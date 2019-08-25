@@ -33,12 +33,19 @@
 			a {
 				width: 200px;
 				padding: .5em;
+				padding-left: 1em;
+				.fas {
+					position: absolute;
+					left: 5px;
+					top: 50%;
+					margin-top: -7px;
+				}
 			}
 
 			:hover > a,
 			.focus > a {
 				background-color: $darkgrey;
-				border: 1px solid transparent;
+				//border: 1px solid transparent;
 			}
 
 			a:hover,
@@ -56,10 +63,12 @@
 		float: left;
 		position: relative;
 
+		position: relative;
+
 		&:hover > a,
 		&.focus > a {
-			border: 1px solid $red;
-			margin: -1px;
+			//border: 1px solid $red;
+			//margin: -1px;
 		}
 	}
 
@@ -73,9 +82,31 @@
 	@include colored-links( $red, black, $red );
 
 	.current_page_item > a,
-	.current-menu-item > a,
+	//.current-menu-item > a,
 	.current_page_ancestor > a,
 	.current-menu-ancestor > a {
+		color: $red !important;
+	}
+
+	.current-menu-item > a {
+		position: relative;
+		color: $red !important;
+		&:after {
+			position: absolute;
+			content: '\f111';
+			font-family: 'Font Awesome 5 Free';
+			font-weight: 900;
+			color: $red;
+			@include font-size( .7 );
+			top: 50%;
+			margin-top: -7px;
+			margin-left: 5px;
+		}
+		&.top-level {
+			&:after {
+				content: '';
+			}
+		}
 	}
 }
 

@@ -76,25 +76,6 @@
             "maxlength": "",
             "rows": "",
             "new_lines": ""
-        },
-        {
-            "key": "field_5d1f0e2735d32",
-            "label": "Video Description",
-            "name": "video_description",
-            "type": "textarea",
-            "instructions": "150 character limit.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "maxlength": 150,
-            "rows": "",
-            "new_lines": ""
         }
     ],
     "location": [
@@ -114,5 +95,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1562316558
+    "modified": 1565889845
 }

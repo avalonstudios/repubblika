@@ -27,6 +27,15 @@
 													{% for child in child.children %}
 														<li>
 															<a href="{{ child.link }}"{{ item.target ? ' target="_blank"' }}>{{ child.title }}</a>
+															{% if child.children %}
+																<ul class="list-unstyled m-0 children">
+																	{% for child in child.children %}
+																		<li>
+																			<a href="{{ child.link }}"{{ item.target ? ' target="_blank"' }}>{{ child.title }}</a>
+																		</li>
+																	{% endfor %}
+																</ul>
+															{% endif %}
 														</li>
 													{% endfor %}
 												</ul>

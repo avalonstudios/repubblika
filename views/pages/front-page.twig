@@ -55,19 +55,6 @@
 
 		{% endif %}
 
-		{% if layout == 'buttons' %}
-			{% set active = section.sec_prop.active %}
-
-			{% if active %}
-
-				<div class="bottom-buttons d-flex justify-content-around w-100">
-				    {{ flex.buttons(section, site) }}
-				</div>
-
-			{% endif %}
-
-	    {% endif %}
-
 	{% endfor %}
 </div>
 

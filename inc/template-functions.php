@@ -162,7 +162,10 @@ function event_type_taxonomy_archive_filter($query) {
 		$now = date('Ymd');
 		$nowEvent = date('Y-m-d H:i:s');
 		$now = date('Y-m-d H:i:s');
-		if ( $query->is_archive && ! is_post_type_archive( 'committee_members' ) ) {
+		/*if ( is_post_type_archive( 'committee_members' ) && is_tax( 'news_type' ) && is_category() ) {
+			return;
+		}*/
+		if ( is_post_type_archive( 'event' ) ) {//$query->is_archive ) {
 			$query->set(
 				'meta_query',
 				[
@@ -216,7 +219,19 @@ function repubblika_archive_titles( $title ) {
 
 	} elseif ( is_tax() ) {
 
-		$title = pll__('Event Type') . ': ' . single_term_title( '', false );
+		if ( get_taxonomy( 'video_type' ) ) {
+
+			$title = pll__('Video Type') . ': ' . single_term_title( '', false );
+
+		} elseif ( get_taxonomy( 'event_type' ) ) {
+
+			$title = pll__('Event Type') . ': ' . single_term_title( '', false );
+
+		} elseif ( get_taxonomy( 'news_type' ) ) {
+
+			$title = pll__('News Type') . ': ' . single_term_title( '', false );
+
+		}
 
 	}
 
@@ -224,3 +239,19 @@ function repubblika_archive_titles( $title ) {
 
 } add_filter( 'get_the_archive_title', 'repubblika_archive_titles' );
 
+
+function rep_set_cookie() {
+	if ( ! isset( $_COOKIE[ 'rep_cookie' ] ) ) {
+		setcookie( 'rep_cookie', rand(), strtotime( '+1 year' ), '/' );
+	}
+} add_action( 'init', 'rep_set_cookie' );
+
+function add_user_id_pmpro_email( $temail_body, $instance ) {
+
+	$userID = "Ref. Code: {$_COOKIE[ 'rep_cookie' ]} <br><br>";
+
+	$output = $userID . $temail_body;
+
+	return $output;
+
+} add_filter( 'pmpro_email_body', 'add_user_id_pmpro_email', 10, 2 );

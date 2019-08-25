@@ -1,0 +1,53 @@
+{% set fw = post.meta('full_width') %}
+{% extends fw ? 'wrappers/head-foot-wrap-no-sidebar.twig' : 'wrappers/head-foot-wrap.twig' %}
+
+
+{% block header %}
+	<div class="my-5"></div>
+{% endblock %}
+
+{% block content %}
+    <article id="post-{{ post.id }}" class="{{ post.class }}">
+    	<header class="entry-header">
+    		<h1 class="entry-title">{{ post.title }}</h1>
+    	</header><!-- .entry-header -->
+
+	   	<div class="entry-content">
+	   		{% if password == 1 %}
+	   			{{ fn('get_the_password_form') }}
+	   		{% else %}
+   				{{ post.content }}
+{#
+	   			{% if user %}
+	   			{% else %}
+	   				<div>{{ flds.message|e('wp_kses_post') }}</div>
+					<a href="{{ fn('wp_login_url') }}" title="Login" class="btn btn-primary">Login</a>
+	   			{% endif %}
+#}
+	   		{% endif %}
+	   		{% if post.pagination %}
+	   			{% set pages = post.pagination.pages %}
+	   			<div class="my-5">
+	   				<span>Pages: </span>
+	   				{% for page in pages %}
+	   					{% if page.current %}
+	   						<span class="current">{{ page.title }}</span>{{ loop.last ? '' : ', ' }}
+	   					{% else %}
+	   						<a href="{{ page.link }}">{{ page.title }}</a>{{ loop.last ? '' : ', ' }}
+	   					{% endif %}
+	   				{% endfor %}
+	   			</div>
+	   		{% endif %}
+    	</div><!-- .entry-content -->
+
+		{% if fn('get_edit_post_link') %}
+    		<footer class="entry-footer">
+    			<a href="{{ post.edit_link }}" class="btn btn-secondary white">Edit <span class="sr-only">{{ post.title }}</span></a>
+    		</footer><!-- .entry-footer -->
+    	{% endif %}
+    </article><!-- #post-<?php the_ID(); ?> -->
+{% endblock %}
+
+{% block builder %}
+    {% include 'sections/partials/content-builder.twig' %}
+{% endblock %}

@@ -3,6 +3,11 @@
 
 {% block content %}
 
+	{% if fn('is_archive') %}
+		{{ fn('the_archive_title', '<h1 class="page-title mb-5">', '</h1>' ) }}
+		{{ fn('the_archive_description', '<div class="archive-description">', '</div>' ) }}
+	{% endif %}
+
 	{{ mcr.posts_carousel(stickies, site, theme) }}
 
 	{% include 'navigation/posts-pagination.twig' %}

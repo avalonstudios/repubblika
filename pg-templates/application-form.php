@@ -1,11 +1,19 @@
 <?php
 /**
- * The template for displaying all single posts
+ * Template Name: Application Form
  *
- * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#single-post
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
  * @package Repubblika
  */
+
+$obj = get_queried_object_id();
+$url = get_permalink( $obj );
+$url = $url . '?e_s=' . $_COOKIE[ 'rep_cookie' ];
+
+if ( ! isset( $_GET[ 'e_s' ] ) || $_GET[ 'e_s' ] !== $_COOKIE[ 'rep_cookie' ] ) {
+	wp_safe_redirect( $url );
+}
 
 get_header();
 
@@ -26,25 +34,10 @@ if ( post_password_required() ) {
 	$c['password'] = true;
 }
 
+$c				= Timber::get_context();
+$c[ 'flds' ]	= get_fields();
+$c[ 'post' ]	= new TimberPost();
 $c[ 'sidebar' ] = Timber::get_sidebar( 'sidebar.php' );
-
-$postType = get_post_type();
-
-switch ( $postType ) {
-	case 'committee_members' :
-		Timber::render( 'pages/single-committee_members.twig', $c );
-		break;
-
-	case 'new' :
-		Timber::render( 'pages/single-news_custom_archive.twig', $c );
-		break;
-
-	default :
-		Timber::render( 'pages/single.twig', $c );
-		break;
-}
-
-
-
+Timber::render( 'pages/must-be-logged-in.twig', $c );
 
 get_footer();

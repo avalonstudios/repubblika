@@ -1,0 +1,41 @@
+{
+    "key": "group_5d554d51ba844",
+    "title": "Single News Post",
+    "fields": [
+        {
+            "key": "field_5d554d6bcca15",
+            "label": "Date published",
+            "name": "date_published",
+            "type": "date_picker",
+            "instructions": "The News Item might have a different date from that published on the website. For e.g. a Press Release might have been released yesterday but you're publishing it on the website today. In that case, select yesterday's date below.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "d\/m\/Y",
+            "return_format": "U",
+            "first_day": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "new"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1565871662
+}
