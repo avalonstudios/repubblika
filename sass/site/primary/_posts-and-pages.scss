@@ -109,7 +109,7 @@
 	}
 	&-wrapper {
 		display: table;
-		height: 60vh;
+		height: 50vh;
 		@include bp( 1, 768, width, 'landscape') {
 			height: 0;
 		}

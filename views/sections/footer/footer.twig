@@ -2,17 +2,21 @@
 		</div><!-- .row -->
 	</div><!-- #content -->
 
-	<div class="bottom-buttons d-flex justify-content-around w-100">
-		{{ flex.buttons(options) }}
+	<div class="container">
+		<div class="bottom-buttons d-flex justify-content-around w-100">
+			{{ flex.buttons(options) }}
+		</div>
 	</div>
 
-	<footer id="colophon" class="site-footer">
-		<div class="site-info text-center pt-3 pb-5 pb-md-3">
-			<span class="copyright d-block d-lg-inline">Copyright &copy; {{ now|date('Y') }} <a href="{{ site.link }}" rel="home">{{ site.name }}</a></span>
-			<span class="sep d-none d-lg-inline"> | </span>
-			<span class="designer d-block d-lg-inline"><a href="https://avalonstudios.eu" rel="external">Design &amp; Development by Avalon Studios</a></span>
-		</div><!-- .site-info -->
-	</footer><!-- #colophon -->
+	{% if not fn('is_front_page') %}
+		<footer id="colophon" class="site-footer my-5">
+			<div class="site-info text-center pt-3 pb-5 pb-md-3">
+				<span class="copyright d-block d-lg-inline">Copyright &copy; {{ now|date('Y') }} <a href="{{ site.link }}" rel="home">{{ site.name }}</a></span>
+				{#<span class="sep d-none d-lg-inline"> | </span>
+				<span class="designer d-block d-lg-inline"><a href="https://avalonstudios.eu" rel="external">Design &amp; Development by Avalon Studios</a></span>#}
+			</div><!-- .site-info -->
+		</footer><!-- #colophon -->
+	{% endif %}
 </div><!-- #page -->
 
 {{ fn('wp_footer') }}
