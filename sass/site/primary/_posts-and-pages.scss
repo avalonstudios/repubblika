@@ -2,8 +2,8 @@
 	display: block;
 }
 
-.post,
-.page {
+//.page,
+.post {
 	margin: 0 0 1.5em;
 }
 
@@ -198,4 +198,9 @@
 		margin-right: 5px;
 		margin-bottom: 8px;
 	}
+}
+
+.site-footer {
+	background-color: $grey;
+	@include colored-links( red, black, red );
 }

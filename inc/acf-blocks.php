@@ -21,7 +21,7 @@ function ava_acf_blocks_scripts() {
 }
 
 
-function my_mario_block_category( $categories, $post ) {
+function repubblika_block_category( $categories, $post ) {
 	return array_merge(
 		$categories,
 		array(
@@ -31,7 +31,7 @@ function my_mario_block_category( $categories, $post ) {
 			),
 		)
 	);
-} add_filter( 'block_categories', 'my_mario_block_category', 10, 2);
+} add_filter( 'block_categories', 'repubblika_block_category', 10, 2);
 
 
 
@@ -135,6 +135,23 @@ function my_register_blocks() {
 
 		// register a testimonial block.
 		acf_register_block_type( $settings );
+
+
+			$settings = [
+							'name'				=> 'add_statute',
+							'title'				=> __('Statute Block'),
+							'description'		=> __('Add Statute Block'),
+							'render_callback'	=> 'add_statute_block',
+							'category'			=> 'repubblika_block_category',
+							'html'				=> true,
+							'align'				=> 'full',
+							'supports'			=>	[
+														'align' => false,
+													],
+						];
+
+			// register a testimonial block.
+			acf_register_block_type( $settings );
 	}
 }
 
@@ -352,4 +369,32 @@ function add_custom_news_archive_in_page_block( $block, $content = '', $is_previ
 	$c[ 'posts' ] = $posts_array;*/
 
 	Timber::render( 'acf-blocks/add_custom_news_archive_in_page_block.twig', $c );
+}
+
+function add_statute_block( $block, $content = '', $is_preview = false, $post_id = 0 ) {
+
+	$c = Timber::get_context();
+
+	// Create id attribute allowing for custom "anchor" value.
+	$c[ 'id' ] = $block[ 'id' ];
+	if ( !empty( $block[ 'anchor' ] ) ) {
+		$c[ 'id' ] = $block[ 'anchor' ];
+	}
+
+	// Create class attribute allowing for custom "class_name" and "align" values.
+	$c[ 'class_name' ] = 'news-custom-archives';
+	if ( !empty( $block[ 'class_name' ] ) ) {
+		$c[ 'class_name' ] .= ' ' . $block[ 'class_name' ];
+	}
+	if ( !empty( $block[ 'align' ] ) ) {
+		$c[ 'class_name' ] .= ' align' . $block[ 'align' ];
+	}
+
+	if ( is_admin() ) {
+		echo 'Please click the pencil icon (<span class="dashicons dashicons-edit"></span>) to start.';
+	}
+
+	$c[ 'fields' ] = get_fields();
+
+	Timber::render( 'acf-blocks/add_statute_block.twig', $c );
 }

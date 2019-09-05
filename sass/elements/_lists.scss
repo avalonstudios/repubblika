@@ -1,5 +1,11 @@
 ul, ol {
-	margin: 0 0 1.5em 3em;
+	@include bp( 1 ) {
+		margin: 0 0 1.5em 0.5em;
+	}
+
+	@include bp( 992 ) {
+		margin: 0 0 1.5em 3em;
+	}
 }
 
 ul {
@@ -7,13 +13,13 @@ ul {
 }
 
 ol {
-	list-style: decimal;
+	//list-style: decimal;
 }
 
 li > ul,
 li > ol {
 	margin-bottom: 0;
-	@include bp( 992 ) {
+	@include bp( 1 ) {
 		margin-left: .5em;
 	}
 	@include bp( 992 ) {

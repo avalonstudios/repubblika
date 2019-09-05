@@ -191,3 +191,25 @@
 		box-shadow: none;
 	}
 }
+
+.side-nav {
+}
+
+.side-nav {
+	.site-branding {
+		a {
+			border: 0;
+		}
+	}
+
+	&-social {
+		float: left;
+		border-bottom: 1px solid $darkgrey;
+		li {
+			a {
+				border: 0;
+				text-align: center;
+			}
+		}
+	}
+}

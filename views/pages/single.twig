@@ -45,26 +45,24 @@
 	<div class="categories-tags">
 		{% if post.terms('category')|length %}
 			<span class="cat-link d-block">
-				<span class="oswald">Filed in:</span>
+				<span class="cs-1 mr-2">Filed in:</span>
 				{% for term in post.terms('category') %}
-					<span class="badge badge-dark mr-1"><a href="{{ term.link }}" rel="bookmark">{{ term }}</a></span>
+					<span class="badge badge-ark mr-3 z-depth-0"><a href="{{ term.link }}" rel="bookmark">{{ term }}</a></span>
 				{% endfor %}
 			</span>
 		{% endif %}
 		{% if post.terms('tags')|length %}
-			<span class="tags-link d-block">
-				<span class="oswald">Tagged as:</span>
+			<span class="tags-link d-block mt-3">
+				<span class="cs-1 mr-2">Tagged as:</span>
 				{% for term in post.terms('tags') %}
-					<span class="badge badge-light mr-1"><a href="{{ term.link }}" rel="bookmark">{{ term }}</a></span>
+					<span class="badge badge-ight mr-3 z-depth-0"><a href="{{ term.link }}" rel="bookmark">{{ term }}</a></span>
 				{% endfor %}
 			</span>
 		{% endif %}
 	</div>
 
 	<div class="my-5">
-		<hr>
 		{% include 'navigation/post-navigation.twig' %}
-		<hr>
 	</div>
 {% endblock %}
 

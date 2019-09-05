@@ -9,14 +9,14 @@
 			{% set logo = theme.link ~ '/images/repubblika-logo' %}
 			<a class="float-left d-block d-lg-none pt-2" href="{{ site.link }}"><img src="{{ logo }}.png" alt="{{ Image(logo).alt }}"></a>
 		{% endif %}
-		<a data-activates="slide-out" class="button-collapse p-3 d-lg-none float-right"><i class="fas fa-bars"></i></a>
+		<a data-activates="slide-out" class="button-collapse py-4 px-4 d-lg-none float-right"><i class="fas fa-bars fa-lg"></i></a>
 		</div>
 		{% include 'menus/main-menu.twig' %}
 	</header><!-- #masthead -->
 
 	{% include 'menus/fixed-sidenav.twig' %}
 
-	<div class="py-0 py-md-5 d-non d-lg-block"></div>
+	<div class="py-0 py-md-2 py-lg-5 d-lg-block"></div>
 
 	{% set fw = post.meta('full_width') %}
 	{#<div id="content" class="site-content {{ fw ? 'container-fluid' : 'container' }}">#}

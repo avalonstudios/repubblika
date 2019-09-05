@@ -29,3 +29,5 @@ pll_register_string( 'repubblika', 'members', 'rep_group' );
 
 pll_register_string( 'repubblika', 'press release', 'rep_group' );
 
+pll_register_string( 'repubblika', 'Article No.', 'rep_group' );
+

@@ -13,12 +13,12 @@
 		<div class="nav-links">
 			{% if prev_link is not null %}
 			<div class="nav-previous">
-				<a href="{{ prev_link }}" rel="prev"><i class="fas fa-caret-left" aria-hidden="true"></i> {{ prev_post_title }}</a>
+				<a href="{{ prev_link }}" rel="prev"><i class="fas fa-caret-left" aria-hidden="true"></i> {{ prev_post_title ?: '(no title)' }}</a>
 			</div>
 			{% endif %}
 			{% if next_link is not null %}
 			<div class="nav-next">
-				<a href="{{ next_link }}" rel="next">{{ next_post_title }} <i class="fas fa-caret-right" aria-hidden="true"></i></a>
+				<a href="{{ next_link }}" rel="next">{{ next_post_title ?: '(no title)' }} <i class="fas fa-caret-right" aria-hidden="true"></i></a>
 			</div>
 			{% endif %}
 		</div>

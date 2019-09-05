@@ -181,12 +181,6 @@ if ( class_exists( 'WooCommerce' ) ) {
 add_filter( 'wpcf7_load_js', '__return_false' );
 add_filter( 'wpcf7_load_css', '__return_false' );
 
-/*
-function my_acf_init() {
-	acf_update_setting('google_api_key', 'AIzaSyBJke8awiiax4MfVDhap0N1eW-4vG2gIoo');
-} add_action('acf/init', 'my_acf_init');
-*/
-
 require_once "inc/cpt.php";
 require_once "inc/acf-fields.php";
 require_once "inc/acf-blocks.php";

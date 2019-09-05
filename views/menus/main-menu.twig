@@ -12,9 +12,7 @@
 			<div class="breadcrumb-dn mr-auto">
 				{% include 'sections/header/branding.twig' %}
 			</div>
-			{% if not fn('is_front_page') %}
-				{% include 'menus/social-menu.twig' %}
-			{% endif %}
+			{% include 'menus/social-menu.twig' %}
 			<!-- First level -->
 			<ul class="nav navbar-nav nav-flex ml-auto">
 				{% for item in menu.items %}
