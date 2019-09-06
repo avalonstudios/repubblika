@@ -234,7 +234,7 @@ add_action( 'init', function() {
 														],
 														[
 															'slug'				=> 'event-categories'
-														],
+														]
 	);
 
 	/**
@@ -248,7 +248,7 @@ add_action( 'init', function() {
 														],
 														[
 															'slug'				=> 'news-categories'
-														],
+														]
 	);
 
 	register_extended_taxonomy( 'video_type', 'video',	[
@@ -258,7 +258,7 @@ add_action( 'init', function() {
 														],
 														[
 															'slug'				=> 'video-categories'
-														],
+														]
 	);
 
 	/**
