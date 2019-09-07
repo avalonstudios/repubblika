@@ -382,7 +382,7 @@ function add_statute_block( $block, $content = '', $is_preview = false, $post_id
 	}
 
 	// Create class attribute allowing for custom "class_name" and "align" values.
-	$c[ 'class_name' ] = 'news-custom-archives';
+	$c[ 'class_name' ] = 'statute-block py-5';
 	if ( !empty( $block[ 'class_name' ] ) ) {
 		$c[ 'class_name' ] .= ' ' . $block[ 'class_name' ];
 	}

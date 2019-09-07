@@ -205,8 +205,22 @@
 	@include colored-links( red, black, red );
 }
 
-.red-title {
-		color: $red;
-	@include bp( 1, 767 ) {
+.statute-block {
+	.red-title {
+			color: $red;
+		@include bp( 1, 767 ) {
+		}
+	}
+
+	ol {
+		.row {
+			padding: 10px;
+		}
+	}
+
+	li {
+		p:last-child {
+			margin-bottom: 0;
+		}
 	}
 }

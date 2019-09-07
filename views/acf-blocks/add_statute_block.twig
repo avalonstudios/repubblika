@@ -1,43 +1,43 @@
-{% for field in fields['article'] %}
-	{% set art_title	= field['article_title']|e('wp_kses_post') %}
-	{% set headings		= field['headings'] %}
-	<div class="row">
-		<h4 class="red-title col-12 col-md-9 mb-4 offset-md-3">{{ fn('pll_e', 'Article No.') }} {{ loop.index }} - {{ art_title }}</h4>
-	</div>
-	<ol type="1" class="ml-3 pl-3 m-md-0 p-md-0">
-		{% for heading in headings %}
-			{% set headTitle	= heading['title']|e('wp_kses_post') %}
-			{% set header		= heading['heading']|e('wp_kses_post') %}
-			{% set header_cont	= heading['heading_contd']|e('wp_kses_post') %}
-			{% set num_style	= heading['num_style']|e('wp_kses_post') %}
-			{% set subheadings	= heading['subheadings'] %}
+<div id="{{ id|e('esc_html') }}" class="{{ class_name|e('esc_html') }}">
+	{% for field in fields['article'] %}
+		{% set art_title	= field['article_title']|e('wp_kses_post') %}
+		{% set headings		= field['headings'] %}
+		<div class="mb-4">
 			<div class="row">
-				{% if headTitle %}
-					<div class="red-title col-md-3"><em>{{ headTitle }}</em></div>
-				{% endif %}
-				<div class="col-md-9{{ headTitle ? '' : ' offset-md-3' }}"><li>{{ header }}</li></div>
+				<h4 class="red-title col-12 col-md-9 mb-4 offset-md-3">{{ fn('pll_e', 'Article No.') }} {{ loop.index }} - {{ art_title }}</h4>
 			</div>
-			{% if subheadings %}
-				<ol type="{{ num_style == 'letter' ? 'a' : 'i' }}" class="ml-3 pl-3 m-md-0 p-md-0">
-					{% for sub in subheadings %}
-						{% set sub_title = sub['title']|e('wp_kses_post') %}
-						{% set subheader = sub['subheading']|e('wp_kses_post') %}
-						<div class="row">
-							{% if sub_title %}
-								<div class="red-title col-md-3"><em>{{ sub_title }}</em></div>
-							{% endif %}
-							<div class="col-md-9{{ sub_title ? '' : ' offset-md-3' }}"><li class="pl-md-3 ml-md-4">{{ subheader }}</li></div>
-						</div>
-					{% endfor %}
-				</ol>
-			{% endif %}
-			<div class="row">
-				<div class="col-md-9 offset-md-3">{{ header_cont }}</div>
-			</div>
-		{% endfor %}
-	</ol>
-{% endfor %}
-
-{#
-<pre>{{ dump(fields) }}</pre>
-#}
+			<ol type="1" class="ml-3 pl-3 m-md-0 p-md-0">
+				{% for heading in headings %}
+					{% set headTitle	= heading['title']|e('wp_kses_post') %}
+					{% set header		= heading['heading']|e('wp_kses_post') %}
+					{% set header_cont	= heading['heading_contd']|e('wp_kses_post') %}
+					{% set num_style	= heading['num_style']|e('wp_kses_post') %}
+					{% set subheadings	= heading['subheadings'] %}
+					<div class="row">
+						{% if headTitle %}
+							<div class="red-title col-md-3"><em>{{ headTitle }}</em></div>
+						{% endif %}
+						<div class="col-md-9{{ headTitle ? '' : ' offset-md-3' }}"><li>{{ header }}</li></div>
+					</div>
+					{% if subheadings %}
+						<ol type="{{ num_style == 'letter' ? 'a' : 'i' }}" class="ml-3 pl-3 m-md-0 p-md-0">
+							{% for sub in subheadings %}
+								{% set sub_title = sub['title']|e('wp_kses_post') %}
+								{% set subheader = sub['subheading']|e('wp_kses_post') %}
+								<div class="row">
+									{% if sub_title %}
+										<div class="red-title col-md-3"><em>{{ sub_title }}</em></div>
+									{% endif %}
+									<div class="col-md-9{{ sub_title ? '' : ' offset-md-3' }}"><li class="pl-md-3 ml-md-4">{{ subheader }}</li></div>
+								</div>
+							{% endfor %}
+						</ol>
+					{% endif %}
+					<div class="row">
+						<div class="col-md-9 offset-md-3">{{ header_cont }}</div>
+					</div>
+				{% endfor %}
+			</ol>
+		</div>
+	{% endfor %}
+</div>
