@@ -187,5 +187,8 @@ require_once "inc/acf-blocks.php";
 require_once "inc/disable-gutenberg.php";
 require_once "inc/string-translations.php";
 
+if ( $GLOBALS[ 'pagenow' ] === 'wp-login.php' ) {
+	require_once "admin/admin-mods.php";
+}
 
 require_once('vendor/autoload.php');

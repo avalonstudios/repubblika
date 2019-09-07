@@ -1,0 +1,55 @@
+@import "variables-site/variables-site";
+@import "mixins/mixins-master";
+@import "typography/typography";
+@import "forms/forms";
+
+body {
+	background-color: $darkgrey;
+	font-family: $sans;
+
+
+	&.login {
+		#backtoblog,
+		#nav {
+			@include colored-links( $red, black, $red );
+		}
+
+		div#login {
+			h1 {
+				a {
+					background-image: url( 'images/repubblika-logo-large.png' );
+					background-size: 260px 69px;
+					display: block;
+					width: 260px;
+					height: 69px;
+					position: relative;
+					z-index: 99999;
+				}
+			}
+		}
+	}
+}
+
+#loginform {
+	border-radius: 50px;
+	background-color: $grey;
+	box-shadow: 30px 30px 225px 257px rgba( $grey, 1 );
+
+	.button {
+		&.button-large {
+			border: 0;
+			box-shadow: none;
+			font-family: $serif;
+			text-transform: uppercase;
+			background-color: $red;
+			text-shadow: none;
+			padding: 10px 20px;
+			height: unset;
+			transition: transit( background-color );
+
+			&:hover {
+				background-color: darken( $red, 10 );
+			}
+		}
+	}
+}
