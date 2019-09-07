@@ -13,7 +13,7 @@ $c = Timber::get_context();
 $c['post'] = new TimberPost();
 $c['sidebar'] = Timber::get_sidebar( 'sidebar.php' );
 
-Timber::render( 'pages/page.twig', $c );
+Timber::render( 'pages/statute-page.twig', $c );
 
 
 get_footer();
