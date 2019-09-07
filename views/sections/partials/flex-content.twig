@@ -259,8 +259,8 @@
 	</section>
 {% endmacro latest_video %}
 
-{% macro button_maker(link, name, target) %}
-	<a href="{{ link }}" class="btn btn-secondary"{{ target ? ' target="_blank"' }}>{{ name }}</a>
+{% macro button_maker(link, name, target, prisec) %}
+	<a href="{{ link }}" class="btn btn-{{ prisec }}"{{ target ? ' target="_blank"' }}>{{ name }}</a>
 {% endmacro button_maker %}
 
 {% macro buttons(cont) %}
@@ -269,11 +269,11 @@
 		{% if btn_type == 'int' %}
 			{% set link = btns.btn_int_grp.button|e('wp_kses_post') %}
 			{% set name = btns.btn_int_grp.btn_name|e('wp_kses_post') %}
-			{{ _self.button_maker(link, name, target) }}
+			{{ _self.button_maker(link, name, 0, 'primary') }}
 		{% elseif btn_type == 'ext' %}
 			{% set link = btns.btn_ext_grp.button|e('wp_kses_post') %}
 			{% set name = btns.btn_ext_grp.btn_name|e('wp_kses_post') %}
-			{{ _self.button_maker(link, name, 1) }}
+			{{ _self.button_maker(link, name, 1, 'primary') }}
 		{% endif %}
 	{% endfor %}
 {% endmacro buttons %}
