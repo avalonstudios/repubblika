@@ -204,3 +204,9 @@
 	background-color: $grey;
 	@include colored-links( red, black, red );
 }
+
+.red-title {
+		color: $red;
+	@include bp( 1, 767 ) {
+	}
+}
